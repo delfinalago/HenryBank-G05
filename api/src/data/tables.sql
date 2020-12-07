@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 06-12-2020 a las 01:57:57
+-- Tiempo de generación: 07-12-2020 a las 18:21:51
 -- Versión del servidor: 10.4.17-MariaDB
 -- Versión de PHP: 8.0.0
 
@@ -144,7 +144,7 @@ ALTER TABLE `transaction`
 -- Indices de la tabla `user`
 --
 ALTER TABLE `user`
-  ADD PRIMARY KEY (`id_user`);
+  ADD PRIMARY KEY (`id_add`);
 
 --
 -- Restricciones para tablas volcadas
@@ -154,7 +154,7 @@ ALTER TABLE `user`
 -- Filtros para la tabla `account`
 --
 ALTER TABLE `account`
-  ADD CONSTRAINT `account_ibfk_1` FOREIGN KEY (`cbu`) REFERENCES `user` (`id_user`);
+  ADD CONSTRAINT `account_ibfk_1` FOREIGN KEY (`cbu`) REFERENCES `user` (`id_add`);
 
 --
 -- Filtros para la tabla `card`
@@ -166,7 +166,7 @@ ALTER TABLE `card`
 -- Filtros para la tabla `contact`
 --
 ALTER TABLE `contact`
-  ADD CONSTRAINT `contact_ibfk_1` FOREIGN KEY (`id_contact`) REFERENCES `user` (`id_user`);
+  ADD CONSTRAINT `contact_ibfk_1` FOREIGN KEY (`id_contact`) REFERENCES `user` (`id_add`);
 
 --
 -- Filtros para la tabla `transaction`
@@ -178,7 +178,7 @@ ALTER TABLE `transaction`
 -- Filtros para la tabla `user`
 --
 ALTER TABLE `user`
-  ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `address` (`id_add`);
+  ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`id_add`) REFERENCES `address` (`id_add`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
