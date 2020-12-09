@@ -55,7 +55,7 @@ module.exports = {
 		testear: {
 			rest: "/testear",
 			handler() {
-				return "testeo bueno";
+				return "aca greeter.service";
 			},
 		},
 	},
