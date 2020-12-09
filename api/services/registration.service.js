@@ -49,6 +49,7 @@ module.exports = {
 		},
 	},
 
+
 	/**
 	 * Actions
 	 */
@@ -72,7 +73,68 @@ module.exports = {
 				return test;
 			},
 		},
-	},
+
+	    validate:{
+
+		rest: {
+
+			method: "POST",
+			path: "/validate",
+
+		},
+		async handler(ctx) {
+		  const birthdate = ctx.params.birthdate;
+		  const bla = birthdate.split('/')
+          console.log ( bla[0])
+		   const today = new Date();
+		   const dat = today.getFullYear();
+
+
+		  const age = dat - bla[0];
+		   console.log(birthdate)
+            console.log (dat)
+
+	      if(age >= 16)  {
+            console.log (age)
+		  return "Cumple con la edad preestablecida";
+
+	       }
+		   console.log('error');
+	      },
+		},
+		create_account:{
+			rest: {
+
+				method: "POST",
+				path: "/create",
+
+			},
+			async handler(ctx) {
+
+				const name = ctx.params.nombre
+				const surname = ctx.params.apellido
+				const tipoDoc = ctx.params.tipoDeDocumento
+				const doc = ctx.params.dni
+				const birthdat = ctx.params.fechaDeNacimiento
+				// const mail = ctx.params.email
+				// const pass = ctx.params.password
+				const cel = ctx.params.celular
+				const street = ctx.params.domicilio
+				const numDom = ctx.params.numDom
+				const city = ctx.params.localidad
+				const province = ctx.params.provincia
+				// const country= ctx.params.pais
+
+
+
+
+
+			},
+
+
+
+		}
+	  },
 
 	/**
 	 * Methods
