@@ -2,6 +2,7 @@
 import {createStackNavigator} from 'react-navigation-stack';
 import {createAppContainer} from 'react-navigation';
 import Register from '../screens/Register';
+import Login from '../screens/Login'
 
 
 
@@ -10,12 +11,24 @@ const stackNavigatorOptions = {
     
 }
 const AppNavigator = createStackNavigator({
-    Register : {screen:Register}
+//     Login : {
+//       screen:Login,
+//         navigationOptions:{
+//         title: "Inicio"
+//     }
+//    },
+
+   Register : {
+       screen:Register,
+       navigationOptions:{
+        title: "Registro"
+    }
+
+    }   
 },
 {
-    defaultNavigationOptions : stackNavigatorOptions
-}
-);
+    // defaultNavigationOptions : stackNavigatorOptions
+});
 
 
 export default createAppContainer(AppNavigator);
