@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 5.0.3
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 07-12-2020 a las 18:21:51
--- Versión del servidor: 10.4.17-MariaDB
--- Versión de PHP: 8.0.0
+-- Tiempo de generación: 09-12-2020 a las 21:35:48
+-- Versión del servidor: 10.4.14-MariaDB
+-- Versión de PHP: 7.2.34
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,34 +24,41 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `account`
+-- Estructura de tabla para la tabla `accounts`
 --
 
 CREATE TABLE `accounts` (
   `id_acc` int(60) NOT NULL,
   `associateacount` int(60) NOT NULL,
-  `cbu` int(60) NOT NULL,
+  `cvu` int(11) NOT NULL,
   `summary` int(60) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `address`
+-- Estructura de tabla para la tabla `addresses`
 --
 
 CREATE TABLE `addresses` (
-  `id_add` int(60) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `id_add` int(60) NOT NULL,
   `street` varchar(60) NOT NULL,
   `postalCode` int(60) NOT NULL,
   `province` varchar(60) NOT NULL,
   `city` varchar(60) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Volcado de datos para la tabla `addresses`
+--
+
+INSERT INTO `addresses` (`id_add`, `street`, `postalCode`, `province`, `city`) VALUES
+(1, 'sas', 123, 'asd', 'qwed');
+
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `card`
+-- Estructura de tabla para la tabla `cards`
 --
 
 CREATE TABLE `cards` (
@@ -68,7 +75,24 @@ CREATE TABLE `cards` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `contact`
+-- Estructura de tabla para la tabla `client`
+--
+
+CREATE TABLE `client` (
+  `id_cli` int(11) NOT NULL,
+  `first_name` varchar(60) NOT NULL,
+  `last_name` varchar(60) NOT NULL,
+  `birthdate` date NOT NULL,
+  `cellphone` int(11) NOT NULL,
+  `id_adr` int(11) NOT NULL,
+  `tipo_doc` varchar(60) NOT NULL,
+  `dni` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `contacts`
 --
 
 CREATE TABLE `contacts` (
@@ -80,7 +104,19 @@ CREATE TABLE `contacts` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `transaction`
+-- Estructura de tabla para la tabla `models`
+--
+
+CREATE TABLE `models` (
+  `id` int(11) NOT NULL,
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `transactions`
 --
 
 CREATE TABLE `transactions` (
@@ -97,13 +133,11 @@ CREATE TABLE `transactions` (
 -- Estructura de tabla para la tabla `user`
 --
 
-CREATE TABLE `users` (
-  `id_user` int(60) NOT NULL,
+CREATE TABLE `user` (
+  `id_user` int(11) NOT NULL,
   `username` varchar(60) NOT NULL,
-  `first_name` varchar(60) NOT NULL,
-  `last_name` varchar(60) NOT NULL,
-  `id_add` int(60) NOT NULL,
-  `email` varchar(60) NOT NULL
+  `password1` varchar(60) NOT NULL,
+  `password2` varchar(60) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -111,25 +145,46 @@ CREATE TABLE `users` (
 --
 
 --
--- Indices de la tabla `account`
+-- Indices de la tabla `accounts`
 --
 ALTER TABLE `accounts`
-  ADD PRIMARY KEY (`cbu`);
+  ADD PRIMARY KEY (`id_acc`),
+  ADD UNIQUE KEY `cvu` (`cvu`),
+  ADD KEY `user-cuent` (`associateacount`);
 
 --
--- Indices de la tabla `card`
+-- Indices de la tabla `addresses`
+--
+ALTER TABLE `addresses`
+  ADD PRIMARY KEY (`id_add`);
+
+--
+-- Indices de la tabla `cards`
 --
 ALTER TABLE `cards`
   ADD PRIMARY KEY (`number`);
 
 --
--- Indices de la tabla `contact`
+-- Indices de la tabla `client`
+--
+ALTER TABLE `client`
+  ADD PRIMARY KEY (`id_cli`),
+  ADD UNIQUE KEY `id_adr` (`id_adr`);
+
+--
+-- Indices de la tabla `contacts`
 --
 ALTER TABLE `contacts`
   ADD PRIMARY KEY (`id_contact`);
 
 --
--- Indices de la tabla `transaction`
+-- Indices de la tabla `models`
+--
+ALTER TABLE `models`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `transactions`
 --
 ALTER TABLE `transactions`
   ADD PRIMARY KEY (`id_tr`);
@@ -137,42 +192,65 @@ ALTER TABLE `transactions`
 --
 -- Indices de la tabla `user`
 --
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`id_add`);
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`id_user`),
+  ADD UNIQUE KEY `username` (`username`);
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+--
+-- AUTO_INCREMENT de la tabla `addresses`
+--
+ALTER TABLE `addresses`
+  MODIFY `id_add` int(60) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de la tabla `models`
+--
+ALTER TABLE `models`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Restricciones para tablas volcadas
 --
 
 --
--- Filtros para la tabla `account`
+-- Filtros para la tabla `accounts`
 --
 ALTER TABLE `accounts`
-  ADD CONSTRAINT `account_ibfk_1` FOREIGN KEY (`cbu`) REFERENCES `users` (`id_add`);
+  ADD CONSTRAINT `user-cuent` FOREIGN KEY (`associateacount`) REFERENCES `client` (`id_cli`);
 
 --
--- Filtros para la tabla `card`
+-- Filtros para la tabla `cards`
 --
 ALTER TABLE `cards`
-  ADD CONSTRAINT `card_ibfk_1` FOREIGN KEY (`number`) REFERENCES `accounts` (`cbu`);
+  ADD CONSTRAINT `card_ibfk_1` FOREIGN KEY (`number`) REFERENCES `accounts` (`cvu`);
 
 --
--- Filtros para la tabla `contact`
+-- Filtros para la tabla `client`
+--
+ALTER TABLE `client`
+  ADD CONSTRAINT `direcc` FOREIGN KEY (`id_adr`) REFERENCES `client` (`id_cli`);
+
+--
+-- Filtros para la tabla `contacts`
 --
 ALTER TABLE `contacts`
-  ADD CONSTRAINT `contact_ibfk_1` FOREIGN KEY (`id_contact`) REFERENCES `users` (`id_add`);
+  ADD CONSTRAINT `contact_ibfk_1` FOREIGN KEY (`id_contact`) REFERENCES `client` (`id_cli`);
 
 --
--- Filtros para la tabla `transaction`
+-- Filtros para la tabla `transactions`
 --
 ALTER TABLE `transactions`
-  ADD CONSTRAINT `transaction_ibfk_1` FOREIGN KEY (`id_tr`) REFERENCES `accounts` (`cbu`);
+  ADD CONSTRAINT `transaction_ibfk_1` FOREIGN KEY (`id_tr`) REFERENCES `accounts` (`cvu`);
 
 --
 -- Filtros para la tabla `user`
 --
-ALTER TABLE `users`
-  ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`id_add`) REFERENCES `addresses` (`id_add`);
+ALTER TABLE `user`
+  ADD CONSTRAINT `userLog` FOREIGN KEY (`id_user`) REFERENCES `client` (`id_cli`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

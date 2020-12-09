@@ -57,6 +57,7 @@ module.exports = {
 		},
 	},
 
+
 	/**
 	 * Actions
 	 */
@@ -80,25 +81,6 @@ module.exports = {
 				return test;
 			},
 		},
-		sendemail: {
-			rest: "GET /sendemail",
-
-			params: {
-				mail: "string",
-			},
-			/** @param {Context} ctx  */
-			async handler(ctx) {
-				let response = await transporter.sendMail({
-					from: process.env.EMAIL_USER,
-					to: ctx.params.mail,
-					subject: "Veski account registration process",
-					html: `<h1>Welcome to Veski</h1>
-					<h3>Please click <a href="http://google.com">here</a> to continue your account registration process.</h3>`,
-				});
-				return response;
-			},
-		},
-	},
 
 	/**
 	 * Methods
