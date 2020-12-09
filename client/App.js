@@ -1,11 +1,12 @@
-import * as React from 'react'
+import React from 'react';
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import {
-  StyleSheet,  
-} from 'react-native'
+import { StyleSheet, Text, View } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
 import Profile from './screens/Profile'
+import AppNavigator from '../client/navigation/Navigator';
+
 
 import Home from './screens/Home'
 
@@ -16,10 +17,8 @@ const styles = StyleSheet.create({
 const HomeStack = createStackNavigator()
 function HomeStackScreen() {
   return (
-    <HomeStack.Navigator>
-      <HomeStack.Screen name="Home" component={Home} />
-    </HomeStack.Navigator>
-  )
+    <AppNavigator/>
+  );
 }
 
 const ProfileStack = createStackNavigator()
