@@ -1,5 +1,5 @@
 // ALTA USER 
-import { Formik, Form, Field, touched } from 'formik';
+import { useFormik, Form, Field, touched } from 'formik';
 import * as Yup from 'yup';
 import React from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, ScrollView } from 'react-native';
@@ -12,6 +12,41 @@ import { useDispatch, useSelector } from 'react-redux';
 export default function register(){
         
 
+
+    const {handleSubmit, handleChange, values, touched, errors, handleBlur} = useFormik({
+        initialValues:{
+            name: "",
+            lastname: "",
+            phone: "",
+            dni: "",
+            address: "",
+            province:"",
+            city:"",
+            nacimiento:""
+          }, 
+          validationSchema: Yup.object({
+            name: Yup
+              .string()
+              .min(4, "El nombre ingresado debe tener mas de 4 caracteres")
+              .max(50, "El nombre ingresado debe tener tener menos de 50 caracteres")
+              .required("Campo requerido"),
+            lastname: Yup
+              .string()
+              .min(4, "El nombre ingresado debe tener mas de 4 caracteres")
+              .max(50, "El nombre ingresado debe tener tener menos de 50 caracteres")
+              .required("Campo requerido"),
+            phone: Yup    
+              .string()
+              .required("Ingrese su numero de telefono")
+              .matches(
+                /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/,
+                "Numero de telefono no valido"
+              )
+          }), onSubmit: ({name, lastname,phone}) => {
+            alert(`name: ${name}, lasname: ${lastname}, phone: ${phone}`);
+          }
+        })
+          
 
     return(
 
@@ -38,50 +73,12 @@ export default function register(){
                Complete los campos para registrarse.
             </Text>
 
-            <Formik
-            initialValues={{
-              name: "",
-              lastname: "",
-              phone: "",
-              dni: "",
-              address: "",
-              province:"",
-              city:"",
-              nacimiento:""
-            }}
-            validationSchema={Yup.object({
-              name: Yup
-                .string()
-                .min(4, "El nombre ingresado debe tener mas de 4 caracteres")
-                .max(50, "El nombre ingresado debe tener tener menos de 50 caracteres")
-                .required("Campo requerido"),
-              lastname: Yup
-                .string()
-                .min(4, "El nombre ingresado debe tener mas de 4 caracteres")
-                .max(50, "El nombre ingresado debe tener tener menos de 50 caracteres")
-                .required("Campo requerido"),
-              phone: Yup    
-                .string()
-                .required("Ingrese su numero de telefono")
-                .matches(
-                  /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/,
-                  "Numero de telefono no valido"
-                )
-            })}
-            onSubmit={(values) => {
-                console.log(values);
-            }}
-            >   
-            {(props) => (
-                <View >
-
-                    
                     <TextInput 
 
                          placeholder="Nombre"
                          placeholderTextColor="#00716F"
-                         onChangeText={props.handleChange('name')}
-                         value={props.values.name}
+                         onChangeText={handleChange('name')}
+                         value={values.name}
 
 
                          style={{flexDirection:"row",
@@ -94,12 +91,16 @@ export default function register(){
                          borderRadius:23,
                          paddingVertical:2}}
                     />
+                     {touched.name && errors.name ? (
+                     <div>{errors.name}</div>
+                      ): null}
                     
                     <TextInput 
                         placeholder="Apellido"
                         placeholderTextColor="#00716F"
-                        onChangeText={props.handleChange('lastname')}
-                        value={props.values.lastname}
+                        onChangeText={handleChange('lastname')}
+                        
+                        value={values.lastname}
 
 
                         style={{flexDirection:"row",
@@ -112,13 +113,17 @@ export default function register(){
                         borderRadius:23,
                         paddingVertical:2}}
                     />
+                     {touched.lastname && errors.lastname ? (
+                     <div>{errors.lastname}</div>
+                      ): null}
 
 
                     <TextInput 
                         placeholder="Telefono"
                         placeholderTextColor="#00716F"
-                        onChangeText={props.handleChange('phone')}
-                        value={props.values.phone}
+                        onChangeText={handleChange('phone')}
+                        onBlur={handleBlur}
+                        value={values.phone}
                         keyboardType='numeric'
 
 
@@ -132,12 +137,16 @@ export default function register(){
                         borderRadius:23,
                         paddingVertical:2}}
                     />
+                     {touched.phone && errors.phone ? (
+                     <div>{errors.phone}</div>
+                      ): null}
+
 
                     <TextInput 
                         placeholder="DNI"
                         placeholderTextColor="#00716F"
-                        onChangeText={props.handleChange('dni')}
-                        value={props.values.dni}
+                        onChangeText={handleChange('dni')}
+                        value={values.dni}
                         keyboardType='numbers-and-punctuation'
 
 
@@ -156,8 +165,8 @@ export default function register(){
                     <TextInput 
                         placeholder="Fecha de nacimiento"
                         placeholderTextColor="#00716F"
-                        onChangeText={props.handleChange('nacimiento')}
-                        value={props.values.nacimiento}
+                        onChangeText={handleChange('nacimiento')}
+                        value={values.nacimiento}
                         keyboardType=''
 
 
@@ -175,8 +184,8 @@ export default function register(){
                     <TextInput 
                         placeholder="Direccion"
                         placeholderTextColor="#00716F"
-                        onChangeText={props.handleChange('address')}
-                        value={props.values.address}
+                        onChangeText={handleChange('address')}
+                        value={values.address}
 
 
                         style={{flexDirection:"row",
@@ -193,8 +202,8 @@ export default function register(){
                     <TextInput 
                         placeholder="Provincia"
                         placeholderTextColor="#00716F"
-                        onChangeText={props.handleChange('province')}
-                        value={props.values.province}
+                        onChangeText={handleChange('province')}
+                        value={values.province}
 
 
                         style={{flexDirection:"row",
@@ -211,8 +220,8 @@ export default function register(){
                     <TextInput 
                         placeholder="Ciudad"
                         placeholderTextColor="#00716F"
-                        onChangeText={props.handleChange('city')}
-                        value={props.values.city}
+                        onChangeText={handleChange('city')}
+                        value={values.city}
 
 
                         style={{flexDirection:"row",
@@ -229,7 +238,7 @@ export default function register(){
                     
                     <TouchableOpacity 
                     mode='contained' secureTextEntry={true} title='Register' 
-                    onPress={props.handleSubmit}
+                    onPress={handleSubmit}
                         style={{
                         marginHorizontal:55,
                         alignItems:"center",
@@ -241,10 +250,6 @@ export default function register(){
                     }}>
 					Enviar
 					</TouchableOpacity>
-
-                </View>
-            )}
-        </Formik>
         </View>
     </ScrollView>
     )
