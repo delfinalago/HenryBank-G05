@@ -4,9 +4,6 @@ import * as Yup from 'yup';
 import React from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, ScrollView } from 'react-native';
 
-
-
-import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 
 export default function register(){
