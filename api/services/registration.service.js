@@ -100,6 +100,40 @@ module.exports = {
 		},
 	},
 
+
+	validate:{
+
+		rest: {
+
+			method: "POST",
+			path: "/validate",
+
+		},
+		async handler(ctx) {
+		  const birthdate = ctx.params.birthdate;
+		  const year = birthdate.split('/')
+		  console.log ( year[0])
+		   const today = new Date();
+		   const dat = today.getFullYear();
+
+
+		  const age = dat - year[0];
+		   console.log(birthdate)
+			console.log (dat)
+
+		  if(age >= 16)  {
+			console.log (age)
+		  return "Cumple con la edad preestablecida";
+
+		   }
+		   console.log('error');
+		 },
+		},
+
+	},
+
+	{
+
 	/**
 	 * Methods
 	 */
