@@ -113,7 +113,7 @@ module.exports = {
 		},
 
 	},
-
+},
 	{
 
 	/**
@@ -127,4 +127,4 @@ module.exports = {
 	async afterConnected() {
 		// await this.adapter.collection.createIndex({ name: 1 });
 	},
-};
+	};
