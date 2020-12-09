@@ -14,7 +14,7 @@ import {
 
 const styles = StyleSheet.create({
   cardContainer: {
-    backgroundColor: '#FFF',
+    backgroundColor: '#29333d',
     borderWidth: 0,
     flex: 1,
     margin: 0,
@@ -22,6 +22,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
+    margin:10
   },
   headerBackgroundImage: {
     paddingBottom: 20,
@@ -29,7 +30,6 @@ const styles = StyleSheet.create({
   },
   headerContainer: {},
   headerColumn: {
-    backgroundColor: 'transparent',
     ...Platform.select({
       ios: {
         alignItems: 'center',
@@ -42,15 +42,17 @@ const styles = StyleSheet.create({
     }),
   },
   scroll: {
-    backgroundColor: '#FFF',
+    backgroundColor:'#29333d',
+    marginTop:10
   },
   userImage: {
-    borderColor: '#FFF',
+    borderColor:'#FFF',
     borderRadius: 85,
     borderWidth: 3,
     height: 170,
     marginBottom: 15,
     width: 170,
+    marginRight:15
   },
   userNameText: {
     color: '#FFF',
@@ -59,29 +61,42 @@ const styles = StyleSheet.create({
     paddingBottom: 8,
     textAlign: 'center',
   },
-  saldo: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 28,
-    fontSize: '14px',
-    marginBottom: 16
+   saldo: {
+     display: 'flex',
+     justifyContent: 'center',
+     alignItems: 'center',
+     marginTop: 28,
+     fontSize: '14px',
+     marginBottom: 16,
+    
+  },
+  saldoActual:{
+color:'#FFF'
   },
   saldoNumber: {
     marginTop: 4,
-    fontSize: '42px'
+    fontSize: '42px',
+    color:'#FFF'
+
   },
   listItemContainer: {
     height: 55,
-    width: '30%',
-    color: 'black'
+    width: '80%',
+    color:'#FFF'
+  
+    
   },
-  buttons: {
-    display: 'grid',
-    'grid-template-columns': '3fr 3fr'
-  },
+   buttons: {
+  alignItems:'center',
+  color:'#FFF',
+  borderRadius:'50%'
+
+  //   display: 'grid',
+  //   'grid-template-columns': '3fr 3fr'
+   },
   button: {
-    width: '30%'
+    width: '50%'
+   
   }
 })
 
@@ -125,96 +140,102 @@ class Contact extends Component {
         <Card containerStyle={styles.cardContainer}>
         {this.renderHeader()}
         <View style={styles.saldo}>
-        <Text>
+        <Text style= {styles.saldoActual}>
             Tu saldo actual es:
           </Text>
           <Text style={styles.saldoNumber}>
-            $22.58
+            $22.580,06
           </Text>
           </View>
         <View style={styles.buttons}>
         <Button
         style={styles.listItem}
             type="outline"
-            title="Currency"
+            title="Transacciones"
             onPress={() => this.onPressSetting()}
             containerStyle={styles.listItemContainer}
             icon={
               <BaseIcon
-                containerStyle={{ backgroundColor: '#FAD291' }}
+                containerStyle={{ backgroundColor: '#29333d' }}
                 icon={{
                   type: 'font-awesome',
-                  name: 'money',
+                  name: 'bank',
                 }}
               />
             }
           />
       <Button
+      style={styles.listItem}
             type="outline"
-            title="Currency"
+            title="Estadisticas"
             onPress={() => this.onPressSetting()}
             containerStyle={styles.listItemContainer}
             icon={
               <BaseIcon
-                containerStyle={{ backgroundColor: '#FAD291' }}
+                containerStyle={{ backgroundColor: '#29333d' }}
                 icon={{
                   type: 'font-awesome',
-                  name: 'money',
+                  name: 'line-chart',
                 }}
               />
             }
           /><Button
+          style={styles.listItem}
           type="outline"
-          title="Currency"
+          title="Mis productos"
           onPress={() => this.onPressSetting()}
           containerStyle={styles.listItemContainer}
           icon={
             <BaseIcon
-              containerStyle={{ backgroundColor: '#FAD291' }}
+              containerStyle={{ backgroundColor: '#29333d' }}
               icon={{
                 type: 'font-awesome',
-                name: 'money',
+                name: 'credit-card',
               }}
             />
           }
         />
         <Button
-        title="Currency"
+        style={styles.listItem}
+        title="Mis datos"
         type="outline"
         onPress={() => this.onPressSetting()}
         containerStyle={styles.listItemContainer}
         icon={
           <BaseIcon
-            containerStyle={{ backgroundColor: '#FAD291' }}
+            containerStyle={{ backgroundColor: '#29333d' }}
             icon={{
               type: 'font-awesome',
-              name: 'money',
+              name: 'user-circle',
             }}
           />
         }
       />
       <Button
-      title="Currency"
+      style={styles.listItem}
+      title="Recargar dinero"
       type="outline"
       onPress={() => this.onPressSetting()}
       containerStyle={styles.listItemContainer}
       icon={
         <BaseIcon
-          containerStyle={{ backgroundColor: '#FAD291' }}
+        style={styles.listItem}
+          containerStyle={{ backgroundColor: '#29333d' }}
           icon={{
             type: 'font-awesome',
-            name: 'money',
+            name: 'google-wallet',
           }}
         />
       }
     /><Button
+    style={styles.listItem}
     type="outline"
-    title="Currency"
+    title="Enviar dinero"
     onPress={() => this.onPressSetting()}
     containerStyle={styles.listItemContainer}
     icon={
       <BaseIcon
-        containerStyle={{ backgroundColor: '#FAD291' }}
+        containerStyle={{ backgroundColor: '#29333d' }}
         icon={{
           type: 'font-awesome',
           name: 'money',

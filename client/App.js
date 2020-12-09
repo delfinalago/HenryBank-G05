@@ -2,10 +2,16 @@ import * as React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-
+import {
+  StyleSheet,  
+} from 'react-native'
 import Profile from './screens/Profile'
 
 import Home from './screens/Home'
+
+const styles = StyleSheet.create({
+
+})
 
 const HomeStack = createStackNavigator()
 function HomeStackScreen() {
@@ -34,7 +40,9 @@ const Tab = createBottomTabNavigator()
 export default function App() {
   return (
     <NavigationContainer>
-      <Tab.Navigator>
+      <Tab.Navigator tabOptions={{
+        style: styles.tab
+      }}>
         <Tab.Screen name="Home" component={HomeStackScreen} />
         <Tab.Screen name="Profile" component={ProfileStackScreen} />
       </Tab.Navigator>

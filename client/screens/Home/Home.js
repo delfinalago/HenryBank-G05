@@ -5,14 +5,19 @@ import {
   View,
 } from 'react-native'
 
-const styles = StyleSheet.create({ })
+const styles = StyleSheet.create({
+  
+
+ })
 
 class Home extends Component {
   render() {
     return (
       <View style={styles.mainViewStyle}>
         <ScrollView style={styles.scroll}>
+          <text>
             Contenido del home !
+            </text>
         </ScrollView>
       </View>
     )
