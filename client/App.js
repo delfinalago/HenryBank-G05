@@ -14,7 +14,9 @@ import Profile from './screens/Profile'
 
 
 const styles = StyleSheet.create({
-
+tab: {
+  marginBottom: 15
+}
 })
 
 const LoginStack = createStackNavigator()
@@ -61,15 +63,16 @@ const Tab = createBottomTabNavigator()
 export default function App() {
   return (
     <NavigationContainer>
-      <Tab.Navigator tabOptions={{
-        style: styles.tab
+      <Tab.Navigator tabBarOptions={{
+        tabStyle: styles.tab
       }}>
+b.Screen name="Mi perfil" component={ProfileStackScreen} />
+
         {/* <Tab.Screen name="Home" component={HomeStackScreen} /> */}
         <Tab.Screen name="Login" component={LoginStackScreen} /> 
         <Tab.Screen name="Register" component={RegisterStackScreen} />
         <Tab.Screen name="Profile" component={ProfileStackScreen} />
-       
-        
+
       </Tab.Navigator>
     </NavigationContainer>
   )
