@@ -6,13 +6,19 @@ import { StyleSheet, Text, View } from "react-native";
 import { StatusBar } from "expo-status-bar";
 
 // Screens
+
 import Home from "./screens/Home";
 import Login from "./screens/Login";
 import Register from "../client/screens/Register";
 import Profile from "./screens/Profile";
 import PreRegister from "./screens/preRegister";
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+tab: {
+  marginBottom: 15
+}
+})
+
 
 const LoginStack = createStackNavigator();
 function LoginStackScreen() {
@@ -60,6 +66,7 @@ const Tab = createBottomTabNavigator();
 export default function App() {
   return (
     <NavigationContainer>
+
       <Tab.Navigator
         tabOptions={{
           style: styles.tab,

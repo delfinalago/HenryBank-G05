@@ -30,7 +30,8 @@ const styles = StyleSheet.create({
   },
   headerContainer: {},
   headerColumn: {
-    ...Platform.select({
+    alignItems: 'center',
+      ...Platform.select({
       ios: {
         alignItems: "center",
         elevation: 1,
@@ -52,7 +53,6 @@ const styles = StyleSheet.create({
     height: 170,
     marginBottom: 15,
     width: 170,
-    marginRight: 15,
   },
   userNameText: {
     color: "#FFF",
@@ -92,6 +92,13 @@ const styles = StyleSheet.create({
   button: {
     width: "50%",
   },
+  listItem: {
+    width: 250,
+  },
+  buttons: {
+    display: 'flex',
+    alignItems: "center",
+  }
 });
 
 class Contact extends Component {
@@ -116,7 +123,7 @@ class Contact extends Component {
   };
 
   onPressSetting = () => {
-    this.props.navigation.navigate("Options");
+  
   };
 
   render() {
@@ -131,14 +138,14 @@ class Contact extends Component {
             </View>
             <View style={styles.buttons}>
               <Button
-                style={styles.listItem}
+                titleStyle={styles.listItem}
                 type="outline"
                 title="Transacciones"
                 onPress={() => this.onPressSetting()}
                 containerStyle={styles.listItemContainer}
                 icon={
                   <BaseIcon
-                    containerStyle={{ backgroundColor: "#29333d" }}
+                    containerStyle={{ backgroundColor: "#29333d", marginLeft:10 }}
                     icon={{
                       type: "font-awesome",
                       name: "bank",
@@ -147,14 +154,14 @@ class Contact extends Component {
                 }
               />
               <Button
-                style={styles.listItem}
+                titleStyle={styles.listItem}
                 type="outline"
                 title="Estadisticas"
                 onPress={() => this.onPressSetting()}
                 containerStyle={styles.listItemContainer}
                 icon={
                   <BaseIcon
-                    containerStyle={{ backgroundColor: "#29333d" }}
+                    containerStyle={{ backgroundColor: "#29333d", marginLeft:15 }}
                     icon={{
                       type: "font-awesome",
                       name: "line-chart",
@@ -163,7 +170,7 @@ class Contact extends Component {
                 }
               />
               <Button
-                style={styles.listItem}
+                titleStyle={styles.listItem}
                 type="outline"
                 title="Mis productos"
                 onPress={() => this.onPressSetting()}
@@ -179,7 +186,7 @@ class Contact extends Component {
                 }
               />
               <Button
-                style={styles.listItem}
+                titleStyle={styles.listItem}
                 title="Mis datos"
                 type="outline"
                 onPress={() => this.onPressSetting()}
@@ -195,7 +202,7 @@ class Contact extends Component {
                 }
               />
               <Button
-                style={styles.listItem}
+                titleStyle={styles.listItem}
                 title="Recargar dinero"
                 type="outline"
                 onPress={() => this.onPressSetting()}
@@ -212,7 +219,7 @@ class Contact extends Component {
                 }
               />
               <Button
-                style={styles.listItem}
+                titleStyle={styles.listItem}
                 type="outline"
                 title="Enviar dinero"
                 onPress={() => this.onPressSetting()}
