@@ -11,8 +11,7 @@ import {
   ScrollView,
 } from "react-native";
 
-import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
+import Axios from "axios";
 
 export default function register() {
   const {
@@ -40,6 +39,11 @@ export default function register() {
         .required("Campo requerido"),
     }),
     onSubmit: ({ email, password, confirmpassword }) => {
+      Axios.post(`http://192.168.0.211:3000/api/registration/sendemail`, {
+        email,
+      })
+        .then((response) => console.log(response))
+        .catch((error) => console.log(error));
       alert(
         `Se ha enviado un email a su casilla de correo (${email}) para continuar con el registro`
       );
