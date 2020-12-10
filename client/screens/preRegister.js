@@ -39,14 +39,16 @@ export default function register() {
         .required("Campo requerido"),
     }),
     onSubmit: ({ email, password, confirmpassword }) => {
-      Axios.post(`http://192.168.0.211:3000/api/registration/sendemail`, {
-        email,
+      Axios.post(`http://192.168.0.46:3000/api/registration/auth`, {
+        username: email,
       })
-        .then((response) => console.log(response))
+        .then((response) => {
+          console.log(response);
+          alert(
+            `Se ha enviado un email a su casilla de correo (${email}) para continuar con el registro`
+          );
+        })
         .catch((error) => console.log(error));
-      alert(
-        `Se ha enviado un email a su casilla de correo (${email}) para continuar con el registro`
-      );
     },
   });
 
@@ -65,7 +67,6 @@ export default function register() {
 
         <Text
           style={{
-            fontFamily: "Verdana",
             fontSize: 20,
             marginHorizontal: 55,
             textAlign: "center",
@@ -93,7 +94,7 @@ export default function register() {
             paddingVertical: 2,
           }}
         />
-        {touched.email && errors.email ? <div>{errors.email}</div> : null}
+        {touched.email && errors.email ? <Text>{errors.email}</Text> : null}
 
         <TextInput
           placeholder="Contraseña"
@@ -114,7 +115,7 @@ export default function register() {
           }}
         />
         {touched.password && errors.password ? (
-          <div>{errors.password}</div>
+          <Text>{errors.password}</Text>
         ) : null}
 
         <TextInput
@@ -136,7 +137,7 @@ export default function register() {
           }}
         />
         {touched.confirmpassword && errors.confirmpassword ? (
-          <div>{errors.confirmpassword}</div>
+          <Text>{errors.confirmpassword}</Text>
         ) : null}
 
         <TouchableOpacity
