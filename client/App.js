@@ -11,7 +11,9 @@ import AppNavigator from '../client/navigation/Navigator';
 import Home from './screens/Home'
 
 const styles = StyleSheet.create({
-
+tab: {
+  marginBottom: 15
+}
 })
 
 const HomeStack = createStackNavigator()
@@ -39,11 +41,11 @@ const Tab = createBottomTabNavigator()
 export default function App() {
   return (
     <NavigationContainer>
-      <Tab.Navigator tabOptions={{
-        style: styles.tab
+      <Tab.Navigator tabBarOptions={{
+        tabStyle: styles.tab
       }}>
-        <Tab.Screen name="Home" component={HomeStackScreen} />
-        <Tab.Screen name="Profile" component={ProfileStackScreen} />
+        <Tab.Screen name="Registrarse" component={HomeStackScreen} />
+        <Tab.Screen name="Mi perfil" component={ProfileStackScreen} />
       </Tab.Navigator>
     </NavigationContainer>
   )
