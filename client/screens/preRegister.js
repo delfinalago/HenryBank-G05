@@ -13,7 +13,7 @@ import {
 
 import Axios from "axios";
 
-export default function register() {
+export default function register({ navigation }) {
   const {
     handleSubmit,
     handleChange,
@@ -39,14 +39,16 @@ export default function register() {
         .required("Campo requerido"),
     }),
     onSubmit: ({ email, password, confirmpassword }) => {
-      Axios.post(`http://192.168.0.46:3000/api/registration/auth`, {
+      Axios.post(`http://192.168.2.159:3000/api/registration/auth`, {
         username: email,
       })
         .then((response) => {
           console.log(response);
           alert(
             `Se ha enviado un email a su casilla de correo (${email}) para continuar con el registro`
+            
           );
+         navigation.navigate("Register")
         })
         .catch((error) => console.log(error));
     },
@@ -145,6 +147,7 @@ export default function register() {
           secureTextEntry={true}
           title="Register"
           onPress={handleSubmit}
+         
           style={{
             marginHorizontal: 55,
             alignItems: "center",
@@ -164,7 +167,7 @@ export default function register() {
 
 const styles = StyleSheet.create({
   scrollView: {
-    backgroundColor: "gray",
+    backgroundColor: "#fff",
   },
   text: {
     fontSize: 42,

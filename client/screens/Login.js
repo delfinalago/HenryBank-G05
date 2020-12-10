@@ -6,15 +6,7 @@ import Register from "./Register";
 import { Card, Button } from "react-native-elements";
 const background = require("../assets/Fondo1.png");
 import {
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  TouchableOpacity,
-  Form,
-  ScrollView,
-  ImageBackground,
-} from "react-native";
+  StyleSheet, Text, View, TextInput, TouchableOpacity, Form, ScrollView, ImageBackground} from "react-native";
 
 export default function Login({ navigation }) {
   const {
