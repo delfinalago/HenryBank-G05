@@ -171,8 +171,11 @@ module.exports = {
 					city,
 					nacimiento,
 				} = ctx.params;
-
-				return test;
+			   const valDir = await this.validateDirection(`${address} , ${city}`)
+			   if(!valDir){ return ("direccion invalida!")}
+				const res = await this.adapter.db.query ('INSERT INTO `client`(`name` , `lastname` , `phone` , `dni` , `address` , `province` , `city`)'+
+					`VALUES ('${name}', '${lastname}', '${phone}', '${dni}', '${address}', '${city}', '${nacimiento}');` )
+				return res;
 			},
 		},
 	},
