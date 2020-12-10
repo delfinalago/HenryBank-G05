@@ -81,6 +81,24 @@ module.exports = {
 				return test;
 			},
 		},
+		sendemail: {
+			rest: "POST /sendemail",
+
+			params: {
+				email: "string",
+			},
+			/** @param {Context} ctx  */
+			async handler(ctx) {
+
+				let response = await transporter.sendMail({
+					from: process.env.EMAIL_USER,
+					to: ctx.params.email,
+					subject: "Veski - Proceso de registro de cuenta",
+					html: `<h1>Bienvenid@ a Veski</h1>
+					<h3>Por favor hace click <a href="http://google.com">acá</a> para continuar con el proceso de registro.</h3>`,
+				});
+				return response;
+			},
 
 
 	validate:{
@@ -113,8 +131,43 @@ module.exports = {
 		},
 
 	},
+
+	auth: {
+		rest: {
+			method: "POST",
+			path: "/auth",
+			name: "mailer",
+			events: {
+				"send.mail": {
+					// Validation schema with shorthand notation
+
+					params: {
+						from: "string|optional",
+						to: "email",
+						subject: "string"
+					},
+				}
+			}
+		},
+		async handler(ctx) {
+			const username = ctx.params.username;
+			console.log(username)
+			const emailDb = await this.adapter.db.query("CALL `vali_mail`"+`('${username}')`);
+			console.log(emailDb)
+			if (emailDb.length) {
+				return "existe ....";
+			} else {
+				return ctx.call('registration.sendemail',{email: username});
+
+			}
+		},
+	},
+
+
+
+
 },
-	{
+
 
 	/**
 	 * Methods

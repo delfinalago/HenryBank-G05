@@ -4,11 +4,14 @@ import { createStackNavigator } from '@react-navigation/stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { StyleSheet, Text, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import Profile from './screens/Profile'
-import AppNavigator from '../client/navigation/Navigator';
 
 
+// Screens
 import Home from './screens/Home'
+import Login from './screens/Login';
+import Register from '../client/screens/Register';
+import Profile from './screens/Profile'
+
 
 const styles = StyleSheet.create({
 tab: {
@@ -16,11 +19,30 @@ tab: {
 }
 })
 
-const HomeStack = createStackNavigator()
-function HomeStackScreen() {
+const LoginStack = createStackNavigator()
+function LoginStackScreen() {
   return (
-    <AppNavigator/>
-  );
+    <LoginStack.Navigator
+      screenOptions={{
+        headerShown: false
+      }}
+    >
+      <LoginStack.Screen name="Login" component={Login} />
+    </LoginStack.Navigator>
+  )
+}
+
+const RegisterStack = createStackNavigator()
+function RegisterStackScreen() {
+  return (
+    <RegisterStack.Navigator
+      screenOptions={{
+        headerShown: false
+      }}
+    >
+      <RegisterStack.Screen name="Register" component={Register} />
+    </RegisterStack.Navigator>
+  )
 }
 
 const ProfileStack = createStackNavigator()
@@ -44,8 +66,13 @@ export default function App() {
       <Tab.Navigator tabBarOptions={{
         tabStyle: styles.tab
       }}>
-        <Tab.Screen name="Registrarse" component={HomeStackScreen} />
-        <Tab.Screen name="Mi perfil" component={ProfileStackScreen} />
+b.Screen name="Mi perfil" component={ProfileStackScreen} />
+
+        {/* <Tab.Screen name="Home" component={HomeStackScreen} /> */}
+        <Tab.Screen name="Login" component={LoginStackScreen} /> 
+        <Tab.Screen name="Register" component={RegisterStackScreen} />
+        <Tab.Screen name="Profile" component={ProfileStackScreen} />
+
       </Tab.Navigator>
     </NavigationContainer>
   )
