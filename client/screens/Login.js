@@ -1,9 +1,11 @@
 import React from "react";
-import logIn from "../assets/log-in.png";
+import Fondo1 from "../assets/Fondo1.png";
 import {useFormik} from 'formik'
 import * as Yup from 'yup'
 import Register from './Register';
 import { Card, Button } from "react-native-elements";
+const background = require('../assets/Fondo1.png');
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Form, ScrollView, ImageBackground  } from 'react-native';
 
 
 export default function Login({ navigation }) {
@@ -24,42 +26,142 @@ export default function Login({ navigation }) {
 
   
   return (
+    <View style={{backgroundColor:"#FFF",height:"100%"}} >
+    
     <form onSubmit={handleSubmit}>
-      <header>
-        <img width="60" src={logIn} alt="log in" />
-      </header>
-      <label htmlFor="login">Login</label>
-      <input
+
+    <Text style={{
+                flexDirection:"column",
+                fontFamily:"Verdana",
+                fontSize:33,
+                marginRight:10,
+                textAlign: 'center',
+                marginTop:10,
+                opacity:0.8,
+                color:"#0000000" 
+            }}> Email :</Text>
+      <TextInput
+        
+        placeholder="Correo"
+        placeholderTextColor="#0000000"
+        onChangeText={handleChange('login')}
         value={values.login}
         onChange={handleChange}
         onBlur={handleBlur}
         id="login"
         name="login"
         type="text"
+
+        style={{       flexDirection:"column",
+                         marginLeft:23,
+                         height: 50,
+                         color:"#0000000",
+                         alignItems:"center",
+                        
+                         borderWidth:3,
+                         marginTop:50,
+                         paddingHorizontal:10,
+                         borderColor:"#00716F",
+                         borderRadius:23,
+                         paddingVertical:2}}
+
+
       />
       {touched.login && errors.login ? (
         <div>{errors.login}</div>
       ): null}
-      <label htmlFor="password">Password</label>
-      <input
+     <Text style={{
+                flexDirection:"column",
+                fontFamily:"Verdana",
+                fontSize:30,
+                marginLeft:50,
+                marginRight:10,
+                textAlign: 'center',
+                marginTop:10,
+                opacity:0.8,
+                color:"#0000000" 
+            }}> Contraseña :</Text>
+      <TextInput
+
+        placeholder="Contraseña"
+        placeholderTextColor="#0000000"
+        onChangeText={handleChange('password')}
         value={values.password}
         onChange={handleChange}
         onBlur={handleBlur}
         id="password"
         name="password"
         type="password"
+
+        style={{         fflexDirection:"column",
+                         height: 50,
+                         color:"#000000",
+                         alignItems:"center",
+                        
+                         borderWidth:3,
+                         marginTop:50,
+                         paddingHorizontal:10,
+                         borderColor:"#00716F",
+                         borderRadius:23,
+                         paddingVertical:2}}
+
       />
       {touched.password && errors.password ? (
         <div>{errors.password}</div>
       ): null}
-      <Button type="submit">Log in</Button>
-      <Button type="submit">Log in</Button>
-      <Button
-        title="Registrarse en BANK"
-        onPress={() => navigation.navigate('Register')}
-      />
+      
+
+      <TouchableOpacity 
+                    mode='contained' secureTextEntry={true} title='' 
+                    onPress={() => navigation.navigate('Login')}
+                        style={{
+                        color: "#000000",
+                        marginHorizontal:55,
+                        alignItems:"center",
+                        justifyContent:"center",
+                        marginTop:30,
+                        marginBottom:30,
+                        backgroundColor:"#00716F",
+                        paddingVertical:10,
+                        borderRadius:23
+                    }}>
+					<Text>Ingresar</Text>
+					</TouchableOpacity> 
+      
+      <TouchableOpacity 
+                    mode='contained' secureTextEntry={true} title='' 
+                    onPress={() => navigation.navigate('Register')}
+                        style={{
+                        color: "#0000000",
+                        backgroundColor:"#FFF",
+                        marginHorizontal:55,
+                        alignItems:"center",
+                        justifyContent:"center",
+                        marginTop:30,
+                        marginBottom:30,
+                        backgroundColor:"#00716F",
+                        paddingVertical:10,
+                        borderRadius:23
+                    }}>
+					<Text>Registrarse</Text>
+					</TouchableOpacity> 
     </form>
+    
+    </View>
     
 
   );
 };
+
+const style = StyleSheet.create({
+  scrollView: {
+    backgroundColor: 'gray',
+  },
+  text: {
+    fontSize: 50,
+  },
+  image:{
+    
+    
+  }
+});

@@ -3,13 +3,13 @@
 import { useFormik} from 'formik';
 import * as Yup from 'yup';
 import React from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, ScrollView, ImageBackground  } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, ScrollView, ImageBackground, Button  } from 'react-native';
 
 import { useDispatch, useSelector } from 'react-redux';
 
 const background = require('../assets/Fondo1.png');
 
-export default function register(){
+export default function register({ navigation }){
         
 
 
@@ -42,17 +42,17 @@ export default function register(){
                 /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/,
                 "Numero de telefono no valido"
               )
-          }), onSubmit: ({name, lastname,phone}) => {
-            // alert(`name: ${name}, lasname: ${lastname}, phone: ${phone}`);
+          }), onSubmit: ({name, lastname, phone}) => {
+            console.log(values)
+            alert(`name: ${name}, lasname: ${lastname}, phone: ${phone}`);
           }
         })
           
 
     return(
 
-      
         <ScrollView style={styles.scrollView}>
-        <View style={{backgroundColor:"#FFF",height:"100%"}} >
+        <View style={{backgroundColor:"#FFF",height:"100%"}}  >
         <ImageBackground source={background} style={styles.image}>
             <Text
              style={{
@@ -77,18 +77,21 @@ export default function register(){
             >
                Complete los campos para registrarse.
             </Text>
-
+                  
                     <TextInput 
 
                          placeholder="Nombre"
                          placeholderTextColor="#fff"
                          onChangeText={handleChange('name')}
+                         onChange={handleChange}
+                         onSubmit={handleSubmit}
                          value={values.name}
+                         id="name"
+                         name="name"
 
 
                          style={{flexDirection:"row",
                          height: 50,
-                         color:"#FFF",
                          alignItems:"center",
                          marginHorizontal:55,
                          borderWidth:3,
@@ -107,6 +110,10 @@ export default function register(){
                         placeholder="Apellido"
                         placeholderTextColor="#fff"
                         onChangeText={handleChange('lastname')}
+                        onChange={handleChange}
+                        onSubmit={handleSubmit}
+                        id="lastname"
+                        name="lastname"
                         
                         value={values.lastname}
 
@@ -131,8 +138,12 @@ export default function register(){
                         placeholder="Telefono"
                         placeholderTextColor="#fff"
                         onChangeText={handleChange('phone')}
+                        onChange={handleChange}
+                        onSubmit={handleSubmit}
                         value={values.phone}
                         keyboardType='numeric'
+                        id="phone"
+                        name="phone"
 
 
                         style={{flexDirection:"row",
@@ -155,8 +166,12 @@ export default function register(){
                         placeholder="DNI"
                         placeholderTextColor="#fff"
                         onChangeText={handleChange('dni')}
+                        onChange={handleChange}
+                        onSubmit={handleSubmit}
                         value={values.dni}
                         keyboardType='numbers-and-punctuation'
+                        id="dno"
+                        name="dni"
 
 
                         style={{flexDirection:"row",
@@ -176,8 +191,11 @@ export default function register(){
                         placeholder="DD/MM/AAAA"
                         placeholderTextColor="#fff"
                         onChangeText={handleChange('nacimiento')}
+                        onChange={handleChange}
+                        onSubmit={handleSubmit}
                         value={values.nacimiento}
-                        keyboardType=''
+                        id="nacimiento"
+                        name="nacimiento"
 
 
                         style={{flexDirection:"row",
@@ -196,7 +214,11 @@ export default function register(){
                         placeholder="Direccion"
                         placeholderTextColor="#fff"
                         onChangeText={handleChange('address')}
+                        onChange={handleChange}
+                        onSubmit={handleSubmit}
                         value={values.address}
+                        id="address"
+                        name="address"
 
 
                         style={{flexDirection:"row",
@@ -215,7 +237,11 @@ export default function register(){
                         placeholder="Provincia"
                         placeholderTextColor="#fff"
                         onChangeText={handleChange('province')}
+                        onChange={handleChange}
+                        onSubmit={handleSubmit}
                         value={values.province}
+                        id="province"
+                        name="province"
 
 
                         style={{flexDirection:"row",
@@ -234,6 +260,10 @@ export default function register(){
                         placeholder="Ciudad"
                         placeholderTextColor="#fff"
                         onChangeText={handleChange('city')}
+                        onChange={handleChange}
+                        id="city"
+                        name="city"
+                        onSubmit={handleSubmit}
                         value={values.city}
 
 
@@ -254,19 +284,38 @@ export default function register(){
                     <TouchableOpacity 
                     mode='contained' secureTextEntry={true} title='Register' 
                     onPress={handleSubmit}
+                    onPress={() => navigation.navigate('Profile')}
                         style={{
                         backgroundColor:"#FFF",
                         marginHorizontal:55,
                         alignItems:"center",
                         justifyContent:"center",
                         marginTop:30,
-                        marginBottom:30,
+                        marginBottom:15,
                         backgroundColor:"#00716F",
                         paddingVertical:10,
                         borderRadius:23
                     }}>
 					<Text>Enviar</Text>
 					</TouchableOpacity> 
+          <TouchableOpacity 
+
+          title="Go back" 
+          onPress={() => navigation.goBack()}
+
+          style={{
+            backgroundColor:"#FFF",
+            marginHorizontal:55,
+            alignItems:"center",
+            justifyContent:"center",
+            marginTop:15,
+            marginBottom:30,
+            backgroundColor:"#00716F",
+            paddingVertical:10,
+            borderRadius:23
+        }}>
+          <Text>Volver</Text>
+          </TouchableOpacity>
           </ImageBackground>
         </View>
     </ScrollView>

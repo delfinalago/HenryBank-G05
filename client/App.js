@@ -65,9 +65,11 @@ export default function App() {
         style: styles.tab
       }}>
         {/* <Tab.Screen name="Home" component={HomeStackScreen} /> */}
-        <Tab.Screen name="Profile" component={ProfileStackScreen} />
+        <Tab.Screen name="Login" component={LoginStackScreen} /> 
         <Tab.Screen name="Register" component={RegisterStackScreen} />
-        <Tab.Screen name="Login" component={LoginStackScreen} />
+        <Tab.Screen name="Profile" component={ProfileStackScreen} />
+       
+        
       </Tab.Navigator>
     </NavigationContainer>
   )
