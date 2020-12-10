@@ -62,8 +62,7 @@ CREATE TABLE `client` (
   `first_name` varchar(60) NOT NULL,
   `last_name` varchar(60) NOT NULL,
   `birthdate` date NOT NULL,
-  `cellphone` int(11) NOT NULL,
-  `tipo_doc` varchar(60) NOT NULL,
+  `phone` int(11) NOT NULL,
   `dni` int(11) NOT NULL,
   `street` varchar(60) NOT NULL,
   `province` int(11) NOT NULL,
@@ -150,8 +149,6 @@ ALTER TABLE `cards`
 --
 -- Indices de la tabla `client`
 --
-ALTER TABLE `client`
-  ADD UNIQUE KEY `dni` (`dni`),
 
 
 --
@@ -208,9 +205,6 @@ ALTER TABLE `cards`
 --
 -- Filtros para la tabla `client`
 --
-ALTER TABLE `client`
-  ADD CONSTRAINT `relac` FOREIGN KEY (`first_name`) REFERENCES `user` (`username`);
-
 --
 -- Filtros para la tabla `contacts`
 --

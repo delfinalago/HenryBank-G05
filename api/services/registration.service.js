@@ -77,7 +77,7 @@ module.exports = {
 			rest: "GET /testear",
 
 			async handler() {
-				const test = await this.adapter.db.query("CALL `testear`();");
+				const test = await this.validateDni("41471665");
 				return test;
 			},
 		},
@@ -97,30 +97,6 @@ module.exports = {
 					<h3>Por favor hace click <a href="http://google.com">acá</a> para continuar con el proceso de registro.</h3>`,
 				});
 				return response;
-			},
-
-			validate: {
-				rest: {
-					method: "POST",
-					path: "/validate",
-				},
-				async handler(ctx) {
-					const birthdate = ctx.params.birthdate;
-					const year = birthdate.split("/");
-					console.log(year[0]);
-					const today = new Date();
-					const dat = today.getFullYear();
-
-					const age = dat - year[0];
-					console.log(birthdate);
-					console.log(dat);
-
-					if (age >= 16) {
-						console.log(age);
-						return "Cumple con la edad preestablecida";
-					}
-					console.log("error");
-				},
 			},
 		},
 
@@ -158,7 +134,7 @@ module.exports = {
 			},
 		},
 		user: {
-			rest: { methodo: "POST", path: "/create_users" },
+			rest: { method: "POST", path: "/create_users" },
 
 			async handler(ctx) {
 				const {
@@ -171,10 +147,27 @@ module.exports = {
 					city,
 					nacimiento,
 				} = ctx.params;
-			   const valDir = await this.validateDirection(`${address} , ${city}`)
-			   if(!valDir){ return ("direccion invalida!")}
-				const res = await this.adapter.db.query ('INSERT INTO `client`(`name` , `lastname` , `phone` , `dni` , `address` , `province` , `city`)'+
-					`VALUES ('${name}', '${lastname}', '${phone}', '${dni}', '${address}', '${city}', '${nacimiento}');` )
+				const valDni = await this.validateDni(dni);
+				if (!valDni) {
+					return {
+						error:
+							"el DNI ingresado corresponde a un usuario existente",
+					};
+				}
+				const valAge = await this.validateAge(nacimiento);
+				if (valAge) {
+					return valAge;
+				}
+				const valDir = await this.validateDirection(
+					`${address} , ${city}`
+				);
+				if (!valDir) {
+					return { error: "direccion invalida!" };
+				}
+				const res = await this.adapter.db.query(
+					"INSERT INTO `client`(`first_name` , `last_name` , `phone` , `dni` , `street` , `province` , `city`, `birthdate`)" +
+						`VALUES ('${name}', '${lastname}', '${phone}', '${dni}', '${address}', '${province}', '${city}', '${nacimiento}');`
+				);
 				return res;
 			},
 		},
@@ -197,6 +190,27 @@ module.exports = {
 						return false;
 					}
 				});
+		},
+		async validateDni(dni) {
+			const dniDb = await this.adapter.db.query(
+				`SELECT * FROM CLIENT WHERE dni = '${dni}'`
+			);
+			return !dniDb[0].length;
+		},
+		async validateAge(birthdate) {
+			const [, , year] = birthdate.split("/");
+			console.log(year);
+			const today = new Date();
+			const dat = today.getFullYear();
+
+			const age = dat - year;
+			console.log(birthdate);
+			console.log(dat);
+
+			if (age >= 16) {
+				return false;
+			}
+			return { error: "necesitas tener 16 años para registrarte" };
 		},
 	},
 
