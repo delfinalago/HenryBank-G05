@@ -21,14 +21,6 @@ SET time_zone = "+00:00";
 -- Base de datos: `veski`
 --
 
-DELIMITER $$
---
--- Procedimientos
---
-CREATE DEFINER=`root`@`localhost` PROCEDURE `vali_mail` (IN `Pusername` VARCHAR(60) CHARSET utf8mb4)  NO SQL
-select * from user where username = Pusername$$
-
-DELIMITER ;
 
 -- --------------------------------------------------------
 
