@@ -57,6 +57,7 @@ module.exports = {
 		},
 	},
 
+
 	/**
 	 * Actions
 	 */
@@ -81,24 +82,56 @@ module.exports = {
 			},
 		},
 		sendemail: {
-			rest: "GET /sendemail",
+			rest: "POST /sendemail",
 
 			params: {
-				mail: "string",
+				email: "string",
 			},
 			/** @param {Context} ctx  */
 			async handler(ctx) {
 				let response = await transporter.sendMail({
 					from: process.env.EMAIL_USER,
-					to: ctx.params.mail,
-					subject: "Veski account registration process",
-					html: `<h1>Welcome to Veski</h1>
-					<h3>Please click <a href="http://google.com">here</a> to continue your account registration process.</h3>`,
+					to: ctx.params.email,
+					subject: "Veski - Proceso de registro de cuenta",
+					html: `<h1>Bienvenid@ a Veski</h1>
+					<h3>Por favor hace click <a href="http://google.com">acá</a> para continuar con el proceso de registro.</h3>`,
 				});
 				return response;
 			},
+
+
+	validate:{
+
+		rest: {
+
+			method: "POST",
+			path: "/validate",
+
 		},
+		async handler(ctx) {
+		  const birthdate = ctx.params.birthdate;
+		  const year = birthdate.split('/')
+		  console.log ( year[0])
+		   const today = new Date();
+		   const dat = today.getFullYear();
+
+
+		  const age = dat - year[0];
+		   console.log(birthdate)
+			console.log (dat)
+
+		  if(age >= 16)  {
+			console.log (age)
+		  return "Cumple con la edad preestablecida";
+
+		   }
+		   console.log('error');
+		 },
+		},
+
 	},
+},
+	{
 
 	/**
 	 * Methods
@@ -111,4 +144,4 @@ module.exports = {
 	async afterConnected() {
 		// await this.adapter.collection.createIndex({ name: 1 });
 	},
-};
+	};
