@@ -1,10 +1,12 @@
 // ALTA USER 
-import { useFormik, Form, Field, touched } from 'formik';
+import { useFormik} from 'formik';
 import * as Yup from 'yup';
 import React from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, ScrollView, ImageBackground  } from 'react-native';
 
 import { useDispatch, useSelector } from 'react-redux';
+
+const background = require('../assets/Fondo1.png');
 
 export default function register(){
         
@@ -47,13 +49,17 @@ export default function register(){
 
     return(
 
+      
         <ScrollView style={styles.scrollView}>
-        <View style={{backgroundColor:"#FFF",height:"100%"}}>
+        <View style={{backgroundColor:"#FFF",height:"100%"}} >
+        <ImageBackground source={background} style={styles.image}>
             <Text
              style={{
-                 paddingTop: 20,
-                 fontSize:40,
+                 paddingTop: 30,
+                 fontSize:50,
                  alignSelf:"center",
+                 color: "#FFF",
+                 fontFamily:"Verdana",
              }}
             >Alta de cliente</Text>
 
@@ -63,8 +69,9 @@ export default function register(){
                 fontSize:20,
                 marginHorizontal:55,
                 textAlign:'center',
-                marginTop:5,
-                opacity:0.4
+                marginTop:10,
+                opacity:0.8,
+                color:"#FFF" 
             }}
             >
                Complete los campos para registrarse.
@@ -73,37 +80,41 @@ export default function register(){
                     <TextInput 
 
                          placeholder="Nombre"
-                         placeholderTextColor="#00716F"
+                         placeholderTextColor="#fff"
                          onChangeText={handleChange('name')}
                          value={values.name}
 
 
                          style={{flexDirection:"row",
+                         height: 50,
+                         color:"#FFF",
                          alignItems:"center",
                          marginHorizontal:55,
-                         borderWidth:2,
+                         borderWidth:3,
                          marginTop:50,
                          paddingHorizontal:10,
                          borderColor:"#00716F",
                          borderRadius:23,
                          paddingVertical:2}}
                     />
+                    
                      {touched.name && errors.name ? (
                      <div>{errors.name}</div>
                       ): null}
                     
                     <TextInput 
                         placeholder="Apellido"
-                        placeholderTextColor="#00716F"
+                        placeholderTextColor="#fff"
                         onChangeText={handleChange('lastname')}
                         
                         value={values.lastname}
 
 
                         style={{flexDirection:"row",
+                        height: 50,
                         alignItems:"center",
                         marginHorizontal:55,
-                        borderWidth:2,
+                        borderWidth:3,
                         marginTop:50,
                         paddingHorizontal:10,
                         borderColor:"#00716F",
@@ -117,17 +128,17 @@ export default function register(){
 
                     <TextInput 
                         placeholder="Telefono"
-                        placeholderTextColor="#00716F"
+                        placeholderTextColor="#fff"
                         onChangeText={handleChange('phone')}
-                        onBlur={handleBlur}
                         value={values.phone}
                         keyboardType='numeric'
 
 
                         style={{flexDirection:"row",
+                        height: 50,
                         alignItems:"center",
                         marginHorizontal:55,
-                        borderWidth:2,
+                        borderWidth:3,
                         marginTop:50,
                         paddingHorizontal:10,
                         borderColor:"#00716F",
@@ -141,16 +152,17 @@ export default function register(){
 
                     <TextInput 
                         placeholder="DNI"
-                        placeholderTextColor="#00716F"
+                        placeholderTextColor="#fff"
                         onChangeText={handleChange('dni')}
                         value={values.dni}
                         keyboardType='numbers-and-punctuation'
 
 
                         style={{flexDirection:"row",
+                        height: 50,
                         alignItems:"center",
                         marginHorizontal:55,
-                        borderWidth:2,
+                        borderWidth:3,
                         marginTop:50,
                         paddingHorizontal:10,
                         borderColor:"#00716F",
@@ -160,17 +172,18 @@ export default function register(){
 
 
                     <TextInput 
-                        placeholder="Fecha de nacimiento"
-                        placeholderTextColor="#00716F"
+                        placeholder="DD/MM/AAAA"
+                        placeholderTextColor="#fff"
                         onChangeText={handleChange('nacimiento')}
                         value={values.nacimiento}
                         keyboardType=''
 
 
                         style={{flexDirection:"row",
+                        height: 50,
                         alignItems:"center",
                         marginHorizontal:55,
-                        borderWidth:2,
+                        borderWidth:3,
                         marginTop:50,
                         paddingHorizontal:10,
                         borderColor:"#00716F",
@@ -180,15 +193,16 @@ export default function register(){
 
                     <TextInput 
                         placeholder="Direccion"
-                        placeholderTextColor="#00716F"
+                        placeholderTextColor="#fff"
                         onChangeText={handleChange('address')}
                         value={values.address}
 
 
                         style={{flexDirection:"row",
+                        height: 50,
                         alignItems:"center",
                         marginHorizontal:55,
-                        borderWidth:2,
+                        borderWidth:3,
                         marginTop:50,
                         paddingHorizontal:10,
                         borderColor:"#00716F",
@@ -198,15 +212,16 @@ export default function register(){
 
                     <TextInput 
                         placeholder="Provincia"
-                        placeholderTextColor="#00716F"
+                        placeholderTextColor="#fff"
                         onChangeText={handleChange('province')}
                         value={values.province}
 
 
                         style={{flexDirection:"row",
+                        height: 50,
                         alignItems:"center",
                         marginHorizontal:55,
-                        borderWidth:2,
+                        borderWidth:3,
                         marginTop:50,
                         paddingHorizontal:10,
                         borderColor:"#00716F",
@@ -216,15 +231,16 @@ export default function register(){
 
                     <TextInput 
                         placeholder="Ciudad"
-                        placeholderTextColor="#00716F"
+                        placeholderTextColor="#fff"
                         onChangeText={handleChange('city')}
                         value={values.city}
 
 
                         style={{flexDirection:"row",
+                        height: 50,
                         alignItems:"center",
                         marginHorizontal:55,
-                        borderWidth:2,
+                        borderWidth:3,
                         marginTop:50,
                         paddingHorizontal:10,
                         borderColor:"#00716F",
@@ -233,22 +249,27 @@ export default function register(){
                     />
 
                     
+
                     <TouchableOpacity 
                     mode='contained' secureTextEntry={true} title='Register' 
                     onPress={handleSubmit}
                         style={{
+                        backgroundColor:"#FFF",
                         marginHorizontal:55,
                         alignItems:"center",
                         justifyContent:"center",
                         marginTop:30,
+                        marginBottom:30,
                         backgroundColor:"#00716F",
                         paddingVertical:10,
                         borderRadius:23
                     }}>
-					Enviar
-					</TouchableOpacity>
+					<Text>Enviar</Text>
+					</TouchableOpacity> 
+          </ImageBackground>
         </View>
     </ScrollView>
+   
     )
 }
 
@@ -257,6 +278,10 @@ const styles = StyleSheet.create({
       backgroundColor: 'gray',
     },
     text: {
-      fontSize: 42,
+      fontSize: 50,
     },
+    image:{
+      
+      
+    }
   });
