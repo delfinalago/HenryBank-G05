@@ -89,6 +89,7 @@ module.exports = {
 			},
 			/** @param {Context} ctx  */
 			async handler(ctx) {
+
 				let response = await transporter.sendMail({
 					from: process.env.EMAIL_USER,
 					to: ctx.params.email,
@@ -130,8 +131,43 @@ module.exports = {
 		},
 
 	},
+
+	auth: {
+		rest: {
+			method: "POST",
+			path: "/auth",
+			name: "mailer",
+			events: {
+				"send.mail": {
+					// Validation schema with shorthand notation
+
+					params: {
+						from: "string|optional",
+						to: "email",
+						subject: "string"
+					},
+				}
+			}
+		},
+		async handler(ctx) {
+			const username = ctx.params.username;
+			console.log(username)
+			const emailDb = await this.adapter.db.query("CALL `vali_mail`"+`('${username}')`);
+			console.log(emailDb)
+			if (emailDb.length) {
+				return "existe ....";
+			} else {
+				return ctx.call('registration.sendemail',{email: username});
+
+			}
+		},
+	},
+
+
+
+
 },
-	{
+
 
 	/**
 	 * Methods

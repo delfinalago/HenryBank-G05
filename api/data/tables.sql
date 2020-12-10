@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 09-12-2020 a las 21:35:48
+-- Tiempo de generación: 10-12-2020 a las 04:03:23
 -- Versión del servidor: 10.4.14-MariaDB
 -- Versión de PHP: 7.2.34
 
@@ -21,6 +21,15 @@ SET time_zone = "+00:00";
 -- Base de datos: `veski`
 --
 
+DELIMITER $$
+--
+-- Procedimientos
+--
+CREATE DEFINER=`root`@`localhost` PROCEDURE `vali_mail` (IN `Pusername` VARCHAR(60) CHARSET utf8mb4)  NO SQL
+select * from user where username = Pusername$$
+
+DELIMITER ;
+
 -- --------------------------------------------------------
 
 --
@@ -36,7 +45,6 @@ CREATE TABLE `accounts` (
 
 -- --------------------------------------------------------
 
---
 -- Estructura de tabla para la tabla `addresses`
 --
 
@@ -141,6 +149,13 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
+-- Volcado de datos para la tabla `user`
+--
+
+INSERT INTO `user` (`id_user`, `username`, `password1`, `password2`) VALUES
+(2, 'mat@mat.com', '1515', '1515');
+
+--
 -- Índices para tablas volcadas
 --
 
@@ -169,7 +184,9 @@ ALTER TABLE `cards`
 --
 ALTER TABLE `client`
   ADD PRIMARY KEY (`id_cli`),
-  ADD UNIQUE KEY `id_adr` (`id_adr`);
+  ADD UNIQUE KEY `id_adr` (`id_adr`),
+  ADD UNIQUE KEY `dni` (`dni`),
+  ADD KEY `relac` (`first_name`);
 
 --
 -- Indices de la tabla `contacts`
@@ -232,7 +249,8 @@ ALTER TABLE `cards`
 -- Filtros para la tabla `client`
 --
 ALTER TABLE `client`
-  ADD CONSTRAINT `direcc` FOREIGN KEY (`id_adr`) REFERENCES `client` (`id_cli`);
+  ADD CONSTRAINT `direcc` FOREIGN KEY (`id_adr`) REFERENCES `client` (`id_cli`),
+  ADD CONSTRAINT `relac` FOREIGN KEY (`first_name`) REFERENCES `user` (`username`);
 
 --
 -- Filtros para la tabla `contacts`
@@ -245,12 +263,6 @@ ALTER TABLE `contacts`
 --
 ALTER TABLE `transactions`
   ADD CONSTRAINT `transaction_ibfk_1` FOREIGN KEY (`id_tr`) REFERENCES `accounts` (`cvu`);
-
---
--- Filtros para la tabla `user`
---
-ALTER TABLE `user`
-  ADD CONSTRAINT `userLog` FOREIGN KEY (`id_user`) REFERENCES `client` (`id_cli`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
