@@ -39,16 +39,15 @@ export default function register({ navigation }) {
         .required("Campo requerido"),
     }),
     onSubmit: ({ email, password, confirmpassword }) => {
-      Axios.post(`http://192.168.2.159:3000/api/registration/auth`, {
+      Axios.post(`http://192.168.0.211:3000/api/registration/auth`, {
         username: email,
       })
         .then((response) => {
           console.log(response);
           alert(
             `Se ha enviado un email a su casilla de correo (${email}) para continuar con el registro`
-            
           );
-         navigation.navigate("Register")
+          navigation.navigate("Register");
         })
         .catch((error) => console.log(error));
     },
@@ -147,7 +146,6 @@ export default function register({ navigation }) {
           secureTextEntry={true}
           title="Register"
           onPress={handleSubmit}
-         
           style={{
             marginHorizontal: 55,
             alignItems: "center",
