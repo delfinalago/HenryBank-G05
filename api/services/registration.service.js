@@ -152,9 +152,9 @@ module.exports = {
 		async handler(ctx) {
 			const username = ctx.params.username;
 			console.log(username)
-			const emailDb = await this.adapter.db.query("CALL `vali_mail`"+`('${username}')`);
+			const emailDb = await this.adapter.db.query(`SELECT * FROM USER WHERE username = '${username}'`);
 			console.log(emailDb)
-			if (emailDb.length) {
+			if (emailDb[0].length) {
 				return "existe ....";
 			} else {
 				return ctx.call('registration.sendemail',{email: username});
@@ -162,7 +162,20 @@ module.exports = {
 			}
 		},
 	},
+     user:{
+		  rest :{ methodo: "POST",
+		           path : "/create_users"
+		},
 
+		async handler(ctx) {
+			const { name , lastname , phone , dni , address , province , city ,nacimiento }=ctx.params
+
+
+
+			return test;
+		},
+
+	 }
 
 
 
