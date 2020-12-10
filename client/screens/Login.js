@@ -2,15 +2,12 @@ import React from "react";
 import logIn from "../assets/log-in.png";
 import {useFormik} from 'formik'
 import * as Yup from 'yup'
-import register from './Register'
+import Register from './Register';
+import { Card, Button } from "react-native-elements";
 
 
-export default function Login() {
+export default function Login({ navigation }) {
     
-//     register = () => {
-//     this.props.navigation.navigate("Register")
-//   }
-
   const {handleSubmit, handleChange, values, touched, errors, handleBlur} = useFormik({
     initialValues: {
       login: '',
@@ -55,8 +52,12 @@ export default function Login() {
       {touched.password && errors.password ? (
         <div>{errors.password}</div>
       ): null}
-      <button type="submit">Log in</button>
-      <button>Registrarse en BANK</button>
+      <Button type="submit">Log in</Button>
+      <Button type="submit">Log in</Button>
+      <Button
+        title="Registrarse en BANK"
+        onPress={() => navigation.navigate('Register')}
+      />
     </form>
     
 

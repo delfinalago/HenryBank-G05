@@ -1,3 +1,4 @@
+
 // ALTA USER 
 import { useFormik} from 'formik';
 import * as Yup from 'yup';
@@ -42,7 +43,7 @@ export default function register(){
                 "Numero de telefono no valido"
               )
           }), onSubmit: ({name, lastname,phone}) => {
-            alert(`name: ${name}, lasname: ${lastname}, phone: ${phone}`);
+            // alert(`name: ${name}, lasname: ${lastname}, phone: ${phone}`);
           }
         })
           
