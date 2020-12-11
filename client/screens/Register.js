@@ -57,7 +57,7 @@ export default function register({ navigation }) {
       console.log("register params: ", values);
       alert(`name: ${name}, lasname: ${lastname}, phone: ${phone}`);
       Axios.post(
-        `http://192.168.0.211:3000/api/registration/create_users`,
+        `http://192.168.2.159:3000/api/registration/create_users`,
         values
       )
         .then(({ data }) => {

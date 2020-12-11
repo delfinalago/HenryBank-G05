@@ -24,7 +24,7 @@ module.exports = {
 	 * Mixins
 	 */
 	mixins: [DbService],
-	adapter: new SqlAdapter("veski", "root", "", {
+	adapter: new SqlAdapter("veski", "root", "Rocco", {
 		host: "127.0.0.1",
 		dialect: "mysql",
 	}),
@@ -121,7 +121,7 @@ module.exports = {
 				const username = ctx.params.username;
 				console.log(username);
 				const emailDb = await this.adapter.db.query(
-					`SELECT * FROM USER WHERE username = '${username}'`
+					`SELECT * FROM \`user\` WHERE username = '${username}'`
 				);
 				console.log(emailDb);
 				if (emailDb[0].length) {
@@ -165,8 +165,8 @@ module.exports = {
 					return { error: "direccion invalida!" };
 				}
 				const res = await this.adapter.db.query(
-					"INSERT INTO `client`(`first_name` , `last_name` , `phone` , `dni` , `street` , `province` , `city`, `birthdate`)" +
-						`VALUES ('${name}', '${lastname}', '${phone}', '${dni}', '${address}', '${province}', '${city}', '${nacimiento}');`
+					"INSERT INTO `client`(`first_name` , `last_name` , `phone` , `dni` , `street` , `province` , `city`, `birthdate`, `postalcode`)" +
+						`VALUES ('${name}', '${lastname}', '${phone}', '${dni}', '${address}', '${province}', '${city}', '${nacimiento}', 34);`
 				);
 				return res;
 			},
@@ -193,7 +193,7 @@ module.exports = {
 		},
 		async validateDni(dni) {
 			const dniDb = await this.adapter.db.query(
-				`SELECT * FROM CLIENT WHERE dni = '${dni}'`
+				`SELECT * FROM \`client\` WHERE dni = '${dni}'`
 			);
 			return !dniDb[0].length;
 		},

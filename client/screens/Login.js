@@ -35,14 +35,16 @@ export default function Login({ navigation }) {
   });
 
   return (
-    <View style={{ backgroundColor: "#FFF", height: "100%" }}>
+    <ScrollView >
+    <View style={{  height: "100%" }}>
+      <ImageBackground source={background} >
       <Text
         style={{
           flexDirection: "column",
-          fontSize: 33,
+          fontSize: 35,
           marginRight: 10,
           textAlign: "center",
-          marginTop: 10,
+          marginTop: 35,
           opacity: 0.8,
           color: "#000000",
         }}
@@ -62,14 +64,15 @@ export default function Login({ navigation }) {
         type="text"
         style={{
           flexDirection: "column",
-          marginLeft: 23,
+          marginRight:20,
+          marginLeft:20,
           height: 50,
           color: "#000000",
           alignItems: "center",
-
           borderWidth: 3,
           marginTop: 50,
           paddingHorizontal: 10,
+
           borderColor: "#00716F",
           borderRadius: 23,
           paddingVertical: 2,
@@ -79,11 +82,11 @@ export default function Login({ navigation }) {
       <Text
         style={{
           flexDirection: "column",
-          fontSize: 30,
+          fontSize: 35,
           marginLeft: 50,
           marginRight: 10,
           textAlign: "center",
-          marginTop: 10,
+          marginTop: 35,
           opacity: 0.8,
           color: "#000000",
         }}
@@ -106,7 +109,8 @@ export default function Login({ navigation }) {
           height: 50,
           color: "#000000",
           alignItems: "center",
-
+          marginRight:20,
+          marginLeft:20,
           borderWidth: 3,
           marginTop: 50,
           paddingHorizontal: 10,
@@ -138,7 +142,9 @@ export default function Login({ navigation }) {
       >
         <Text>Registrarse</Text>
       </TouchableOpacity>
+      </ImageBackground>
     </View>
+    </ScrollView>
   );
 }
 

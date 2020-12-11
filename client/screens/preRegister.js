@@ -39,7 +39,7 @@ export default function register({ navigation }) {
         .required("Campo requerido"),
     }),
     onSubmit: ({ email, password, confirmpassword }) => {
-      Axios.post(`http://192.168.0.211:3000/api/registration/auth`, {
+      Axios.post(`http://192.168.2.159:3000/api/registration/auth`, {
         username: email,
       })
         .then((response) => {
