@@ -62,27 +62,54 @@ module.exports = {
 	 * Actions
 	 */
 	actions: {
+		saldoARG: {
+			//esta acción mantiene el estado del saldo de la cuenta en pesos de forma actualizada.
+			rest: { method: "GET", path: "/saldoarg" },
+			async handler(ctx) {
+				const id = ctx.params.id_client;
+				const saldo = await this.adapter.db
+					.query(
+						`SELECT balance FROM accounts WHERE id_client = '${id}'`
+					)
+					.then((e) => e[0][0])
+					.then((e) => Object.values(e))
+					.then((e) => e[0]);
+				const balance = saldo;
+				console.log(balance);
+				//devuelve saldo actualizado
+				return saldo;
+			},
+		},
 		recarga: {
 			rest: { method: "PUT", path: "/accountarg" },
 			async handler(ctx) {
-				
-				const destiny= ctx.params.destiny;
-				const amount= ctx.params.amount;
+				const summary = ctx.params.amount;
+				const amount = parseInt(summary)
+				const destiny = ctx.params.destiny;
 
 				const saldoActual = await this.adapter.db
 					.query(
 						`SELECT balance + '${amount}' FROM accounts WHERE id_client ='${destiny}' `
 					)
-					.then(e => e[0][0])
-					.then(e => Object.values(e))
-					.then(e=>e[0])
-					.then(e=>
-						this.adapter.db
-					.query(
-						`UPDATE accounts SET balance = '${e}' WHERE id_client ='${destiny}' `
+					.then((e) => e[0][0])
+					.then((e) => Object.values(e))
+					.then((e) => e[0])
+					.then((e) =>
+						this.adapter.db.query(
+							`UPDATE accounts SET balance = '${e}' WHERE id_client ='${destiny}' `
+						)
 					)
-						);
-					//devolver saldo actual
+					.then((e) =>
+						this.adapter.db.query(
+							`SELECT balance FROM accounts WHERE id_client = '${destiny}'`
+						)
+					)
+					.then((e) => e[0][0])
+					.then((e) => Object.values(e))
+					.then((e) => e[0]);
+
+				//devolver saldo actual
+				return saldoActual;
 			},
 		},
 	},
