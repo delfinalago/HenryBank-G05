@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 10-12-2020 a las 04:03:23
+-- Tiempo de generación: 10-12-2020 a las 17:50:05
 -- Versión del servidor: 10.4.14-MariaDB
 -- Versión de PHP: 7.2.34
 
@@ -21,15 +21,6 @@ SET time_zone = "+00:00";
 -- Base de datos: `veski`
 --
 
-DELIMITER $$
---
--- Procedimientos
---
-CREATE DEFINER=`root`@`localhost` PROCEDURE `vali_mail` (IN `Pusername` VARCHAR(60) CHARSET utf8mb4)  NO SQL
-select * from user where username = Pusername$$
-
-DELIMITER ;
-
 -- --------------------------------------------------------
 
 --
@@ -42,26 +33,6 @@ CREATE TABLE `accounts` (
   `cvu` int(11) NOT NULL,
   `summary` int(60) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
--- Estructura de tabla para la tabla `addresses`
---
-
-CREATE TABLE `addresses` (
-  `id_add` int(60) NOT NULL,
-  `street` varchar(60) NOT NULL,
-  `postalCode` int(60) NOT NULL,
-  `province` varchar(60) NOT NULL,
-  `city` varchar(60) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Volcado de datos para la tabla `addresses`
---
-
-INSERT INTO `addresses` (`id_add`, `street`, `postalCode`, `province`, `city`) VALUES
-(1, 'sas', 123, 'asd', 'qwed');
 
 -- --------------------------------------------------------
 
@@ -87,14 +58,16 @@ CREATE TABLE `cards` (
 --
 
 CREATE TABLE `client` (
-  `id_cli` int(11) NOT NULL,
+  `id_cli` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `first_name` varchar(60) NOT NULL,
   `last_name` varchar(60) NOT NULL,
   `birthdate` date NOT NULL,
-  `cellphone` int(11) NOT NULL,
-  `id_adr` int(11) NOT NULL,
-  `tipo_doc` varchar(60) NOT NULL,
-  `dni` int(11) NOT NULL
+  `phone` int(11) NOT NULL,
+  `dni` int(11) NOT NULL,
+  `street` varchar(60) NOT NULL,
+  `province` int(11) NOT NULL,
+  `city` varchar(60) NOT NULL,
+  `postalcode` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -168,12 +141,6 @@ ALTER TABLE `accounts`
   ADD KEY `user-cuent` (`associateacount`);
 
 --
--- Indices de la tabla `addresses`
---
-ALTER TABLE `addresses`
-  ADD PRIMARY KEY (`id_add`);
-
---
 -- Indices de la tabla `cards`
 --
 ALTER TABLE `cards`
@@ -182,11 +149,7 @@ ALTER TABLE `cards`
 --
 -- Indices de la tabla `client`
 --
-ALTER TABLE `client`
-  ADD PRIMARY KEY (`id_cli`),
-  ADD UNIQUE KEY `id_adr` (`id_adr`),
-  ADD UNIQUE KEY `dni` (`dni`),
-  ADD KEY `relac` (`first_name`);
+
 
 --
 -- Indices de la tabla `contacts`
@@ -218,12 +181,6 @@ ALTER TABLE `user`
 --
 
 --
--- AUTO_INCREMENT de la tabla `addresses`
---
-ALTER TABLE `addresses`
-  MODIFY `id_add` int(60) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
 -- AUTO_INCREMENT de la tabla `models`
 --
 ALTER TABLE `models`
@@ -248,10 +205,6 @@ ALTER TABLE `cards`
 --
 -- Filtros para la tabla `client`
 --
-ALTER TABLE `client`
-  ADD CONSTRAINT `direcc` FOREIGN KEY (`id_adr`) REFERENCES `client` (`id_cli`),
-  ADD CONSTRAINT `relac` FOREIGN KEY (`first_name`) REFERENCES `user` (`username`);
-
 --
 -- Filtros para la tabla `contacts`
 --
