@@ -74,42 +74,35 @@ module.exports = {
 					.then((e) => e[0][0])
 					.then((e) => Object.values(e))
 					.then((e) => e[0]);
-				const balance = saldo;
-				console.log(balance);
+				const balance = parseInt(saldo);
 				//devuelve saldo actualizado
-				return saldo;
+				return balance;
 			},
 		},
 		recarga: {
 			rest: { method: "PUT", path: "/accountarg" },
 			async handler(ctx) {
-				const summary = ctx.params.amount;
-				const amount = parseInt(summary)
+				const amount = parseInt(ctx.params.amount);
+
 				const destiny = ctx.params.destiny;
 
-				const saldoActual = await this.adapter.db
-					.query(
-						`SELECT balance + '${amount}' FROM accounts WHERE id_client ='${destiny}' `
-					)
-					.then((e) => e[0][0])
-					.then((e) => Object.values(e))
-					.then((e) => e[0])
+				ctx.call("accounts.saldoARG", {
+					id_client: destiny,
+				})
+					.then((e) => {
+						const newAmount = e + amount;
+						return newAmount;
+					})
 					.then((e) =>
 						this.adapter.db.query(
 							`UPDATE accounts SET balance = '${e}' WHERE id_client ='${destiny}' `
 						)
-					)
-					.then((e) =>
-						this.adapter.db.query(
-							`SELECT balance FROM accounts WHERE id_client = '${destiny}'`
-						)
-					)
-					.then((e) => e[0][0])
-					.then((e) => Object.values(e))
-					.then((e) => e[0]);
+					);
 
 				//devolver saldo actual
-				return saldoActual;
+				return ctx.call("accounts.saldoARG", {
+					id_client: destiny,
+				});
 			},
 		},
 	},
