@@ -17,7 +17,7 @@ const transporter = nodemailer.createTransport({
  */
 
 module.exports = {
-	name: "transaction",
+	name: "accounts",
 	// version: 1
 
 	/**
@@ -62,17 +62,6 @@ module.exports = {
 	 * Actions
 	 */
 	actions: {
-		/**
-		 * The "moleculer-db" mixin registers the following actions:
-		 *  - list
-		 *  - find
-		 *  - count
-		 *  - create
-		 *  - insert
-		 *  - update
-		 *  - remove
-		 */
-
 		testear: {
 			rest: "GET /testear",
 
@@ -81,14 +70,26 @@ module.exports = {
 				return test;
 			},
 		},
+		saldoARG: {
+			//esta acción mantiene el estado del saldo de la cuenta en pesos de forma actualizada.
+			rest: { method: "GET", path: "/saldoarg" },
+			async handler(ctx) {
+				const id=ctx.params.id_client;
+				const saldo = await this.adapter.db.query(
+					`SELECT balance FROM accounts WHERE id_client = '${id}'`
+				).then((e)=>e[0][0]).then((e)=>e.balance);
+				const balance= saldo;
+				console.log(balance)
+				//devuelve saldo actualizado
+				return saldo;
+			},
+		},
 	},
 
 	/**
 	 * Methods
 	 */
-	methods: {
-		
-	},
+	methods: {},
 
 	/**
 	 * Fired after database connection establishing.
