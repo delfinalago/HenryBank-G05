@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.3
+-- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 12-12-2020 a las 00:43:43
--- Versión del servidor: 10.4.14-MariaDB
--- Versión de PHP: 7.2.34
+-- Tiempo de generación: 12-12-2020 a las 04:55:28
+-- Versión del servidor: 10.4.17-MariaDB
+-- Versión de PHP: 8.0.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -36,6 +36,13 @@ CREATE TABLE `accounts` (
   `balance` int(60) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Volcado de datos para la tabla `accounts`
+--
+
+INSERT INTO `accounts` (`id`, `numClient`, `id_client`, `associateacount`, `cvu`, `balance`) VALUES
+(1, 1, 1, 12345678, 2147483647, 100000);
+
 -- --------------------------------------------------------
 
 --
@@ -53,6 +60,14 @@ CREATE TABLE `cards` (
   `expirationdate` date NOT NULL,
   `id_acc` int(8) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `cards`
+--
+
+INSERT INTO `cards` (`id`, `first_name`, `last_name`, `cardtype`, `bankname`, `number`, `securitycode`, `expirationdate`, `id_acc`) VALUES
+(1, 'veski', 'veski', '', '', 0, NULL, '0000-00-00', 0),
+(1, 'a', 'a', 'a', 'a', 123456789, NULL, '2020-12-01', 1);
 
 -- --------------------------------------------------------
 
@@ -75,6 +90,13 @@ CREATE TABLE `client` (
   `city` varchar(60) NOT NULL,
   `postalcode` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `client`
+--
+
+INSERT INTO `client` (`id`, `username`, `password`, `first_name`, `last_name`, `birthdate`, `cellphone`, `tipo_doc`, `dni`, `street`, `province`, `city`, `postalcode`) VALUES
+(1, 'usernameveski', '1', 'veski', 'veski', '2020-12-01', 123, '123', 1, 'avenida siempreviva', 'bsas', 'argentina', 1234);
 
 -- --------------------------------------------------------
 
@@ -104,6 +126,13 @@ CREATE TABLE `transactions` (
   `origin` int(60) NOT NULL,
   `destiny` int(8) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `transactions`
+--
+
+INSERT INTO `transactions` (`id`, `state`, `type`, `description`, `amount`, `origin`, `destiny`) VALUES
+(1, 1, 'a', 'a', 1, 1, 1);
 
 --
 -- Índices para tablas volcadas
@@ -152,7 +181,7 @@ ALTER TABLE `transactions`
 -- AUTO_INCREMENT de la tabla `transactions`
 --
 ALTER TABLE `transactions`
-  MODIFY `id` int(60) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(60) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Restricciones para tablas volcadas

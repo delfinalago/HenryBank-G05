@@ -4,6 +4,7 @@ const DbService = require("moleculer-db");
 const SqlAdapter = require("moleculer-db-adapter-sequelize");
 const nodemailer = require("nodemailer");
 const axios = require("axios");
+const { MoleculerRetryableError } = require("moleculer").Errors;
 const transporter = nodemailer.createTransport({
 	service: "gmail",
 	auth: {
@@ -71,9 +72,10 @@ module.exports = {
 					.query(
 						`SELECT balance FROM accounts WHERE id_client = '${id}'`
 					)
-					.then((e) => e[0][0])
-					.then((e) => Object.values(e))
-					.then((e) => e[0]);
+					.then((e) => Object.values(e[0][0])[0])
+					
+					.catch((err) => err);
+
 				const balance = parseInt(saldo);
 				//devuelve saldo actualizado
 				return balance;
@@ -86,9 +88,10 @@ module.exports = {
 
 				const destiny = ctx.params.destiny;
 
-				ctx.call("accounts.saldoARG", {
-					id_client: destiny,
-				})
+				await ctx
+					.call("accounts.saldoARG", {
+						id_client: destiny,
+					})
 					.then((e) => {
 						const newAmount = e + amount;
 						return newAmount;
@@ -97,7 +100,9 @@ module.exports = {
 						this.adapter.db.query(
 							`UPDATE accounts SET balance = '${e}' WHERE id_client ='${destiny}' `
 						)
-					);
+					)
+					
+					.catch((err) => err);
 
 				//devolver saldo actual
 				return ctx.call("accounts.saldoARG", {
