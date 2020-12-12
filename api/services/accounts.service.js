@@ -62,15 +62,29 @@ module.exports = {
 	 * Actions
 	 */
 	actions: {
-		testear: {
-			rest: "GET /testear",
+		recarga: {
+			rest: { method: "PUT", path: "/accountarg" },
+			async handler(ctx) {
+				
+				const destiny= ctx.params.destiny;
+				const amount= ctx.params.amount;
 
-			async handler() {
-				const test = await this.validateDni("41471665");
-				return test;
+				const saldoActual = await this.adapter.db
+					.query(
+						`SELECT balance + '${amount}' FROM accounts WHERE id_client ='${destiny}' `
+					)
+					.then(e => e[0][0])
+					.then(e => Object.values(e))
+					.then(e=>e[0])
+					.then(e=>
+						this.adapter.db
+					.query(
+						`UPDATE accounts SET balance = '${e}' WHERE id_client ='${destiny}' `
+					)
+						);
+					//devolver saldo actual
 			},
 		},
-		
 	},
 
 	/**
