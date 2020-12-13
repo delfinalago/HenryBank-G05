@@ -94,7 +94,7 @@ module.exports = {
 					to: ctx.params.email,
 					subject: "Veski - Proceso de registro de cuenta",
 					html: `<h1>Bienvenid@ a Veski</h1>
-					<h3>Por favor hace click <a href="http://google.com">acá</a> para continuar con el proceso de registro.</h3>`,
+					<h3>Por favor hace click <a href="intent:#Intent;scheme=veskiapp://register;package=com.veski.app;end">acá</a> para continuar con el proceso de registro.</h3>`,
 				});
 				return response;
 			},

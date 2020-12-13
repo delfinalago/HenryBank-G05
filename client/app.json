@@ -35,7 +35,8 @@
             "DEFAULT"
           ]
         }
-      ]
+      ],
+      "package": "com.veski.app"
     },
     "web": {
       "favicon": "./assets/favicon.png"
