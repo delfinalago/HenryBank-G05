@@ -28,7 +28,9 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `accounts` (
-  `id_acc` int(60) NOT NULL,
+  `id` int(8) NOT NULL,
+  `numClient` int(8) NOT NULL,
+  `id_client` int(8) NOT NULL,
   `associateacount` int(60) NOT NULL,
   `cvu` int(11) NOT NULL,
   `summary` int(60) NOT NULL
@@ -41,14 +43,15 @@ CREATE TABLE `accounts` (
 --
 
 CREATE TABLE `cards` (
-  `id_card` int(60) NOT NULL,
+  `id` int(8) NOT NULL,
   `first_name` varchar(60) NOT NULL,
   `last_name` varchar(60) NOT NULL,
-  `cardname` varchar(60) NOT NULL,
+  `cardtype` varchar(50) NOT NULL,
   `bankname` varchar(60) NOT NULL,
-  `number` int(60) NOT NULL,
-  `securitycode` varchar(60) NOT NULL,
-  `expirationdate` varchar(60) NOT NULL
+  `number` int(15) NOT NULL,
+  `securitycode` int(8) DEFAULT NULL,
+  `expirationdate` date NOT NULL,
+  `id_acc` int(8) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -77,21 +80,10 @@ CREATE TABLE `client` (
 --
 
 CREATE TABLE `contacts` (
+  `id` int(8) NOT NULL,
   `id_contact` int(60) NOT NULL,
-  `username` varchar(60) NOT NULL,
-  `numberphone` int(60) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `models`
---
-
-CREATE TABLE `models` (
-  `id` int(11) NOT NULL,
-  `createdAt` datetime NOT NULL,
-  `updatedAt` datetime NOT NULL
+  `alias` varchar(60) NOT NULL,
+  `id_cli` int(8) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -101,32 +93,14 @@ CREATE TABLE `models` (
 --
 
 CREATE TABLE `transactions` (
-  `id_tr` int(60) NOT NULL,
+  `id` int(60) NOT NULL,
   `state` int(60) NOT NULL,
   `type` varchar(60) NOT NULL,
   `description` varchar(60) NOT NULL,
-  `amount` int(60) NOT NULL
+  `amount` int(60) NOT NULL,
+  `origin` int(60) NOT NULL,
+  `destiny` int(8) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `user`
---
-
-CREATE TABLE `user` (
-  `id_user` int(11) NOT NULL,
-  `username` varchar(60) NOT NULL,
-  `password1` varchar(60) NOT NULL,
-  `password2` varchar(60) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Volcado de datos para la tabla `user`
---
-
-INSERT INTO `user` (`id_user`, `username`, `password1`, `password2`) VALUES
-(2, 'mat@mat.com', '1515', '1515');
 
 --
 -- Índices para tablas volcadas
@@ -144,37 +118,27 @@ ALTER TABLE `accounts`
 -- Indices de la tabla `cards`
 --
 ALTER TABLE `cards`
-  ADD PRIMARY KEY (`number`);
+  ADD PRIMARY KEY (`number`),
+  ADD UNIQUE KEY `id_acc` (`id_acc`);
 
 --
 -- Indices de la tabla `client`
 --
 
-
 --
 -- Indices de la tabla `contacts`
 --
 ALTER TABLE `contacts`
-  ADD PRIMARY KEY (`id_contact`);
-
---
--- Indices de la tabla `models`
---
-ALTER TABLE `models`
-  ADD PRIMARY KEY (`id`);
+  ADD UNIQUE KEY `id_contact` (`id_contact`,`id_cli`),
+  ADD KEY `cli-cli` (`id_cli`);
 
 --
 -- Indices de la tabla `transactions`
 --
 ALTER TABLE `transactions`
-  ADD PRIMARY KEY (`id_tr`);
-
---
--- Indices de la tabla `user`
---
-ALTER TABLE `user`
-  ADD PRIMARY KEY (`id_user`),
-  ADD UNIQUE KEY `username` (`username`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `origin` (`origin`,`destiny`),
+  ADD KEY `acc-transd` (`destiny`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -194,13 +158,8 @@ ALTER TABLE `models`
 -- Filtros para la tabla `accounts`
 --
 ALTER TABLE `accounts`
-  ADD CONSTRAINT `user-cuent` FOREIGN KEY (`associateacount`) REFERENCES `client` (`id_cli`);
-
---
--- Filtros para la tabla `cards`
---
-ALTER TABLE `cards`
-  ADD CONSTRAINT `card_ibfk_1` FOREIGN KEY (`number`) REFERENCES `accounts` (`cvu`);
+  ADD CONSTRAINT `acc-tarj` FOREIGN KEY (`id`) REFERENCES `cards` (`id_acc`),
+  ADD CONSTRAINT `acc-trans` FOREIGN KEY (`id`) REFERENCES `transactions` (`origin`);
 
 --
 -- Filtros para la tabla `client`
@@ -209,13 +168,14 @@ ALTER TABLE `cards`
 -- Filtros para la tabla `contacts`
 --
 ALTER TABLE `contacts`
-  ADD CONSTRAINT `contact_ibfk_1` FOREIGN KEY (`id_contact`) REFERENCES `client` (`id_cli`);
+  ADD CONSTRAINT `cli-cli` FOREIGN KEY (`id_cli`) REFERENCES `client` (`id`),
+  ADD CONSTRAINT `cont-cli` FOREIGN KEY (`id_contact`) REFERENCES `client` (`id`);
 
 --
 -- Filtros para la tabla `transactions`
 --
 ALTER TABLE `transactions`
-  ADD CONSTRAINT `transaction_ibfk_1` FOREIGN KEY (`id_tr`) REFERENCES `accounts` (`cvu`);
+  ADD CONSTRAINT `acc-transd` FOREIGN KEY (`destiny`) REFERENCES `transactions` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
