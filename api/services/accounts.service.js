@@ -63,7 +63,6 @@ module.exports = {
 	 * Actions
 	 */
 	actions: {
-
 		recarga: {
 			rest: { method: "PUT", path: "/accountarg" },
 			async handler(ctx) {
@@ -84,7 +83,7 @@ module.exports = {
 							`UPDATE accounts SET balance = '${e}' WHERE id_client ='${destiny}' `
 						)
 					)
-					
+
 					.catch((err) => err);
 
 				//devolver saldo actual

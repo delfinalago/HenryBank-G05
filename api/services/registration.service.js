@@ -15,7 +15,7 @@ const transporter = nodemailer.createTransport({
 //Authentication
 const { ServiceBroker } = require("moleculer");
 const broker = new ServiceBroker({
-    validator: true // Default is true
+	validator: true, // Default is true
 });
 
 /* ================================================================================================================== */
