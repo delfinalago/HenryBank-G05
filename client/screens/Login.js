@@ -15,7 +15,6 @@ export default function Login({ navigation }) {
     values,
     touched,
     errors,
-    handleBlur,
   } = useFormik({
     initialValues: {
       login: "",
@@ -23,7 +22,7 @@ export default function Login({ navigation }) {
     },
     validationSchema: Yup.object({
       login: Yup.string()
-        .max(10, "Login must be shorter than 10 characters")
+        .max(50, "Login must be shorter than 50 characters")
         .required("Required"),
       password: Yup.string()
         .min(6, "Password should be longer than 6 characters")
@@ -38,17 +37,7 @@ export default function Login({ navigation }) {
     <ScrollView >
     <View style={{  height: "100%" }}>
       <ImageBackground source={background} >
-      <Text
-        style={{
-          flexDirection: "column",
-          fontSize: 35,
-          marginRight: 10,
-          textAlign: "center",
-          marginTop: 35,
-          opacity: 0.8,
-          color: "#000000",
-        }}
-      >
+      <Text style={styles.correo} >
         {" "}
         Email :
       </Text>
@@ -58,39 +47,11 @@ export default function Login({ navigation }) {
         onChangeText={handleChange("login")}
         value={values.login}
         onChange={handleChange}
-        onBlur={handleBlur}
-        id="login"
-        name="login"
         type="text"
-        style={{
-          flexDirection: "column",
-          marginRight:20,
-          marginLeft:20,
-          height: 50,
-          color: "#000000",
-          alignItems: "center",
-          borderWidth: 3,
-          marginTop: 50,
-          paddingHorizontal: 10,
-
-          borderColor: "#00716F",
-          borderRadius: 23,
-          paddingVertical: 2,
-        }}
-      />
+        style={styles.input}/>
       {touched.login && errors.login ? <div>{errors.login}</div> : null}
       <Text
-        style={{
-          flexDirection: "column",
-          fontSize: 35,
-          marginLeft: 50,
-          marginRight: 10,
-          textAlign: "center",
-          marginTop: 35,
-          opacity: 0.8,
-          color: "#000000",
-        }}
-      >
+        style={styles.password}>
         {" "}
         Contraseña :
       </Text>
@@ -100,25 +61,8 @@ export default function Login({ navigation }) {
         onChangeText={handleChange("password")}
         value={values.password}
         onChange={handleChange}
-        onBlur={handleBlur}
-        id="password"
-        name="password"
         type="password"
-        style={{
-          flexDirection: "column",
-          height: 50,
-          color: "#000000",
-          alignItems: "center",
-          marginRight:20,
-          marginLeft:20,
-          borderWidth: 3,
-          marginTop: 50,
-          paddingHorizontal: 10,
-          borderColor: "#00716F",
-          borderRadius: 23,
-          paddingVertical: 2,
-        }}
-      />
+        style={styles.input}/>
       {touched.password && errors.password ? (
         <div>{errors.password}</div>
       ) : null}
@@ -127,8 +71,7 @@ export default function Login({ navigation }) {
         mode="contained"
         secureTextEntry={true}
         title=""
-        onPress={() => navigation.navigate("Login")}
-        style={style.touchable}
+        style={styles.touchable}
       >
         <Text>Ingresar</Text>
       </TouchableOpacity>
@@ -138,7 +81,7 @@ export default function Login({ navigation }) {
         secureTextEntry={true}
         title=""
         onPress={() => navigation.navigate("PreRegister")}
-        style={style.touchable}
+        style={styles.touchable}
       >
         <Text>Registrarse</Text>
       </TouchableOpacity>
@@ -148,7 +91,7 @@ export default function Login({ navigation }) {
   );
 }
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
   scrollView: {
     backgroundColor: "gray",
   },
@@ -166,4 +109,37 @@ const style = StyleSheet.create({
     paddingVertical: 10,
     borderRadius: 23,
   },
+  correo: {
+    flexDirection: "column",
+    fontSize: 35,
+    marginRight: 10,
+    textAlign: "center",
+    marginTop: 35,
+    opacity: 0.8,
+    color: "#000000",
+  },
+  input:{
+    flexDirection: "column",
+    marginRight:20,
+    marginLeft:20,
+    height: 50,
+    color: "#000000",
+    alignItems: "center",
+    borderWidth: 3,
+    marginTop: 50,
+    paddingHorizontal: 10,
+    borderColor: "#00716F",
+    borderRadius: 23,
+    paddingVertical: 2,
+  },
+  password: {
+    flexDirection: "column",
+    fontSize: 35,
+    marginLeft: 50,
+    marginRight: 10,
+    textAlign: "center",
+    marginTop: 35,
+    opacity: 0.8,
+    color: "#000000",
+  }
 });

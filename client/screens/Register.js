@@ -24,8 +24,7 @@ export default function register({ navigation }) {
     handleChange,
     values,
     touched,
-    errors,
-    handleBlur,
+    errors
   } = useFormik({
     initialValues: {
       name: "",
@@ -33,6 +32,7 @@ export default function register({ navigation }) {
       phone: "",
       dni: "",
       address: "",
+      postalcode: "",
       province: "",
       city: "",
       nacimiento: "",
@@ -56,10 +56,9 @@ export default function register({ navigation }) {
     onSubmit: ({ name, lastname, phone }) => {
       console.log("register params: ", values);
       alert(`name: ${name}, lasname: ${lastname}, phone: ${phone}`);
-      Axios.post(
-        `http://192.168.2.159:3000/api/registration/create_users`,
+      Axios.post(`http://192.168.2.159:3000/api/registration/create_users`,
         values
-      )
+        )
         .then(({ data }) => {
           if (data.error) {
             alert(data.error);
@@ -76,29 +75,11 @@ export default function register({ navigation }) {
     <ScrollView style={styles.scrollView}>
       <View style={{ backgroundColor: "#FFF", height: "100%" }}>
         <ImageBackground source={background} style={styles.image}>
-          <Text
-            style={{
-              paddingTop: 30,
-              fontSize: 50,
-              alignSelf: "center",
-              color: "#FFF",
-              fontFamily: "Verdana",
-            }}
-          >
+          <Text style={styles.title}>
             Alta de cliente
           </Text>
 
-          <Text
-            style={{
-              fontFamily: "Verdana",
-              fontSize: 20,
-              marginHorizontal: 55,
-              textAlign: "center",
-              marginTop: 10,
-              opacity: 0.8,
-              color: "#FFF",
-            }}
-          >
+          <Text style={styles.subtitle}>
             Complete los campos para registrarse.
           </Text>
 
@@ -111,18 +92,7 @@ export default function register({ navigation }) {
             value={values.name}
             id="name"
             name="name"
-            style={{
-              flexDirection: "row",
-              height: 50,
-              alignItems: "center",
-              marginHorizontal: 55,
-              borderWidth: 3,
-              marginTop: 50,
-              paddingHorizontal: 10,
-              borderColor: "#00716F",
-              borderRadius: 23,
-              paddingVertical: 2,
-            }}
+            style={styles.input}
           />
 
           {touched.name && errors.name ? <div>{errors.name}</div> : null}
@@ -136,18 +106,7 @@ export default function register({ navigation }) {
             id="lastname"
             name="lastname"
             value={values.lastname}
-            style={{
-              flexDirection: "row",
-              height: 50,
-              alignItems: "center",
-              marginHorizontal: 55,
-              borderWidth: 3,
-              marginTop: 50,
-              paddingHorizontal: 10,
-              borderColor: "#00716F",
-              borderRadius: 23,
-              paddingVertical: 2,
-            }}
+            style={styles.input}
           />
           {touched.lastname && errors.lastname ? (
             <div>{errors.lastname}</div>
@@ -163,18 +122,7 @@ export default function register({ navigation }) {
             keyboardType="numeric"
             id="phone"
             name="phone"
-            style={{
-              flexDirection: "row",
-              height: 50,
-              alignItems: "center",
-              marginHorizontal: 55,
-              borderWidth: 3,
-              marginTop: 50,
-              paddingHorizontal: 10,
-              borderColor: "#00716F",
-              borderRadius: 23,
-              paddingVertical: 2,
-            }}
+            style={styles.input}
           />
           {touched.phone && errors.phone ? <div>{errors.phone}</div> : null}
 
@@ -188,18 +136,7 @@ export default function register({ navigation }) {
             keyboardType="numbers-and-punctuation"
             id="dno"
             name="dni"
-            style={{
-              flexDirection: "row",
-              height: 50,
-              alignItems: "center",
-              marginHorizontal: 55,
-              borderWidth: 3,
-              marginTop: 50,
-              paddingHorizontal: 10,
-              borderColor: "#00716F",
-              borderRadius: 23,
-              paddingVertical: 2,
-            }}
+            style={styles.input}
           />
 
           <TextInput
@@ -211,18 +148,7 @@ export default function register({ navigation }) {
             value={values.nacimiento}
             id="nacimiento"
             name="nacimiento"
-            style={{
-              flexDirection: "row",
-              height: 50,
-              alignItems: "center",
-              marginHorizontal: 55,
-              borderWidth: 3,
-              marginTop: 50,
-              paddingHorizontal: 10,
-              borderColor: "#00716F",
-              borderRadius: 23,
-              paddingVertical: 2,
-            }}
+            style={styles.input}
           />
 
           <TextInput
@@ -234,18 +160,19 @@ export default function register({ navigation }) {
             value={values.address}
             id="address"
             name="address"
-            style={{
-              flexDirection: "row",
-              height: 50,
-              alignItems: "center",
-              marginHorizontal: 55,
-              borderWidth: 3,
-              marginTop: 50,
-              paddingHorizontal: 10,
-              borderColor: "#00716F",
-              borderRadius: 23,
-              paddingVertical: 2,
-            }}
+            style={styles.input}
+          />
+
+          <TextInput
+            placeholder="Codigo Postal"
+            placeholderTextColor="#fff"
+            onChangeText={handleChange("postalcode")}
+            onChange={handleChange}
+            onSubmit={handleSubmit}
+            value={values.postalcode}
+            id="postalcode"
+            name="postalcode"
+            style={styles.input}
           />
 
           <TextInput
@@ -257,18 +184,7 @@ export default function register({ navigation }) {
             value={values.province}
             id="province"
             name="province"
-            style={{
-              flexDirection: "row",
-              height: 50,
-              alignItems: "center",
-              marginHorizontal: 55,
-              borderWidth: 3,
-              marginTop: 50,
-              paddingHorizontal: 10,
-              borderColor: "#00716F",
-              borderRadius: 23,
-              paddingVertical: 2,
-            }}
+            style={styles.input}
           />
 
           <TextInput
@@ -280,18 +196,7 @@ export default function register({ navigation }) {
             name="city"
             onSubmit={handleSubmit}
             value={values.city}
-            style={{
-              flexDirection: "row",
-              height: 50,
-              alignItems: "center",
-              marginHorizontal: 55,
-              borderWidth: 3,
-              marginTop: 50,
-              paddingHorizontal: 10,
-              borderColor: "#00716F",
-              borderRadius: 23,
-              paddingVertical: 2,
-            }}
+            style={styles.input}
           />
 
           <TouchableOpacity
@@ -299,34 +204,14 @@ export default function register({ navigation }) {
             secureTextEntry={true}
             title="Register"
             onPress={handleSubmit}
-            style={{
-              backgroundColor: "#FFF",
-              marginHorizontal: 55,
-              alignItems: "center",
-              justifyContent: "center",
-              marginTop: 30,
-              marginBottom: 15,
-              backgroundColor: "#00716F",
-              paddingVertical: 10,
-              borderRadius: 23,
-            }}
+            style={styles.boton}
           >
             <Text>Enviar</Text>
           </TouchableOpacity>
           <TouchableOpacity
             title="Go back"
             onPress={() => navigation.goBack()}
-            style={{
-              backgroundColor: "#FFF",
-              marginHorizontal: 55,
-              alignItems: "center",
-              justifyContent: "center",
-              marginTop: 15,
-              marginBottom: 30,
-              backgroundColor: "#00716F",
-              paddingVertical: 10,
-              borderRadius: 23,
-            }}
+            style={styles.boton}
           >
             <Text>Volver</Text>
           </TouchableOpacity>
@@ -338,10 +223,48 @@ export default function register({ navigation }) {
 
 const styles = StyleSheet.create({
   scrollView: {
-    backgroundColor: "gray",
+    backgroundColor: "#fff",
   },
   text: {
     fontSize: 50,
   },
-  image: {},
+  input: {
+    flexDirection: "row",
+    height: 50,
+    alignItems: "center",
+    marginHorizontal: 55,
+    borderWidth: 3,
+    marginTop: 50,
+    paddingHorizontal: 10,
+    borderColor: "#00716F",
+    borderRadius: 23,
+    paddingVertical: 2,
+  },
+  boton: {
+    backgroundColor: "#FFF",
+    marginHorizontal: 55,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 30,
+    marginBottom: 15,
+    backgroundColor: "#00716F",
+    paddingVertical: 10,
+    borderRadius: 23,
+  },
+  title: {
+    paddingTop: 30,
+    fontSize: 50,
+    alignSelf: "center",
+    color: "#FFF",
+    fontFamily: "Verdana",
+  },
+  subtitle: {
+    fontFamily: "Verdana",
+    fontSize: 20,
+    marginHorizontal: 55,
+    textAlign: "center",
+    marginTop: 10,
+    opacity: 0.8,
+    color: "#FFF",
+  }
 });
