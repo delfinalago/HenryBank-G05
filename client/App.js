@@ -74,7 +74,7 @@ export default function App() {
       >
         {/* <Tab.Screen name="Home" component={HomeStackScreen} /> */}
         <Tab.Screen name="Login" component={LoginStackScreen} />
-        {/* <Tab.Screen name="Register" component={RegisterStackScreen} /> */}
+        <Tab.Screen name="Register" component={RegisterStackScreen} />
         <Tab.Screen name="Profile" component={ProfileStackScreen} />
       </Tab.Navigator>
     </NavigationContainer>

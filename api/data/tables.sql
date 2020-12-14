@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 12-12-2020 a las 00:43:43
+-- Tiempo de generación: 10-12-2020 a las 17:50:05
 -- Versión del servidor: 10.4.14-MariaDB
 -- Versión de PHP: 7.2.34
 
@@ -33,7 +33,7 @@ CREATE TABLE `accounts` (
   `id_client` int(8) NOT NULL,
   `associateacount` int(60) NOT NULL,
   `cvu` int(11) NOT NULL,
-  `balance` int(60) NOT NULL
+  `summary` int(60) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -61,17 +61,14 @@ CREATE TABLE `cards` (
 --
 
 CREATE TABLE `client` (
-  `id` int(11) NOT NULL,
-  `username` varchar(60) NOT NULL,
-  `password` varchar(60) NOT NULL,
+  `id_cli` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `first_name` varchar(60) NOT NULL,
   `last_name` varchar(60) NOT NULL,
   `birthdate` date NOT NULL,
-  `cellphone` int(11) NOT NULL,
-  `tipo_doc` varchar(60) NOT NULL,
+  `phone` int(11) NOT NULL,
   `dni` int(11) NOT NULL,
   `street` varchar(60) NOT NULL,
-  `province` varchar(50) NOT NULL,
+  `province` int(11) NOT NULL,
   `city` varchar(60) NOT NULL,
   `postalcode` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -113,8 +110,9 @@ CREATE TABLE `transactions` (
 -- Indices de la tabla `accounts`
 --
 ALTER TABLE `accounts`
-  ADD UNIQUE KEY `id_client` (`id_client`),
-  ADD UNIQUE KEY `id` (`id`);
+  ADD PRIMARY KEY (`id_acc`),
+  ADD UNIQUE KEY `cvu` (`cvu`),
+  ADD KEY `user-cuent` (`associateacount`);
 
 --
 -- Indices de la tabla `cards`
@@ -126,8 +124,6 @@ ALTER TABLE `cards`
 --
 -- Indices de la tabla `client`
 --
-ALTER TABLE `client`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `contacts`
@@ -149,10 +145,10 @@ ALTER TABLE `transactions`
 --
 
 --
--- AUTO_INCREMENT de la tabla `transactions`
+-- AUTO_INCREMENT de la tabla `models`
 --
-ALTER TABLE `transactions`
-  MODIFY `id` int(60) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `models`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Restricciones para tablas volcadas
@@ -168,9 +164,6 @@ ALTER TABLE `accounts`
 --
 -- Filtros para la tabla `client`
 --
-ALTER TABLE `client`
-  ADD CONSTRAINT `cli-acc` FOREIGN KEY (`id`) REFERENCES `accounts` (`id_client`);
-
 --
 -- Filtros para la tabla `contacts`
 --

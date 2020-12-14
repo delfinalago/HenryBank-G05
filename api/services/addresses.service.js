@@ -19,7 +19,7 @@ module.exports = {
 		host: "127.0.0.1",
 		dialect: "mysql",
 	}),
-	model: { name: "addresses" },
+	model: {},
 
 	/**
 	 * Settings
@@ -70,6 +70,18 @@ module.exports = {
 			async handler() {
 				const test = await this.adapter.db.query("CALL `testear`();");
 				return test;
+			},
+		},
+
+		agregar: {
+			rest: "POST /agregar",
+			async handler(ctx) {
+				const { street, postalCode, province, city } = ctx.params;
+				const res = await this.adapter.db.query(
+					"INSERT INTO `addresses` (`street`, `postalCode`, `province`, `city`)" +
+						`VALUES ('${name}', '${lastname}', '${phone}', '${dni}', '${address}', '${city}', '${nacimiento}');`
+				);
+				return res;
 			},
 		},
 	},
