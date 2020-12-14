@@ -74,14 +74,18 @@ module.exports = {
 			//esta acción mantiene el estado del saldo de la cuenta en pesos de forma actualizada.
 			rest: { method: "GET", path: "/saldoarg" },
 			async handler(ctx) {
-				const id=ctx.params.id_client;
-				const saldo = await this.adapter.db.query(
-					`SELECT balance FROM accounts WHERE id_client = '${id}'`
-				).then((e)=>e[0][0]).then((e)=>e.balance);
-				const balance= saldo;
-				console.log(balance)
+				const id = ctx.params.id_client;
+				const saldo = await this.adapter.db
+					.query(
+						`SELECT balance FROM accounts WHERE id_client = '${id}'`
+					)
+					.then((e) => Object.values(e[0][0])[0])
+
+					.catch((err) => err);
+
+				const balance = parseInt(saldo);
 				//devuelve saldo actualizado
-				return saldo;
+				return balance;
 			},
 		},
 	},
