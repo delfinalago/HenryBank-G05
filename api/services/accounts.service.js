@@ -63,24 +63,7 @@ module.exports = {
 	 * Actions
 	 */
 	actions: {
-		saldoARG: {
-			//esta acción mantiene el estado del saldo de la cuenta en pesos de forma actualizada.
-			rest: { method: "GET", path: "/saldoarg" },
-			async handler(ctx) {
-				const id = ctx.params.id_client;
-				const saldo = await this.adapter.db
-					.query(
-						`SELECT balance FROM accounts WHERE id_client = '${id}'`
-					)
-					.then((e) => Object.values(e[0][0])[0])
-					
-					.catch((err) => err);
 
-				const balance = parseInt(saldo);
-				//devuelve saldo actualizado
-				return balance;
-			},
-		},
 		recarga: {
 			rest: { method: "PUT", path: "/accountarg" },
 			async handler(ctx) {
