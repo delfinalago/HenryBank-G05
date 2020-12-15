@@ -15,7 +15,7 @@ import {
 
 import { useDispatch, useSelector } from "react-redux";
 import Axios from "axios";
-
+import { API } from "../env.js";
 const background = require("../assets/Fondo1.png");
 
 export default function register({ navigation }) {
@@ -56,10 +56,7 @@ export default function register({ navigation }) {
     onSubmit: ({ name, lastname, phone }) => {
       console.log("register params: ", values);
       alert(`name: ${name}, lasname: ${lastname}, phone: ${phone}`);
-      Axios.post(
-        `http://192.168.0.211:3000/api/registration/create_users`,
-        values
-      )
+      Axios.post(`${API}/api/registration/create_users`, values)
         .then(({ data }) => {
           if (data.error) {
             alert(data.error);
@@ -82,7 +79,6 @@ export default function register({ navigation }) {
               fontSize: 50,
               alignSelf: "center",
               color: "#FFF",
-              fontFamily: "Verdana",
             }}
           >
             Alta de cliente
@@ -90,7 +86,6 @@ export default function register({ navigation }) {
 
           <Text
             style={{
-              fontFamily: "Verdana",
               fontSize: 20,
               marginHorizontal: 55,
               textAlign: "center",

@@ -12,13 +12,13 @@ import Login from "./screens/Login";
 import Register from "../client/screens/Register";
 import Profile from "./screens/Profile";
 import PreRegister from "./screens/preRegister";
+import PreRegisterToken from "./screens/preRegisterToken";
 
 const styles = StyleSheet.create({
-tab: {
-  marginBottom: 15
-}
-})
-
+  tab: {
+    marginBottom: 15,
+  },
+});
 
 const LoginStack = createStackNavigator();
 function LoginStackScreen() {
@@ -30,6 +30,7 @@ function LoginStackScreen() {
     >
       <LoginStack.Screen name="Login" component={Login} />
       <LoginStack.Screen name="PreRegister" component={PreRegister} />
+      <LoginStack.Screen name="PreRegisterToken" component={PreRegisterToken} />
       <LoginStack.Screen name="Register" component={Register} />
     </LoginStack.Navigator>
   );
@@ -66,7 +67,6 @@ const Tab = createBottomTabNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-
       <Tab.Navigator
         tabOptions={{
           style: styles.tab,
@@ -76,6 +76,7 @@ export default function App() {
         <Tab.Screen name="Login" component={LoginStackScreen} />
         <Tab.Screen name="Register" component={RegisterStackScreen} />
         <Tab.Screen name="Profile" component={ProfileStackScreen} />
+        {/* <Tab.Screen name="Token" component={PreRegisterToken} /> */}
       </Tab.Navigator>
     </NavigationContainer>
   );
