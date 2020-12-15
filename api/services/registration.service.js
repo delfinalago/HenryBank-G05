@@ -1,4 +1,4 @@
-"use strict";
+// "use strict";
 
 const DbService = require("moleculer-db");
 const SqlAdapter = require("moleculer-db-adapter-sequelize");
@@ -83,18 +83,14 @@ module.exports = {
 		},
 		sendemail: {
 			rest: "POST /sendemail",
-
-			params: {
-				email: "string",
-			},
-			/** @param {Context} ctx  */
 			async handler(ctx) {
 				let response = await transporter.sendMail({
 					from: process.env.EMAIL_USER,
-					to: ctx.params.email,
+					to: ctx.params.values.email,
 					subject: "Veski - Proceso de registro de cuenta",
 					html: `<h1>Bienvenid@ a Veski</h1>
-					<h3>Por favor hace click <a href="http://google.com">acá</a> para continuar con el proceso de registro.</h3>`,
+					<h3>Por favor ingresá en tu app Veski el siguiente código para continuar con el proceso de registro.</h3>
+					<h2>${ctx.params.values.token}</h2>`,
 				});
 				return response;
 			},
@@ -118,8 +114,7 @@ module.exports = {
 				},
 			},
 			async handler(ctx) {
-				const username = ctx.params.username;
-				console.log(username);
+				const username = ctx.params.values.email;
 				const emailDb = await this.adapter.db.query(
 					`SELECT * FROM USER WHERE username = '${username}'`
 				);
@@ -127,9 +122,7 @@ module.exports = {
 				if (emailDb[0].length) {
 					return "existe ....";
 				} else {
-					return ctx.call("registration.sendemail", {
-						email: username,
-					});
+					return ctx.call("registration.sendemail", ctx.params);
 				}
 			},
 		},
