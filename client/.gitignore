@@ -14,3 +14,6 @@ web-build/
 # Dependency directories
 jspm_packages/
 package-lock.json
+
+#entorno
+env.js
