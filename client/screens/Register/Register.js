@@ -15,7 +15,7 @@ import {
 
 import { useDispatch, useSelector } from "react-redux";
 import Axios from "axios";
-import { API } from "../env.js";
+import { API } from "../../env.js";
 const background = require("../assets/Fondo1.png");
 
 export default function register({ navigation }) {

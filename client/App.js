@@ -9,10 +9,10 @@ import { StatusBar } from "expo-status-bar";
 
 import Home from "./screens/Home";
 import Login from "./screens/Login";
-import Register from "../client/screens/Register";
+import Register from "./screens/Register/Register";
 import Profile from "./screens/Profile";
-import PreRegister from "./screens/preRegister";
-import PreRegisterToken from "./screens/preRegisterToken";
+import PreRegister from "./screens/Register/preRegister";
+import PreRegisterToken from "./screens/Register/preRegisterToken";
 
 const styles = StyleSheet.create({
   tab: {

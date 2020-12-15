@@ -13,7 +13,7 @@ import {
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Axios from "axios";
-import { API } from "../env.js";
+import { API } from "../../env.js";
 
 const randomNum = () => {
   return Math.floor(Math.random() * 999999 - 100000) + 100000;
