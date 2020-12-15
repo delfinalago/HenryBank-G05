@@ -4,7 +4,7 @@ const DbService = require("moleculer-db");
 const SqlAdapter = require("moleculer-db-adapter-sequelize");
 const nodemailer = require("nodemailer");
 const axios = require("axios");
-const { MoleculerRetryableError } = require("moleculer").Errors;
+
 const transporter = nodemailer.createTransport({
 	service: "gmail",
 	auth: {
@@ -63,7 +63,36 @@ module.exports = {
 	 * Actions
 	 */
 	actions: {
-		recarga: {
+
+		testear: {
+			rest: "GET /testear",
+
+			async handler() {
+				const test = await this.validateDni("41471665");
+				return test;
+			},
+		},
+    
+		saldoARG: {
+			//esta acción mantiene el estado del saldo de la cuenta en pesos de forma actualizada.
+			rest: { method: "GET", path: "/saldoarg" },
+			async handler(ctx) {
+				const id = ctx.params.id_client;
+				const saldo = await this.adapter.db
+					.query(
+						`SELECT balance FROM accounts WHERE id_client = '${id}'`
+					)
+					.then((e) => Object.values(e[0][0])[0])
+
+					.catch((err) => console.log(err));
+
+				const balance = parseInt(saldo);
+				//devuelve saldo actualizado
+				return balance;
+			},
+		},
+    
+    recarga: {
 			rest: { method: "PUT", path: "/accountarg" },
 			async handler(ctx) {
 				const amount = parseInt(ctx.params.amount);
@@ -84,14 +113,12 @@ module.exports = {
 						)
 					)
 
-					.catch((err) => err);
+					.catch((err) => console.log(err));
 
 				//devolver saldo actual
 				return ctx.call("accounts.saldoARG", {
 					id_client: destiny,
 				});
-			},
-		},
 	},
 
 	/**

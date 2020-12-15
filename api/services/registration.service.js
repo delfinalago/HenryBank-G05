@@ -4,6 +4,7 @@ const DbService = require("moleculer-db");
 const SqlAdapter = require("moleculer-db-adapter-sequelize");
 const nodemailer = require("nodemailer");
 const axios = require("axios");
+const crypto = require ("crypto")
 const transporter = nodemailer.createTransport({
 	service: "gmail",
 	auth: {
@@ -134,6 +135,8 @@ module.exports = {
 
 			async handler(ctx) {
 				const {
+					username,
+					password,
 					name,
 					lastname,
 					phone,
@@ -141,7 +144,7 @@ module.exports = {
 					address,
 					province,
 					city,
-					nacimiento,
+					nacimiento
 				} = ctx.params;
 				const valDni = await this.validateDni(dni);
 				if (!valDni) {
@@ -160,11 +163,17 @@ module.exports = {
 				if (!valDir) {
 					return { error: "direccion invalida!" };
 				}
+
 				const res = await this.adapter.db.query(
-					"INSERT INTO `client`(`first_name` , `last_name` , `phone` , `dni` , `street` , `province` , `city`, `birthdate`)" +
-						`VALUES ('${name}', '${lastname}', '${phone}', '${dni}', '${address}', '${province}', '${city}', '${nacimiento}');`
+					"INSERT INTO `client`(`first_name` , `last_name` , `cellphone` , `dni` , `street` , `province` , `city`, `birthdate`, `username` , `password` )" +
+						`VALUES ('${name}', '${lastname}', '${phone}', '${dni}', '${address}', '${province}', '${city}', '${nacimiento}' , '${username}' , '${password}' );`
+
 				);
-				return res;
+				const genHash=await this.generateHash(dni);
+				console.log (genHash)
+
+
+                return res;
 			},
 		},
 	},
@@ -207,6 +216,15 @@ module.exports = {
 				return false;
 			}
 			return { error: "necesitas tener 16 años para registrarte" };
+		},
+
+
+		generateHash(dni) {
+
+		const numRam = crypto.createHash ('sha256').digest('hex');
+		 // aplicamos crypto con Gime y mati//
+		 this.adapter.db.query(`UPDATE client SET numClient = '${numRam}' WHERE dni ='${dni}'`)
+		   return ;
 		},
 	},
 
