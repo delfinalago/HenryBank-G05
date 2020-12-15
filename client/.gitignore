@@ -13,6 +13,7 @@ web-build/
 .DS_Store
 # Dependency directories
 jspm_packages/
+
 package-lock.json
 
 #entorno
