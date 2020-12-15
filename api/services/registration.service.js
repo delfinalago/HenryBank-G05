@@ -165,12 +165,14 @@ module.exports = {
 					return { error: "direccion invalida!" };
 				}
 				const res = await this.adapter.db.query(
-					"INSERT INTO `client`(`first_name` , `last_name` , `phone` , `dni` , `street` , `province` , `city`, `birthdate`)" +
+					"INSERT INTO `client`(`first_name` , `last_name` , `cellphone` , `dni` , `street` , `province` , `city`, `birthdate`)" +
 						`VALUES ('${name}', '${lastname}', '${phone}', '${dni}', '${address}', '${province}', '${city}', '${nacimiento}');`
 				);
 				return res;
 			},
 		},
+
+		
 	},
 
 	/**
