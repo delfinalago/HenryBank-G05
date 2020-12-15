@@ -79,7 +79,6 @@ export default function register({ navigation }) {
               fontSize: 50,
               alignSelf: "center",
               color: "#FFF",
-              fontFamily: "Verdana",
             }}
           >
             Alta de cliente
@@ -87,7 +86,6 @@ export default function register({ navigation }) {
 
           <Text
             style={{
-              fontFamily: "Verdana",
               fontSize: 20,
               marginHorizontal: 55,
               textAlign: "center",
