@@ -20,19 +20,6 @@ const randomNum = () => {
 };
 
 export default function preRegister({ navigation }) {
-  const handlePrueba = async () => {
-    try {
-      const value = await AsyncStorage.getItem("@localUserStore");
-      if (value !== null) {
-        // We have data!!
-        console.log(value);
-      } else {
-        console.log("No hay nada");
-      }
-    } catch (error) {
-      // Error retrieving data
-    }
-  };
   const {
     handleSubmit,
     handleChange,
