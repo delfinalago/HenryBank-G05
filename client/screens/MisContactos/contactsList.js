@@ -10,49 +10,74 @@ import {
   TextInput,
   FlatList,
 } from 'react-native'
-import * as Contacts from 'expo-contacts';
+import { Card, ListItem, Button, Icon,Avatar } from 'react-native-elements'
 
-const DATA = [
+
+const list = [
   {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    nombre: 'First Item',
-    correo: "pepe.lopez@gmail.com"
+    name: 'Amy Farha',
+    avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
+    subtitle: 'Vice President'
   },
   {
-    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-    nombre: 'Second Item',
-    correo: "Rocco.loco@gmail.com"
+    name: 'Chris Jackson',
+    avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
+    subtitle: 'Vice Chairman'
   },
   {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    nombre: 'Third Item',
-    correo: "circe@gmail.com"
+    name: 'Rocco',
+    avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
+    subtitle: 'loco'
+  },
+  {
+    name: 'Circe',
+    avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
+    subtitle: 'Lago'
   },
 ];
 
 
 
-
 export default function contactos({ navigation }) {
+
  
     
       return ( 
-      <View style={{ flex: 1}}>
-        <SafeAreaView style={styles.fondo}/>
+        <ScrollView style={styles.fondo}>
+         <View style={{ flex: 1}}>
+        <SafeAreaView />
             <TextInput
             placeholder= "Search"
             placeholderTextColor= "#dddddd"
             style={styles.input}
             />
          <View style={{flex:1, backgroundColor: "#fff"}}>
-        
-          <Text style={styles.contacts} >Contacts</Text>
-
-       
-
-
+          <Card>
+           <Card.Title style={styles.contacts}>MIS CONTACTOS</Card.Title>
+           <Card.Divider/>
+           <Button type="outline"  title="Agregar Contacto" style={styles.boton}  onPress={() => navigation.navigate("addContact")}/>
+           <Card.Divider/>
+            {
+          list.map((u, i) => {
+          return ( 
+          <View key={i}>
+          <TouchableOpacity onPress={() => navigation.navigate("editContact")}>
+          <ListItem
+          key={i}
+          roundAvatar
+          title={u.name}
+          leftAvatar={{ source: { uri: 'https://media.istockphoto.com/vectors/vector-of-cute-dog-head-cartoon-character-for-avatar-icon-or-symbol-vector-id1189777293' } }}
+          />
+         </TouchableOpacity>
+          
+        </View>
+      );
+    })
+  }
+</Card>
           </View>
         </View>
+        </ScrollView>
        
       );
 }
@@ -74,9 +99,7 @@ const styles = StyleSheet.create({
         padding: 10,
         color: "#000000",
         borderBottomWidth: 0.5,
-        borderBottomColor: "#7d90a0"
-
-        
+        borderBottomColor: "#7d90a0"  
     },
     containers: {
       flex: 1,
@@ -93,9 +116,16 @@ const styles = StyleSheet.create({
       fontSize: 32,
     },
     contacts: {
-      marginTop: 15,
-      fontSize: 30,
-      color: "#000000",
+      marginTop: 5,
+      fontSize: 20,
+      color: "#00aae4",
       alignSelf: "center"
+    },
+    boton: {
+      marginBottom: 5,
+      flex : "row",
+      color:"#03bb85",
+      alignSelf: "flex-end",
+      backgroundColor: "#fff",
     }
   });
