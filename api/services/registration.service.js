@@ -1,5 +1,5 @@
 "use strict";
-
+//Moleculer_DB
 const DbService = require("moleculer-db");
 const SqlAdapter = require("moleculer-db-adapter-sequelize");
 const nodemailer = require("nodemailer");
@@ -12,6 +12,14 @@ const transporter = nodemailer.createTransport({
 		pass: process.env.EMAIL_PASSWORD,
 	},
 });
+
+//Authentication
+const { ServiceBroker } = require("moleculer");
+const broker = new ServiceBroker({
+	validator: true, // Default is true
+});
+
+/* ================================================================================================================== */
 
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
@@ -54,7 +62,7 @@ module.exports = {
 			},
 
 			testear() {
-				console.log("aca toy broder");
+				console.log("aca registration.service");
 			},
 		},
 	},
@@ -105,18 +113,6 @@ module.exports = {
 			rest: {
 				method: "POST",
 				path: "/auth",
-				name: "mailer",
-				events: {
-					"send.mail": {
-						// Validation schema with shorthand notation
-
-						params: {
-							from: "string|optional",
-							to: "email",
-							subject: "string",
-						},
-					},
-				},
 			},
 			async handler(ctx) {
 				const username = ctx.params.username;
