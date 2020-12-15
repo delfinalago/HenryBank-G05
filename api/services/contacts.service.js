@@ -149,7 +149,7 @@ module.exports = {
                 async handler(ctx) {    
 
                     const contact = ctx.params.id_contact;
-			   const modcontact = await this.adapter.db.query(
+			   const deleteContact = await this.adapter.db.query(
 
 					`DELETE FROM contacts WHERE id_contact ='${contact}' `
 					
