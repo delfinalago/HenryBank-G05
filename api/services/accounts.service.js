@@ -63,7 +63,6 @@ module.exports = {
 	 * Actions
 	 */
 	actions: {
-
 		testear: {
 			rest: "GET /testear",
 
@@ -72,7 +71,7 @@ module.exports = {
 				return test;
 			},
 		},
-    
+
 		saldoARG: {
 			//esta acción mantiene el estado del saldo de la cuenta en pesos de forma actualizada.
 			rest: { method: "GET", path: "/saldoarg" },
@@ -91,8 +90,8 @@ module.exports = {
 				return balance;
 			},
 		},
-    
-    recarga: {
+
+		recarga: {
 			rest: { method: "PUT", path: "/accountarg" },
 			async handler(ctx) {
 				const amount = parseInt(ctx.params.amount);
@@ -119,9 +118,9 @@ module.exports = {
 				return ctx.call("accounts.saldoARG", {
 					id_client: destiny,
 				});
-			}
+			},
+		},
 	},
-},
 	/**
 	 * Methods
 	 */
