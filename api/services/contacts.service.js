@@ -74,11 +74,12 @@ module.exports = {
         rest: "GET",
         path: "/findContact",
 
-		async handler() {
+		async handler(ctx) {
 	
+	    const id_cli = ctx.params.id_cli;
 		const allContact = await this.adapter.db
        .query(
-            `SELECT alias FROM CONTACTS'`
+            `SELECT * FROM contacts WHERE id_cli= '${id_cli}'`
         );
             return allContact;
         },
@@ -86,73 +87,62 @@ module.exports = {
 	
 
 	associateContact: {
-        rest: "POST",
-        path: "/associateContact",
+		rest: "POST",
+		path: "/associateContact",
 
 		async handler(ctx) {
 			const {
 				alias,
 				username,
+				id_cli 
 			} = ctx.params;
-
-
 			
 		const contact = await this.adapter.db
-       .query(
+	   .query(
 		  
 		  `SELECT id FROM client WHERE username = '${username}'`
-	   );
-        console.log(contact)
-		//   if(contact) {
-   
-		//    "INSERT INTO contacts (`alias` , `username` )" + `VALUES ('${alias}', '${username}');`
+	   )
+		.then(e => Object.values(e[0][0]))
+		 console.log(contact)
 
-		//   }
-              
-		// 	return contact;
-	   
-	},
-		
 
+	   if(!contact[0].length) {
+		const insertContact = await this.adapter.db
+		.query(
+		   "INSERT INTO `contacts` (`alias` , `id_cli`, `id_contact` )" + `VALUES ('${alias}','${id_cli}' , '${contact}');`
+		);
+		//id_cli es un dato externo que lo tomamos de la auth hecha al usuario, asi sabemos quien hace las peticiones
+
+		  console.log(insertContact)
+	   }
 	
-	// async handler(ctx) {
-	// 	const username = ctx.params.username;
-	// 	console.log(username);
-	// 	const emailDb = await this.adapter.db.query(
-	// 		`SELECT * FROM USER WHERE username = '${username}'`
-	// 	);
-	// 	console.log(emailDb);
-	// 	if (emailDb[0].length) {
-	// 		return "existe ....";
-	// 	} else {
-	// 		return ctx.call("registration.sendemail", {
-	// 			email: username,
-	// 		});
-	// 	}
-	// },
+		},
+	
 },
 
-    modifContact: {
-                rest: "PUT",
-                path: "/modifContact",
 
-            async handler(ctx) {    
 
-			const alias = ctx.params.alias;
-			const aliasm = ctx.params.alias;
-		   const modcontact = await this.adapter.db
-		
-                .query(
-                    `UPDATE contacts SET alias = '${aliasm}' WHERE alias ='${alias}' `
-				);
-				const modif= this.adapter.db.query`SELECT * FROM con WHERE alias = '${alias}'`
-				console.log(modcontact)
-				
-				return modcontact;
+	modifContact: {
+		rest: "PUT /modifContact",
+
+	async handler(ctx) {    
+
+	const id_contact = ctx.params.id_contact;
+	const alias = ctx.params.alias;
+
+	console.log(alias)
+   
+
+   const modcontact = await this.adapter.db
+
+		.query(
+			`UPDATE contacts SET alias = '${alias}' WHERE id_contact ='${id_contact}' `
+		)
+	       
             },
         },
         
-    eliminContact: {
+    deleteContact: {
                 rest: "DELETE",
                 path: "/deleteContact",
              
@@ -161,12 +151,8 @@ module.exports = {
                     const contact = ctx.params.id_contact;
 			   const modcontact = await this.adapter.db.query(
 
-					`DELETE FROM contacts= '${id_contact}' WHERE id_contact ='${id_contact}' `
+					`DELETE FROM contacts WHERE id_contact ='${contact}' `
 					
-				);
-				
-				const allContact = await this.adapter.db.query(
-					`SELECT * FROM CONTACTS WHERE id_contact = '${id_contact}'`
 				);
 
 },
