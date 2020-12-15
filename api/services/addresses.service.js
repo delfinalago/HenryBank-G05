@@ -44,7 +44,7 @@ module.exports = {
 			},
 
 			testear() {
-				console.log("aca toy broder");
+				console.log("aca addresses.service");
 			},
 		},
 	},

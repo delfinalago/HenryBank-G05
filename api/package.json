@@ -28,6 +28,7 @@
   "dependencies": {
     "axios": "^0.21.0",
     "cors": "^2.8.5",
+    "crypto-js": "^4.0.0",
     "dotenv": "^8.2.0",
     "moleculer": "^0.14.10",
     "moleculer-db": "^0.8.11",
