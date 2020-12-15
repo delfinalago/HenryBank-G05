@@ -95,22 +95,42 @@ module.exports = {
 				username,
 			} = ctx.params;
 
-        
-		if (username) {
-		
+
+			
 		const contact = await this.adapter.db
        .query(
 		  
-		  `SELECT * FROM CLIENT WHERE username = '${username}'`,
-		   
-		   "INSERT INTO contacts (`alias` , `id_cli` )" + `VALUES ('${alias}', '${id_cli}');`
+		  `SELECT id FROM client WHERE username = '${username}'`
 	   );
-           console.log(contact)
-			return contact;
-	   }
+        console.log(contact)
+		//   if(contact) {
+   
+		//    "INSERT INTO contacts (`alias` , `username` )" + `VALUES ('${alias}', '${username}');`
+
+		//   }
+              
+		// 	return contact;
+	   
 	},
 		
-    },
+
+	
+	// async handler(ctx) {
+	// 	const username = ctx.params.username;
+	// 	console.log(username);
+	// 	const emailDb = await this.adapter.db.query(
+	// 		`SELECT * FROM USER WHERE username = '${username}'`
+	// 	);
+	// 	console.log(emailDb);
+	// 	if (emailDb[0].length) {
+	// 		return "existe ....";
+	// 	} else {
+	// 		return ctx.call("registration.sendemail", {
+	// 			email: username,
+	// 		});
+	// 	}
+	// },
+},
 
     modifContact: {
                 rest: "PUT",
