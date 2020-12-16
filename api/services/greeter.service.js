@@ -31,8 +31,8 @@ module.exports = {
 				method: "GET",
 				path: "/hello",
 			},
-			async handler() {
-				return "Hello Moleculer";
+			async handler(ctx) {
+				return "hello " + ctx.meta.user.first_name;
 			},
 		},
 

@@ -3,6 +3,9 @@
 const DbService = require("moleculer-db");
 const SqlAdapter = require("moleculer-db-adapter-sequelize");
 
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
  */
@@ -26,6 +29,7 @@ module.exports = {
 	 */
 	settings: {
 		// Available fields in the responses
+		secret: process.env.SECRET || "secret",
 	},
 
 	/**
@@ -64,9 +68,28 @@ module.exports = {
 		},
 
 		login: {
-			rest: "GET /login",
+			rest: "POST /login",
 
-			async handler() {},
+			async handler(ctx) {
+				const [[user]] = await this.adapter.db.query(
+					`SELECT * FROM CLIENT WHERE username = '${ctx.params.username}'`
+				);
+
+				const test = await bcrypt.compare(
+					ctx.params.password,
+					user.password
+				);
+
+				if (test) {
+					const { username, id, first_name, last_name } = user;
+					delete user.password;
+					const token = jwt.sign(
+						{ username, id, first_name, last_name },
+						this.settings.secret
+					);
+					return { ...user, token };
+				}
+			},
 		},
 	},
 
