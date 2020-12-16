@@ -36,6 +36,7 @@ CREATE TABLE `accounts` (
   `balance` int(60) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+
 -- --------------------------------------------------------
 
 --
@@ -53,6 +54,7 @@ CREATE TABLE `cards` (
   `expirationdate` date NOT NULL,
   `id_acc` int(8) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 
 -- --------------------------------------------------------
 

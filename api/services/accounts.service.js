@@ -81,6 +81,7 @@ module.exports = {
 					.query(
 						`SELECT balance FROM accounts WHERE id_client = '${id}'`
 					)
+
 					.then((e) => Object.values(e[0][0])[0])
 
 					.catch((err) => console.log(err));
@@ -118,8 +119,54 @@ module.exports = {
 				return ctx.call("accounts.saldoARG", {
 					id_client: destiny,
 				});
-				
+
 			},
+		},
+			//	---------------------	 acciones para administrar las transactions---//
+			extrac: {
+				rest: "PUT /extraccion",
+				async handler(ctx) {
+					const amount = parseInt(ctx.params.amount);
+					const state = ctx.params.state
+					const origin = ctx.params.origin;
+                   if (state){
+					await ctx
+
+						.call("accounts.saldoARG", {
+							id_client: origin,
+						})
+						.then((e) => {
+							const newAmount = e - amount; //extrae la plata//
+							return newAmount;
+						})
+						.then((e) => //actualizo el monto//
+							this.adapter.db.query(
+								`UPDATE accounts SET balance = '${e}' WHERE id_client ='${origin}' `
+							)
+						)
+
+						.catch((err) => console.log(err));
+
+					//devolver saldo actual
+					return ctx.call("accounts.saldoARG", {
+						id_client: origin,
+					});
+				};
+				   },
+				},
+
+				transaction : {
+					rest: "PUT /transc",      //operacion que une la extraccion con la recarga de dinero //
+
+					async handler(ctx) {
+
+						const { origin , destiny , amount ,state } = ctx.params
+
+						ctx.call("accounts.extrac" , { origin , amount , state})  //invoca a la func  extrac y recarga //
+
+							ctx.call ("accounts.recarga" , { amount , destiny})
+							return "transferencia exitosa!"
+        	},
 		},
 	},
 	/**
