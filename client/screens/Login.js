@@ -2,8 +2,12 @@ import React from "react";
 import Fondo1 from "../assets/Fondo1.png";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import axios from "axios";
 import Register from "./Register/Register";
 import { Card, Button } from "react-native-elements";
+import { API } from "../env.js";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 const background = require("../assets/Fondo1.png");
 import {
   StyleSheet,
@@ -16,7 +20,7 @@ import {
   ImageBackground,
 } from "react-native";
 
-export default function Login({ navigation }) {
+export default function Login({ navigation, setToken }) {
   const {
     handleSubmit,
     handleChange,
@@ -37,7 +41,18 @@ export default function Login({ navigation }) {
         .required(),
     }),
     onSubmit: ({ login, password }) => {
-      alert(`Login: ${login}, password: ${password}`);
+      axios
+        .post(`${API}/api/users/login`, { username: login, password })
+        .then(({ data }) => {
+          (async () => {
+            try {
+              await AsyncStorage.setItem("@localUser", JSON.stringify(data));
+              setToken(data.token);
+            } catch (error) {
+              // Error saving data
+            }
+          })();
+        });
     },
   });
 
@@ -55,14 +70,13 @@ export default function Login({ navigation }) {
         onChangeText={handleChange("login")}
         value={values.login}
         onChange={handleChange}
+        id="login"
+        name="login"
         type="text"
-        style={styles.input}/>
-      {touched.login && errors.login ? <div>{errors.login}</div> : null}
-      <Text
-        style={styles.password}>
-        {" "}
-        Contraseña :
-      </Text>
+        style={style.input}
+      />
+      {touched.login && errors.login ? <Text>{errors.login}</Text> : null}
+      <Text style={style.text}> Contraseña :</Text>
       <TextInput
         placeholder="Contraseña"
         placeholderTextColor="#000000"
@@ -79,7 +93,8 @@ export default function Login({ navigation }) {
         mode="contained"
         secureTextEntry={true}
         title=""
-        style={styles.touchable}
+        onPress={handleSubmit}
+        style={style.touchable}
       >
         <Text>Ingresar</Text>
       </TouchableOpacity>
@@ -104,7 +119,13 @@ const styles = StyleSheet.create({
     backgroundColor: "gray",
   },
   text: {
-    fontSize: 50,
+    flexDirection: "column",
+    fontSize: 30,
+    marginRight: 10,
+    textAlign: "center",
+    marginTop: 10,
+    opacity: 0.8,
+    color: "#000000",
   },
   touchable: {
     color: "#000000",

@@ -5,6 +5,8 @@ const SqlAdapter = require("moleculer-db-adapter-sequelize");
 const nodemailer = require("nodemailer");
 const axios = require("axios");
 const crypto = require("crypto");
+const bcrypt = require("bcrypt");
+
 const transporter = nodemailer.createTransport({
 	service: "gmail",
 	auth: {
@@ -129,16 +131,17 @@ module.exports = {
 			async handler(ctx) {
 				const {
 					username,
-					password,
-					name,
-					lastname,
-					phone,
+					first_name,
+					last_name,
+					cellphone,
 					dni,
-					address,
-					province,
+					street,
 					city,
 					nacimiento,
 				} = ctx.params;
+
+				const password = bcrypt.hashSync(ctx.params.password, 10);
+
 				const valDni = await this.validateDni(dni);
 				if (!valDni) {
 					return {
@@ -151,20 +154,33 @@ module.exports = {
 					return valAge;
 				}
 				const valDir = await this.validateDirection(
-					`${address} , ${city}`
+					`${street} , ${city}`
 				);
 				if (!valDir) {
 					return { error: "direccion invalida!" };
 				}
 
-				const res = await this.adapter.db.query(
-					"INSERT INTO `client`(`first_name` , `last_name` , `cellphone` , `dni` , `street` , `province` , `city`, `birthdate`, `username` , `password` )" +
-						`VALUES ('${name}', '${lastname}', '${phone}', '${dni}', '${address}', '${province}', '${city}', '${nacimiento}' , '${username}' , '${password}' );`
+				const client = await this.adapter.db.query(
+					"INSERT INTO `client` (`username`, `password`, `first_name`, `last_name`, `birthdate`, `cellphone`, `dni`, `street`, `city`)" +
+						`VALUES ('${username}', '${password}', '${first_name}', '${last_name}', '${nacimiento}', '${cellphone}', '${dni}', '${street}', '${city}');`
 				);
-				const genHash = await this.generateHash(dni);
-				console.log(genHash);
 
-				return res;
+				if (client) {
+					const [[{ id }]] = await this.adapter.db.query(
+						"SELECT id FROM `client` WHERE dni =" + dni
+					);
+
+					const code = await this.generateHash();
+
+					const res = this.adapter.db.query(
+						"INSERT INTO `accounts` (`id_client`, `code`)" +
+							`VALUES ('${id}', '${code}')`
+					);
+
+					return res;
+				} else {
+					return "me rompi :(";
+				}
 			},
 		},
 	},
@@ -209,13 +225,10 @@ module.exports = {
 			return { error: "necesitas tener 16 años para registrarte" };
 		},
 
-		generateHash(dni) {
+		generateHash() {
 			const numRam = crypto.createHash("sha256").digest("hex");
 			// aplicamos crypto con Gime y mati//
-			this.adapter.db.query(
-				`UPDATE client SET numClient = '${numRam}' WHERE dni ='${dni}'`
-			);
-			return;
+			return numRam.slice(0, 10);
 		},
 	},
 
