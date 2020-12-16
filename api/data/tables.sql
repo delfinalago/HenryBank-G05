@@ -30,9 +30,10 @@ SET time_zone = "+00:00";
 CREATE TABLE `accounts` (
   `id` int(8) NOT NULL,
   `id_client` int(8) NOT NULL,
-  `associateacount` int(60) NOT NULL,
-  `cvu` int(11) NOT NULL,
-  `balance` int(60) NOT NULL
+  `associateacount` int(60),
+  `cvu` varchar(22),
+  `code` varchar(10) NOT NULL,
+  `balance` int(60) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
@@ -63,27 +64,16 @@ CREATE TABLE `cards` (
 
 CREATE TABLE `client` (
   `id` int(11) NOT NULL,
-  `numClient` varchar(60) NOT NULL,
   `username` varchar(60) NOT NULL,
   `password` varchar(60) NOT NULL,
   `first_name` varchar(60) NOT NULL,
   `last_name` varchar(60) NOT NULL,
   `birthdate` date NOT NULL,
   `cellphone` int(11) NOT NULL,
-  `tipo_doc` varchar(60) NOT NULL,
   `dni` int(11) NOT NULL,
   `street` varchar(60) NOT NULL,
-  `province` varchar(50) NOT NULL,
-  `city` varchar(60) NOT NULL,
-  `postalcode` int(11) NOT NULL
+  `city` varchar(60) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Volcado de datos para la tabla `client`
---
-
-INSERT INTO `client` (`id`, `numClient`, `username`, `password`, `first_name`, `last_name`, `birthdate`, `cellphone`, `tipo_doc`, `dni`, `street`, `province`, `city`, `postalcode`) VALUES
-(1, '', 'cami@gmail.com', '12333', 'camila', 'fernandez', '1994-10-10', 1222222222, 'dni', 38511491, 'calle2', 'bbb', 'lp', 1900);
 
 -- --------------------------------------------------------
 
@@ -108,7 +98,7 @@ CREATE TABLE `transactions` (
   `id` int(60) NOT NULL,
   `state` int(60) NOT NULL,
   `type` varchar(60) NOT NULL,
-  `description` varchar(60) NOT NULL,
+  `description` varchar(60),
   `amount` int(60) NOT NULL,
   `origin` int(60) NOT NULL,
   `destiny` int(8) NOT NULL
@@ -217,7 +207,7 @@ ALTER TABLE `contacts`
 --
 ALTER TABLE `transactions`
   ADD CONSTRAINT `acc-trans` FOREIGN KEY (`origin`) REFERENCES `accounts` (`id`),
-  ADD CONSTRAINT `acc-transd` FOREIGN KEY (`destiny`) REFERENCES `transactions` (`id`);
+  ADD CONSTRAINT `acc-transd` FOREIGN KEY (`destiny`) REFERENCES `accounts` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

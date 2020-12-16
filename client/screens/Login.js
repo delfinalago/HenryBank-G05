@@ -2,8 +2,12 @@ import React from "react";
 import Fondo1 from "../assets/Fondo1.png";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import axios from "axios";
 import Register from "./Register/Register";
 import { Card, Button } from "react-native-elements";
+import { API } from "../env.js";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 const background = require("../assets/Fondo1.png");
 import {
   StyleSheet,
@@ -16,7 +20,7 @@ import {
   ImageBackground,
 } from "react-native";
 
-export default function Login({ navigation }) {
+export default function Login({ navigation, setToken }) {
   const {
     handleSubmit,
     handleChange,
@@ -30,98 +34,53 @@ export default function Login({ navigation }) {
       password: "",
     },
     validationSchema: Yup.object({
-      login: Yup.string()
-        .max(10, "Login must be shorter than 10 characters")
-        .required("Required"),
+      login: Yup.string().required("Required"),
       password: Yup.string()
         .min(6, "Password should be longer than 6 characters")
         .required(),
     }),
     onSubmit: ({ login, password }) => {
-      alert(`Login: ${login}, password: ${password}`);
+      axios
+        .post(`${API}/api/users/login`, { username: login, password })
+        .then(({ data }) => {
+          (async () => {
+            try {
+              await AsyncStorage.setItem("@localUser", JSON.stringify(data));
+              setToken(data.token);
+            } catch (error) {
+              // Error saving data
+            }
+          })();
+        });
     },
   });
 
   return (
     <View style={{ backgroundColor: "#FFF", height: "100%" }}>
-      <Text
-        style={{
-          flexDirection: "column",
-          fontSize: 33,
-          marginRight: 10,
-          textAlign: "center",
-          marginTop: 10,
-          opacity: 0.8,
-          color: "#000000",
-        }}
-      >
-        {" "}
-        Email :
-      </Text>
+      <Text style={style.text}> Email :</Text>
       <TextInput
         placeholder="Correo"
         placeholderTextColor="#000000"
         onChangeText={handleChange("login")}
         value={values.login}
         onChange={handleChange}
-        onBlur={handleBlur}
         id="login"
         name="login"
         type="text"
-        style={{
-          flexDirection: "column",
-          marginLeft: 23,
-          height: 50,
-          color: "#000000",
-          alignItems: "center",
-
-          borderWidth: 3,
-          marginTop: 50,
-          paddingHorizontal: 10,
-          borderColor: "#00716F",
-          borderRadius: 23,
-          paddingVertical: 2,
-        }}
+        style={style.input}
       />
-      {touched.login && errors.login ? <div>{errors.login}</div> : null}
-      <Text
-        style={{
-          flexDirection: "column",
-          fontSize: 30,
-          marginLeft: 50,
-          marginRight: 10,
-          textAlign: "center",
-          marginTop: 10,
-          opacity: 0.8,
-          color: "#000000",
-        }}
-      >
-        {" "}
-        Contraseña :
-      </Text>
+      {touched.login && errors.login ? <Text>{errors.login}</Text> : null}
+      <Text style={style.text}> Contraseña :</Text>
       <TextInput
         placeholder="Contraseña"
         placeholderTextColor="#000000"
         onChangeText={handleChange("password")}
         value={values.password}
         onChange={handleChange}
-        onBlur={handleBlur}
         id="password"
         name="password"
         type="password"
-        style={{
-          flexDirection: "column",
-          height: 50,
-          color: "#000000",
-          alignItems: "center",
-
-          borderWidth: 3,
-          marginTop: 50,
-          paddingHorizontal: 10,
-          borderColor: "#00716F",
-          borderRadius: 23,
-          paddingVertical: 2,
-        }}
+        style={style.input}
       />
       {touched.password && errors.password ? (
         <div>{errors.password}</div>
@@ -131,7 +90,7 @@ export default function Login({ navigation }) {
         mode="contained"
         secureTextEntry={true}
         title=""
-        onPress={() => navigation.navigate("Login")}
+        onPress={handleSubmit}
         style={style.touchable}
       >
         <Text>Ingresar</Text>
@@ -155,7 +114,13 @@ const style = StyleSheet.create({
     backgroundColor: "gray",
   },
   text: {
-    fontSize: 50,
+    flexDirection: "column",
+    fontSize: 30,
+    marginRight: 10,
+    textAlign: "center",
+    marginTop: 10,
+    opacity: 0.8,
+    color: "#000000",
   },
   touchable: {
     color: "#000000",
@@ -167,5 +132,17 @@ const style = StyleSheet.create({
     backgroundColor: "#00716F",
     paddingVertical: 10,
     borderRadius: 23,
+  },
+  input: {
+    flexDirection: "column",
+    height: 50,
+    color: "#000000",
+    alignItems: "center",
+    borderWidth: 3,
+    marginTop: 50,
+    paddingHorizontal: 10,
+    borderColor: "#00716F",
+    borderRadius: 23,
+    paddingVertical: 2,
   },
 });

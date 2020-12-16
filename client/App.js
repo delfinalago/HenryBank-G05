@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { StyleSheet, Text, View } from "react-native";
-import { StatusBar } from "expo-status-bar";
+import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // Screens
 
@@ -21,14 +22,16 @@ const styles = StyleSheet.create({
 });
 
 const LoginStack = createStackNavigator();
-function LoginStackScreen() {
+function LoginStackScreen({ setToken }) {
   return (
     <LoginStack.Navigator
       screenOptions={{
         headerShown: false,
       }}
     >
-      <LoginStack.Screen name="Login" component={Login} />
+      <LoginStack.Screen name="Login">
+        {(setToken) => <Login setToken={setToken} />}
+      </LoginStack.Screen>
       <LoginStack.Screen name="PreRegister" component={PreRegister} />
       <LoginStack.Screen name="PreRegisterToken" component={PreRegisterToken} />
       <LoginStack.Screen name="Register" component={Register} />
@@ -65,6 +68,27 @@ function ProfileStackScreen() {
 const Tab = createBottomTabNavigator();
 
 export default function App() {
+  const [token, setToken] = useState(null);
+
+  useEffect(() => {
+    AsyncStorage.getItem("@localUser")
+      .then((data) => {
+        if (data) return JSON.parse(data);
+      })
+      .then((data) => {
+        if (data) setToken(data.token);
+      });
+  }, []);
+
+  useEffect(() => {
+    console.log(token);
+    if (token) {
+      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+    } else {
+      axios.defaults.headers.common["Authorization"] = ``;
+    }
+  }, [token]);
+
   return (
     <NavigationContainer>
       <Tab.Navigator
@@ -73,7 +97,10 @@ export default function App() {
         }}
       >
         {/* <Tab.Screen name="Home" component={HomeStackScreen} /> */}
-        <Tab.Screen name="Login" component={LoginStackScreen} />
+        <Tab.Screen
+          name="Login"
+          children={() => <LoginStackScreen setToken={setToken} />}
+        />
         <Tab.Screen name="Register" component={RegisterStackScreen} />
         <Tab.Screen name="Profile" component={ProfileStackScreen} />
         {/* <Tab.Screen name="Token" component={PreRegisterToken} /> */}
