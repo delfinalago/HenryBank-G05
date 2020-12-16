@@ -11,9 +11,15 @@ import {
   ScrollView,
 } from "react-native";
 
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import Axios from "axios";
+import { API } from "../../env.js";
 
-export default function register({ navigation }) {
+const randomNum = () => {
+  return Math.floor(Math.random() * 999999 - 100000) + 100000;
+};
+
+export default function preRegister({ navigation }) {
   const {
     handleSubmit,
     handleChange,
@@ -39,15 +45,27 @@ export default function register({ navigation }) {
         .required("Campo requerido"),
     }),
     onSubmit: ({ email, password, confirmpassword }) => {
-      Axios.post(`http://192.168.0.211:3000/api/registration/auth`, {
-        username: email,
+      let token = randomNum();
+      values.token = token;
+      Axios.post(`${API}/api/registration/auth`, {
+        values,
       })
         .then((response) => {
           console.log(response);
           alert(
             `Se ha enviado un email a su casilla de correo (${email}) para continuar con el registro`
           );
-          navigation.navigate("Register");
+          (async () => {
+            try {
+              await AsyncStorage.setItem(
+                "@localUserStore",
+                JSON.stringify(values)
+              );
+            } catch (error) {
+              // Error saving data
+            }
+          })();
+          navigation.navigate("PreRegisterToken");
         })
         .catch((error) => console.log(error));
     },
