@@ -4,6 +4,8 @@ const ApiGateway = require("moleculer-web");
 
 const cors = require("cors");
 
+const jwt = require("jsonwebtoken");
+
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
  * @typedef {import('http').IncomingMessage} IncomingRequest Incoming HTTP Request
@@ -18,6 +20,8 @@ module.exports = {
 	settings: {
 		// Exposed port
 		port: process.env.PORT || 3000,
+
+		secret: process.env.SECRET || "secret",
 
 		// Exposed IP
 		ip: "0.0.0.0",
@@ -38,7 +42,7 @@ module.exports = {
 				mergeParams: true,
 
 				// Enable authentication. Implement the logic into `authenticate` method. More info: https://moleculer.services/docs/0.14/moleculer-web.html#Authentication
-				authentication: false,
+				authentication: true,
 
 				// Enable authorization. Implement the logic into `authorize` method. More info: https://moleculer.services/docs/0.14/moleculer-web.html#Authorization
 				authorization: false,
@@ -132,10 +136,11 @@ module.exports = {
 			if (auth && auth.startsWith("Bearer")) {
 				const token = auth.slice(7);
 
-				// Check the token. Tip: call a service which verify the token. E.g. `accounts.resolveToken`
-				if (token == "123456") {
+				const valid = jwt.verify(token, this.settings.secret);
+
+				if (valid) {
 					// Returns the resolved user. It will be set to the `ctx.meta.user`
-					return { id: 1, name: "John Doe" };
+					return valid;
 				} else {
 					// Invalid token
 					throw new ApiGateway.Errors.UnAuthorizedError(
