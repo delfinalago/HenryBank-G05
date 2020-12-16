@@ -10,7 +10,7 @@ import { StatusBar } from "expo-status-bar";
 
 import Home from "./screens/Home";
 import Login from "./screens/Login";
-import Register from "../client/screens/Register";
+import Register from "./screens/Register/Register";
 import Profile from "./screens/Profile";
 import PreRegister from "./screens/preRegister";
 import contactsList from "./screens/MisContactos/contactsList"
@@ -18,6 +18,30 @@ import addContact from "./screens/MisContactos/addContact";
 import editContact from "./screens/MisContactos/editContact";
 
 const Stack = createStackNavigator(); //contiene la navegacion
+import PreRegister from "./screens/Register/preRegister";
+import PreRegisterToken from "./screens/Register/preRegisterToken";
+
+const styles = StyleSheet.create({
+  tab: {
+    marginBottom: 15,
+  },
+});
+
+const LoginStack = createStackNavigator();
+function LoginStackScreen() {
+  return (
+    <LoginStack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <LoginStack.Screen name="Login" component={Login} />
+      <LoginStack.Screen name="PreRegister" component={PreRegister} />
+      <LoginStack.Screen name="PreRegisterToken" component={PreRegisterToken} />
+      <LoginStack.Screen name="Register" component={Register} />
+    </LoginStack.Navigator>
+  );
+}
 
 
 function RootStack() {
@@ -48,29 +72,6 @@ function LoginStack() {
 		</Stack.Navigator>
 	);
 }
-
-
-// // <--------------------- MAIN Stack --------------------->
-// function MainStack() {
-// 	return (
-// 		<Drawer.Navigator
-// 			initialRouteName='Inicio'
-// 			drawerContent={(props) => <CustomDrawerContent {...props} />}
-// 			screenOptions={{
-// 				headerShown: true,
-// 				headerTitleAlign: 'center',
-// 				headerStyle: { backgroundColor: 'indigo', shadowColor: 'indigo', elevation: 0 },
-// 				headerTitleStyle: { color: 'white', fontSize: 16 },
-// 			}}
-// 			lazy={true}
-// 		>
-// 			<Drawer.Screen name='Inicio' component={Profile} />
-			
-// 		</Drawer.Navigator>
-// 	);
-// }
-// // <--------------------- MAIN Stack ------------------
-
 
 export default function App() {
 	return (

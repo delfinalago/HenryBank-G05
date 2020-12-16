@@ -15,8 +15,8 @@ import {
 
 import { useDispatch, useSelector } from "react-redux";
 import Axios from "axios";
-
-const background = require("../assets/Fondo1.png");
+import { API } from "../../env.js";
+const background = require("../../assets/Fondo1.png");
 
 export default function register({ navigation }) {
   const {
@@ -56,9 +56,7 @@ export default function register({ navigation }) {
     onSubmit: ({ name, lastname, phone }) => {
       console.log("register params: ", values);
       alert(`name: ${name}, lasname: ${lastname}, phone: ${phone}`);
-      Axios.post(`http://192.168.2.159:3000/api/registration/create_users`,
-        values
-        )
+      Axios.post(`${API}/api/registration/create_users`, values)
         .then(({ data }) => {
           if (data.error) {
             alert(data.error);

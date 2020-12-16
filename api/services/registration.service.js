@@ -1,9 +1,10 @@
 "use strict";
-
+//Moleculer_DB
 const DbService = require("moleculer-db");
 const SqlAdapter = require("moleculer-db-adapter-sequelize");
 const nodemailer = require("nodemailer");
 const axios = require("axios");
+const crypto = require("crypto");
 const transporter = nodemailer.createTransport({
 	service: "gmail",
 	auth: {
@@ -11,6 +12,14 @@ const transporter = nodemailer.createTransport({
 		pass: process.env.EMAIL_PASSWORD,
 	},
 });
+
+//Authentication
+const { ServiceBroker } = require("moleculer");
+const broker = new ServiceBroker({
+	validator: true, // Default is true
+});
+
+/* ================================================================================================================== */
 
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
@@ -53,7 +62,7 @@ module.exports = {
 			},
 
 			testear() {
-				console.log("aca toy broder");
+				console.log("aca registration.service");
 			},
 		},
 	},
@@ -83,18 +92,14 @@ module.exports = {
 		},
 		sendemail: {
 			rest: "POST /sendemail",
-
-			params: {
-				email: "string",
-			},
-			/** @param {Context} ctx  */
 			async handler(ctx) {
 				let response = await transporter.sendMail({
 					from: process.env.EMAIL_USER,
-					to: ctx.params.email,
+					to: ctx.params.values.email,
 					subject: "Veski - Proceso de registro de cuenta",
 					html: `<h1>Bienvenid@ a Veski</h1>
-					<h3>Por favor hace click <a href="http://google.com">acá</a> para continuar con el proceso de registro.</h3>`,
+					<h3>Por favor ingresá en tu app Veski el siguiente código para continuar con el proceso de registro.</h3>
+					<h2>${ctx.params.values.token}</h2>`,
 				});
 				return response;
 			},
@@ -104,22 +109,9 @@ module.exports = {
 			rest: {
 				method: "POST",
 				path: "/auth",
-				name: "mailer",
-				events: {
-					"send.mail": {
-						// Validation schema with shorthand notation
-
-						params: {
-							from: "string|optional",
-							to: "email",
-							subject: "string",
-						},
-					},
-				},
 			},
 			async handler(ctx) {
-				const username = ctx.params.username;
-				console.log(username);
+				const username = ctx.params.values.email;
 				const emailDb = await this.adapter.db.query(
 					`SELECT * FROM \`user\` WHERE username = '${username}'`
 				);
@@ -127,9 +119,7 @@ module.exports = {
 				if (emailDb[0].length) {
 					return "existe ....";
 				} else {
-					return ctx.call("registration.sendemail", {
-						email: username,
-					});
+					return ctx.call("registration.sendemail", ctx.params);
 				}
 			},
 		},
@@ -138,6 +128,8 @@ module.exports = {
 
 			async handler(ctx) {
 				const {
+					username,
+					password,
 					name,
 					lastname,
 					phone,
@@ -164,10 +156,14 @@ module.exports = {
 				if (!valDir) {
 					return { error: "direccion invalida!" };
 				}
+
 				const res = await this.adapter.db.query(
-					"INSERT INTO `client`(`first_name` , `last_name` , `phone` , `dni` , `street` , `province` , `city`, `birthdate`, `postalcode`)" +
-						`VALUES ('${name}', '${lastname}', '${phone}', '${dni}', '${address}', '${province}', '${city}', '${nacimiento}', 34);`
+					"INSERT INTO `client`(`first_name` , `last_name` , `cellphone` , `dni` , `street` , `province` , `city`, `birthdate`, `username` , `password` )" +
+						`VALUES ('${name}', '${lastname}', '${phone}', '${dni}', '${address}', '${province}', '${city}', '${nacimiento}' , '${username}' , '${password}' );`
 				);
+				const genHash = await this.generateHash(dni);
+				console.log(genHash);
+
 				return res;
 			},
 		},
@@ -211,6 +207,15 @@ module.exports = {
 				return false;
 			}
 			return { error: "necesitas tener 16 años para registrarte" };
+		},
+
+		generateHash(dni) {
+			const numRam = crypto.createHash("sha256").digest("hex");
+			// aplicamos crypto con Gime y mati//
+			this.adapter.db.query(
+				`UPDATE client SET numClient = '${numRam}' WHERE dni ='${dni}'`
+			);
+			return;
 		},
 	},
 

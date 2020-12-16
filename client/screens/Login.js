@@ -2,11 +2,19 @@ import React from "react";
 import Fondo1 from "../assets/Fondo1.png";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import Register from "./Register";
+import Register from "./Register/Register";
 import { Card, Button } from "react-native-elements";
 const background = require("../assets/Fondo1.png");
 import {
-  StyleSheet, Text, View, TextInput, TouchableOpacity, Form, ScrollView, ImageBackground} from "react-native";
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  TouchableOpacity,
+  Form,
+  ScrollView,
+  ImageBackground,
+} from "react-native";
 
 export default function Login({ navigation }) {
   const {
