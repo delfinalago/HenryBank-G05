@@ -115,7 +115,7 @@ module.exports = {
 			async handler(ctx) {
 				const username = ctx.params.values.email;
 				const emailDb = await this.adapter.db.query(
-					`SELECT * FROM USER WHERE username = '${username}'`
+					`SELECT * FROM CLIENT WHERE username = '${username}'`
 				);
 				console.log(emailDb);
 				if (emailDb[0].length) {

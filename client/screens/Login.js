@@ -63,7 +63,6 @@ export default function Login({ navigation, setToken }) {
         placeholderTextColor="#000000"
         onChangeText={handleChange("login")}
         value={values.login}
-        onChange={handleChange}
         id="login"
         name="login"
         type="text"
@@ -76,7 +75,6 @@ export default function Login({ navigation, setToken }) {
         placeholderTextColor="#000000"
         onChangeText={handleChange("password")}
         value={values.password}
-        onChange={handleChange}
         id="password"
         name="password"
         type="password"
@@ -100,7 +98,7 @@ export default function Login({ navigation, setToken }) {
         mode="contained"
         secureTextEntry={true}
         title=""
-        onPress={() => navigation.navigate("PreRegister")}
+        onPress={() => navigation.navigate("Register")}
         style={style.touchable}
       >
         <Text>Registrarse</Text>

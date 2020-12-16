@@ -13,10 +13,11 @@ import {
   Button,
 } from "react-native";
 
-import { useDispatch, useSelector } from "react-redux";
 import Axios from "axios";
 import { API } from "../../env.js";
 const background = require("../../assets/Fondo1.png");
+
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function register({ navigation }) {
   const {
@@ -28,35 +29,48 @@ export default function register({ navigation }) {
     handleBlur,
   } = useFormik({
     initialValues: {
-      name: "",
-      lastname: "",
-      phone: "",
+      first_name: "",
+      last_name: "",
+      cellphone: "",
       dni: "",
-      address: "",
-      province: "",
+      street: "",
       city: "",
       nacimiento: "",
     },
     validationSchema: Yup.object({
-      name: Yup.string()
+      first_name: Yup.string()
         .min(4, "El nombre ingresado debe tener mas de 4 caracteres")
         .max(50, "El nombre ingresado debe tener tener menos de 50 caracteres")
         .required("Campo requerido"),
-      lastname: Yup.string()
+      last_name: Yup.string()
         .min(4, "El nombre ingresado debe tener mas de 4 caracteres")
         .max(50, "El nombre ingresado debe tener tener menos de 50 caracteres")
         .required("Campo requerido"),
-      phone: Yup.string()
+      cellphone: Yup.string()
         .required("Ingrese su numero de telefono")
         .matches(
           /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/,
           "Numero de telefono no valido"
         ),
     }),
-    onSubmit: ({ name, lastname, phone }) => {
-      console.log("register params: ", values);
-      alert(`name: ${name}, lasname: ${lastname}, phone: ${phone}`);
-      Axios.post(`${API}/api/registration/create_users`, values)
+    onSubmit: async () => {
+      const { email: username, password } = await AsyncStorage.getItem(
+        "@localUserStore"
+      ).then((info) => {
+        if (info) {
+          return JSON.parse(info);
+        } else {
+          alert(
+            "hubo un probleba con tu email, pero podras recibir un nuevo codigo"
+          );
+        }
+      });
+
+      Axios.post(`${API}/api/registration/create_users`, {
+        ...values,
+        username,
+        password,
+      })
         .then(({ data }) => {
           if (data.error) {
             alert(data.error);
@@ -100,12 +114,12 @@ export default function register({ navigation }) {
           <TextInput
             placeholder="Nombre"
             placeholderTextColor="#fff"
-            onChangeText={handleChange("name")}
+            onChangeText={handleChange("first_name")}
             onChange={handleChange}
             onSubmit={handleSubmit}
-            value={values.name}
-            id="name"
-            name="name"
+            value={values.first_name}
+            id="first_name"
+            name="first_name"
             style={{
               flexDirection: "row",
               height: 50,
@@ -120,17 +134,19 @@ export default function register({ navigation }) {
             }}
           />
 
-          {touched.name && errors.name ? <div>{errors.name}</div> : null}
+          {touched.first_name && errors.first_name ? (
+            <Text>{errors.first_name}</Text>
+          ) : null}
 
           <TextInput
             placeholder="Apellido"
             placeholderTextColor="#fff"
-            onChangeText={handleChange("lastname")}
+            onChangeText={handleChange("last_name")}
             onChange={handleChange}
             onSubmit={handleSubmit}
-            id="lastname"
-            name="lastname"
-            value={values.lastname}
+            id="last_name"
+            name="last_name"
+            value={values.last_name}
             style={{
               flexDirection: "row",
               height: 50,
@@ -144,20 +160,20 @@ export default function register({ navigation }) {
               paddingVertical: 2,
             }}
           />
-          {touched.lastname && errors.lastname ? (
-            <div>{errors.lastname}</div>
+          {touched.last_name && errors.last_name ? (
+            <Text>{errors.last_name}</Text>
           ) : null}
 
           <TextInput
             placeholder="Telefono"
             placeholderTextColor="#fff"
-            onChangeText={handleChange("phone")}
+            onChangeText={handleChange("cellphone")}
             onChange={handleChange}
             onSubmit={handleSubmit}
-            value={values.phone}
+            value={values.cellphone}
             keyboardType="numeric"
-            id="phone"
-            name="phone"
+            id="cellphone"
+            name="cellphone"
             style={{
               flexDirection: "row",
               height: 50,
@@ -171,7 +187,9 @@ export default function register({ navigation }) {
               paddingVertical: 2,
             }}
           />
-          {touched.phone && errors.phone ? <div>{errors.phone}</div> : null}
+          {touched.cellphone && errors.cellphone ? (
+            <Text>{errors.cellphone}</Text>
+          ) : null}
 
           <TextInput
             placeholder="DNI"
@@ -223,35 +241,12 @@ export default function register({ navigation }) {
           <TextInput
             placeholder="Direccion"
             placeholderTextColor="#fff"
-            onChangeText={handleChange("address")}
+            onChangeText={handleChange("street")}
             onChange={handleChange}
             onSubmit={handleSubmit}
-            value={values.address}
-            id="address"
-            name="address"
-            style={{
-              flexDirection: "row",
-              height: 50,
-              alignItems: "center",
-              marginHorizontal: 55,
-              borderWidth: 3,
-              marginTop: 50,
-              paddingHorizontal: 10,
-              borderColor: "#00716F",
-              borderRadius: 23,
-              paddingVertical: 2,
-            }}
-          />
-
-          <TextInput
-            placeholder="Provincia"
-            placeholderTextColor="#fff"
-            onChangeText={handleChange("province")}
-            onChange={handleChange}
-            onSubmit={handleSubmit}
-            value={values.province}
-            id="province"
-            name="province"
+            value={values.street}
+            id="street"
+            name="street"
             style={{
               flexDirection: "row",
               height: 50,

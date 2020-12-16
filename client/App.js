@@ -22,16 +22,13 @@ const styles = StyleSheet.create({
 });
 
 const LoginStack = createStackNavigator();
-function LoginStackScreen({ setToken }) {
+function RegisterStackScreen({ setToken }) {
   return (
     <LoginStack.Navigator
       screenOptions={{
         headerShown: false,
       }}
     >
-      <LoginStack.Screen name="Login">
-        {(setToken) => <Login setToken={setToken} />}
-      </LoginStack.Screen>
       <LoginStack.Screen name="PreRegister" component={PreRegister} />
       <LoginStack.Screen name="PreRegisterToken" component={PreRegisterToken} />
       <LoginStack.Screen name="Register" component={Register} />
@@ -39,28 +36,18 @@ function LoginStackScreen({ setToken }) {
   );
 }
 
-const RegisterStack = createStackNavigator();
-function RegisterStackScreen() {
-  return (
-    <RegisterStack.Navigator
-      screenOptions={{
-        headerShown: false,
-      }}
-    >
-      <RegisterStack.Screen name="Register" component={Register} />
-    </RegisterStack.Navigator>
-  );
-}
-
 const ProfileStack = createStackNavigator();
-function ProfileStackScreen() {
+function ProfileStackScreen({ setToken }) {
+  console.log(setToken);
   return (
     <ProfileStack.Navigator
       screenOptions={{
         headerShown: false,
       }}
     >
-      <ProfileStack.Screen name="Profile" component={Profile} />
+      <ProfileStack.Screen name="Profile">
+        {(props) => <Profile {...props} setToken={setToken} />}
+      </ProfileStack.Screen>
     </ProfileStack.Navigator>
   );
 }
@@ -96,14 +83,25 @@ export default function App() {
           style: styles.tab,
         }}
       >
-        {/* <Tab.Screen name="Home" component={HomeStackScreen} /> */}
-        <Tab.Screen
-          name="Login"
-          children={() => <LoginStackScreen setToken={setToken} />}
-        />
-        <Tab.Screen name="Register" component={RegisterStackScreen} />
-        <Tab.Screen name="Profile" component={ProfileStackScreen} />
-        {/* <Tab.Screen name="Token" component={PreRegisterToken} /> */}
+        {!token && (
+          <Tab.Screen
+            name="Login"
+            children={({ navigation }) => (
+              <Login setToken={setToken} navigation={navigation} />
+            )}
+          />
+        )}
+        {!token && (
+          <Tab.Screen name="Register" component={RegisterStackScreen} />
+        )}
+        {!!token && (
+          <Tab.Screen
+            name="Profile"
+            children={({ navigation }) => (
+              <ProfileStackScreen navigation={navigation} setToken={setToken} />
+            )}
+          />
+        )}
       </Tab.Navigator>
     </NavigationContainer>
   );

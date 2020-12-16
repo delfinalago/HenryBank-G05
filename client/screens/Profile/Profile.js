@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Card, Button } from "react-native-elements";
 import BaseIcon from "./Icon";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import {
   Image,
@@ -30,8 +31,8 @@ const styles = StyleSheet.create({
   },
   headerContainer: {},
   headerColumn: {
-    alignItems: 'center',
-      ...Platform.select({
+    alignItems: "center",
+    ...Platform.select({
       ios: {
         alignItems: "center",
         elevation: 1,
@@ -96,9 +97,9 @@ const styles = StyleSheet.create({
     width: 250,
   },
   buttons: {
-    display: 'flex',
+    display: "flex",
     alignItems: "center",
-  }
+  },
 });
 
 class Contact extends Component {
@@ -122,11 +123,10 @@ class Contact extends Component {
     );
   };
 
-  onPressSetting = () => {
-  
-  };
+  onPressSetting = () => {};
 
   render() {
+    const { setToken, navigation } = this.props;
     return (
       <ScrollView style={styles.scroll}>
         <View style={styles.container}>
@@ -145,7 +145,10 @@ class Contact extends Component {
                 containerStyle={styles.listItemContainer}
                 icon={
                   <BaseIcon
-                    containerStyle={{ backgroundColor: "#29333d", marginLeft:10 }}
+                    containerStyle={{
+                      backgroundColor: "#29333d",
+                      marginLeft: 10,
+                    }}
                     icon={{
                       type: "font-awesome",
                       name: "bank",
@@ -161,7 +164,10 @@ class Contact extends Component {
                 containerStyle={styles.listItemContainer}
                 icon={
                   <BaseIcon
-                    containerStyle={{ backgroundColor: "#29333d", marginLeft:15 }}
+                    containerStyle={{
+                      backgroundColor: "#29333d",
+                      marginLeft: 15,
+                    }}
                     icon={{
                       type: "font-awesome",
                       name: "line-chart",
@@ -233,6 +239,18 @@ class Contact extends Component {
                     }}
                   />
                 }
+              />
+              <Button
+                title="logout"
+                onPress={async () => {
+                  try {
+                    await AsyncStorage.setItem("@localUser", "");
+                    setToken("");
+                    navigation.navigate("Login");
+                  } catch (error) {
+                    console.log(this.props);
+                  }
+                }}
               />
             </View>
           </Card>
