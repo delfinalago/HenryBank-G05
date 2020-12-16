@@ -1,10 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+import {
+  createDrawerNavigator,
+  DrawerContentScrollView,
+  DrawerItemList,
+  DrawerItem,
+} from "@react-navigation/drawer";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { StyleSheet, Text, View } from "react-native";
-import axios from "axios";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { StatusBar } from "expo-status-bar";
 
 // Screens
 
@@ -13,48 +18,15 @@ import Login from "./screens/Login";
 import Register from "./screens/Register/Register";
 import Profile from "./screens/Profile";
 import PreRegister from "./screens/Register/preRegister";
+import contactsList from "./screens/MisContactos/contactsList";
+import addContact from "./screens/MisContactos/addContact";
+import editContact from "./screens/MisContactos/editContact";
+
 import PreRegisterToken from "./screens/Register/preRegisterToken";
 
-const styles = StyleSheet.create({
-  tab: {
-    marginBottom: 15,
-  },
-});
+const Stack = createStackNavigator(); //contiene la navegacion
 
-const LoginStack = createStackNavigator();
-function RegisterStackScreen({ setToken }) {
-  return (
-    <LoginStack.Navigator
-      screenOptions={{
-        headerShown: false,
-      }}
-    >
-      <LoginStack.Screen name="PreRegister" component={PreRegister} />
-      <LoginStack.Screen name="PreRegisterToken" component={PreRegisterToken} />
-      <LoginStack.Screen name="Register" component={Register} />
-    </LoginStack.Navigator>
-  );
-}
-
-const ProfileStack = createStackNavigator();
-function ProfileStackScreen({ setToken }) {
-  console.log(setToken);
-  return (
-    <ProfileStack.Navigator
-      screenOptions={{
-        headerShown: false,
-      }}
-    >
-      <ProfileStack.Screen name="Profile">
-        {(props) => <Profile {...props} setToken={setToken} />}
-      </ProfileStack.Screen>
-    </ProfileStack.Navigator>
-  );
-}
-
-const Tab = createBottomTabNavigator();
-
-export default function App() {
+function RootStack() {
   const [token, setToken] = useState(null);
 
   useEffect(() => {
@@ -77,32 +49,84 @@ export default function App() {
   }, [token]);
 
   return (
+    <Stack.Navigator initialRouteName="Login">
+      <Stack.Screen
+        name="Login"
+        component={LoginStack}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen name="Profile" options={{ headerShown: false }}>
+        {(props) => <ProfileStack {...props} setToken={setToken} />}
+      </Stack.Screen>
+    </Stack.Navigator>
+  );
+}
+
+function LoginStack() {
+  return (
+    <Stack.Navigator
+      initialRouteName="Home"
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <Stack.Screen
+        name="Login"
+        component={Login}
+        options={{ title: "Iniciar sesión" }}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen name="PreRegister" component={PreRegister} />
+      <Stack.Screen name="PreRegisterToken" component={PreRegisterToken} />
+      <Stack.Screen
+        name="Register"
+        component={Register}
+        options={{ title: "Registrarse" }}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
+  );
+}
+
+function ProfileStack() {
+  return (
+    <Stack.Navigator
+      initialRouteName="Profile"
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <ProfileStack.Screen name="Profile">
+        {(props) => <Profile {...props} setToken={setToken} />}
+      </ProfileStack.Screen>
+      <Stack.Screen
+        name="contactsList"
+        component={contactsList}
+        options={{ title: "Mis Contactos" }}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="addContact"
+        component={addContact}
+        options={{ title: "Mis Contactos" }}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="editContact"
+        component={editContact}
+        options={{ title: "Mis Contactos" }}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
+  );
+}
+
+export default function App() {
+  const [token, setToken] = useState(null);
+
+  return (
     <NavigationContainer>
-      <Tab.Navigator
-        tabOptions={{
-          style: styles.tab,
-        }}
-      >
-        {!token && (
-          <Tab.Screen
-            name="Login"
-            children={({ navigation }) => (
-              <Login setToken={setToken} navigation={navigation} />
-            )}
-          />
-        )}
-        {!token && (
-          <Tab.Screen name="Register" component={RegisterStackScreen} />
-        )}
-        {!!token && (
-          <Tab.Screen
-            name="Profile"
-            children={({ navigation }) => (
-              <ProfileStackScreen navigation={navigation} setToken={setToken} />
-            )}
-          />
-        )}
-      </Tab.Navigator>
+      <RootStack />
     </NavigationContainer>
   );
 }

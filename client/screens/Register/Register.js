@@ -20,14 +20,7 @@ const background = require("../../assets/Fondo1.png");
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function register({ navigation }) {
-  const {
-    handleSubmit,
-    handleChange,
-    values,
-    touched,
-    errors,
-    handleBlur,
-  } = useFormik({
+  const { handleSubmit, handleChange, values, touched, errors } = useFormik({
     initialValues: {
       first_name: "",
       last_name: "",
@@ -87,27 +80,9 @@ export default function register({ navigation }) {
     <ScrollView style={styles.scrollView}>
       <View style={{ backgroundColor: "#FFF", height: "100%" }}>
         <ImageBackground source={background} style={styles.image}>
-          <Text
-            style={{
-              paddingTop: 30,
-              fontSize: 50,
-              alignSelf: "center",
-              color: "#FFF",
-            }}
-          >
-            Alta de cliente
-          </Text>
+          <Text style={styles.title}>Alta de cliente</Text>
 
-          <Text
-            style={{
-              fontSize: 20,
-              marginHorizontal: 55,
-              textAlign: "center",
-              marginTop: 10,
-              opacity: 0.8,
-              color: "#FFF",
-            }}
-          >
+          <Text style={styles.subtitle}>
             Complete los campos para registrarse.
           </Text>
 
@@ -120,18 +95,7 @@ export default function register({ navigation }) {
             value={values.first_name}
             id="first_name"
             name="first_name"
-            style={{
-              flexDirection: "row",
-              height: 50,
-              alignItems: "center",
-              marginHorizontal: 55,
-              borderWidth: 3,
-              marginTop: 50,
-              paddingHorizontal: 10,
-              borderColor: "#00716F",
-              borderRadius: 23,
-              paddingVertical: 2,
-            }}
+            style={styles.input}
           />
 
           {touched.first_name && errors.first_name ? (
@@ -147,18 +111,7 @@ export default function register({ navigation }) {
             id="last_name"
             name="last_name"
             value={values.last_name}
-            style={{
-              flexDirection: "row",
-              height: 50,
-              alignItems: "center",
-              marginHorizontal: 55,
-              borderWidth: 3,
-              marginTop: 50,
-              paddingHorizontal: 10,
-              borderColor: "#00716F",
-              borderRadius: 23,
-              paddingVertical: 2,
-            }}
+            style={styles.input}
           />
           {touched.last_name && errors.last_name ? (
             <Text>{errors.last_name}</Text>
@@ -174,18 +127,7 @@ export default function register({ navigation }) {
             keyboardType="numeric"
             id="cellphone"
             name="cellphone"
-            style={{
-              flexDirection: "row",
-              height: 50,
-              alignItems: "center",
-              marginHorizontal: 55,
-              borderWidth: 3,
-              marginTop: 50,
-              paddingHorizontal: 10,
-              borderColor: "#00716F",
-              borderRadius: 23,
-              paddingVertical: 2,
-            }}
+            style={styles.input}
           />
           {touched.cellphone && errors.cellphone ? (
             <Text>{errors.cellphone}</Text>
@@ -201,18 +143,7 @@ export default function register({ navigation }) {
             keyboardType="numbers-and-punctuation"
             id="dno"
             name="dni"
-            style={{
-              flexDirection: "row",
-              height: 50,
-              alignItems: "center",
-              marginHorizontal: 55,
-              borderWidth: 3,
-              marginTop: 50,
-              paddingHorizontal: 10,
-              borderColor: "#00716F",
-              borderRadius: 23,
-              paddingVertical: 2,
-            }}
+            style={styles.input}
           />
 
           <TextInput
@@ -224,18 +155,7 @@ export default function register({ navigation }) {
             value={values.nacimiento}
             id="nacimiento"
             name="nacimiento"
-            style={{
-              flexDirection: "row",
-              height: 50,
-              alignItems: "center",
-              marginHorizontal: 55,
-              borderWidth: 3,
-              marginTop: 50,
-              paddingHorizontal: 10,
-              borderColor: "#00716F",
-              borderRadius: 23,
-              paddingVertical: 2,
-            }}
+            style={styles.input}
           />
 
           <TextInput
@@ -247,18 +167,7 @@ export default function register({ navigation }) {
             value={values.street}
             id="street"
             name="street"
-            style={{
-              flexDirection: "row",
-              height: 50,
-              alignItems: "center",
-              marginHorizontal: 55,
-              borderWidth: 3,
-              marginTop: 50,
-              paddingHorizontal: 10,
-              borderColor: "#00716F",
-              borderRadius: 23,
-              paddingVertical: 2,
-            }}
+            style={styles.input}
           />
 
           <TextInput
@@ -270,18 +179,7 @@ export default function register({ navigation }) {
             name="city"
             onSubmit={handleSubmit}
             value={values.city}
-            style={{
-              flexDirection: "row",
-              height: 50,
-              alignItems: "center",
-              marginHorizontal: 55,
-              borderWidth: 3,
-              marginTop: 50,
-              paddingHorizontal: 10,
-              borderColor: "#00716F",
-              borderRadius: 23,
-              paddingVertical: 2,
-            }}
+            style={styles.input}
           />
 
           <TouchableOpacity
@@ -289,34 +187,14 @@ export default function register({ navigation }) {
             secureTextEntry={true}
             title="Register"
             onPress={handleSubmit}
-            style={{
-              backgroundColor: "#FFF",
-              marginHorizontal: 55,
-              alignItems: "center",
-              justifyContent: "center",
-              marginTop: 30,
-              marginBottom: 15,
-              backgroundColor: "#00716F",
-              paddingVertical: 10,
-              borderRadius: 23,
-            }}
+            style={styles.boton}
           >
             <Text>Enviar</Text>
           </TouchableOpacity>
           <TouchableOpacity
             title="Go back"
             onPress={() => navigation.goBack()}
-            style={{
-              backgroundColor: "#FFF",
-              marginHorizontal: 55,
-              alignItems: "center",
-              justifyContent: "center",
-              marginTop: 15,
-              marginBottom: 30,
-              backgroundColor: "#00716F",
-              paddingVertical: 10,
-              borderRadius: 23,
-            }}
+            style={styles.boton}
           >
             <Text>Volver</Text>
           </TouchableOpacity>
@@ -328,10 +206,48 @@ export default function register({ navigation }) {
 
 const styles = StyleSheet.create({
   scrollView: {
-    backgroundColor: "gray",
+    backgroundColor: "#fff",
   },
   text: {
     fontSize: 50,
   },
-  image: {},
+  input: {
+    flexDirection: "row",
+    height: 50,
+    alignItems: "center",
+    marginHorizontal: 55,
+    borderWidth: 3,
+    marginTop: 50,
+    paddingHorizontal: 10,
+    borderColor: "#00716F",
+    borderRadius: 23,
+    paddingVertical: 2,
+  },
+  boton: {
+    backgroundColor: "#FFF",
+    marginHorizontal: 55,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 30,
+    marginBottom: 15,
+    backgroundColor: "#00716F",
+    paddingVertical: 10,
+    borderRadius: 23,
+  },
+  title: {
+    paddingTop: 30,
+    fontSize: 50,
+    alignSelf: "center",
+    color: "#FFF",
+    fontFamily: "",
+  },
+  subtitle: {
+    fontFamily: "",
+    fontSize: 20,
+    marginHorizontal: 55,
+    textAlign: "center",
+    marginTop: 10,
+    opacity: 0.8,
+    color: "#FFF",
+  },
 });

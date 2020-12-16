@@ -15,14 +15,6 @@ const transporter = nodemailer.createTransport({
 	},
 });
 
-//Authentication
-const { ServiceBroker } = require("moleculer");
-const broker = new ServiceBroker({
-	validator: true, // Default is true
-});
-
-/* ================================================================================================================== */
-
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
  */
@@ -35,7 +27,7 @@ module.exports = {
 	 * Mixins
 	 */
 	mixins: [DbService],
-	adapter: new SqlAdapter("veski", "root", "", {
+	adapter: new SqlAdapter("veski", "rocco", "Rocco", {
 		host: "127.0.0.1",
 		dialect: "mysql",
 	}),
@@ -205,7 +197,7 @@ module.exports = {
 		},
 		async validateDni(dni) {
 			const dniDb = await this.adapter.db.query(
-				`SELECT * FROM CLIENT WHERE dni = '${dni}'`
+				`SELECT * FROM \`client\` WHERE dni = '${dni}'`
 			);
 			return !dniDb[0].length;
 		},
