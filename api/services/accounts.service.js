@@ -127,10 +127,11 @@ module.exports = {
 				rest: "PUT /extraccion",
 				async handler(ctx) {
 					const amount = parseInt(ctx.params.amount);
-
+					const state = ctx.params.state
 					const origin = ctx.params.origin;
-
+                   if (state){
 					await ctx
+
 						.call("accounts.saldoARG", {
 							id_client: origin,
 						})
@@ -150,8 +151,23 @@ module.exports = {
 					return ctx.call("accounts.saldoARG", {
 						id_client: origin,
 					});
+				};
 				   },
 				},
+
+				transaction : {
+					rest: "PUT /transc",      //operacion que une la extraccion con la recarga de dinero //
+
+					async handler(ctx) {
+
+						const { origin , destiny , amount ,state } = ctx.params
+
+						ctx.call("accounts.extrac" , { origin , amount , state})  //invoca a la func  extrac y recarga //
+
+							ctx.call ("accounts.recarga" , { amount , destiny})
+							return "transferencia exitosa!"
+        	},
+		},
 	},
 	/**
 	 * Methods
