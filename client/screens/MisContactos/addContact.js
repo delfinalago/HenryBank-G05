@@ -43,6 +43,7 @@ export default function addContact({ navigation }) {
             value={values.email} style={styles.input} placeholder='Email'/>
             </Card>
                 <Button type="outline" onPress={handleSubmit} title="Guardar" style={styles.boton}/>
+                <Button type="outline" onPress={() => navigation.goBack()} title="Volver" style={styles.boton}/>
         </ScrollView>
     )
 }
@@ -54,7 +55,7 @@ const styles = StyleSheet.create({
     },
     title: {
         marginTop: 15,
-        fontSize: 20,
+        fontSize: 30,
         color: "#00aae4",
         alignSelf: "center"
     },
@@ -69,9 +70,12 @@ const styles = StyleSheet.create({
         borderRadius: 23,
       },
     boton: {
-    marginTop: 5,
-      margin: 60,
-      alignSelf: "auto",
-      
+      paddingTop: 15,
+      marginBottom: 5,
+      flex : "row",
+      color:"#03bb85",
+      marginLeft: 60,
+      marginRight: 60,
+      backgroundColor: "#fff",
     }
 })

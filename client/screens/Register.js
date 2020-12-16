@@ -256,10 +256,10 @@ const styles = StyleSheet.create({
     fontSize: 50,
     alignSelf: "center",
     color: "#FFF",
-    fontFamily: "Verdana",
+    fontFamily: "",
   },
   subtitle: {
-    fontFamily: "Verdana",
+    fontFamily: "",
     fontSize: 20,
     marginHorizontal: 55,
     textAlign: "center",

@@ -13,6 +13,9 @@ import Login from "./screens/Login";
 import Register from "../client/screens/Register";
 import Profile from "./screens/Profile";
 import PreRegister from "./screens/preRegister";
+import contactsList from "./screens/MisContactos/contactsList"
+import addContact from "./screens/MisContactos/addContact";
+import editContact from "./screens/MisContactos/editContact";
 
 const Stack = createStackNavigator(); //contiene la navegacion
 
@@ -35,10 +38,13 @@ function LoginStack() {
 		>
 			
 			{/* <Stack.Screen name='Home' component={Home} options={{ headerShown: false }} /> */}
-			<Stack.Screen name='Login' component={Login} options={{ title: 'Iniciar sesión' }} options={{ headerShown: false }} />
+			{/* <Stack.Screen name='Login' component={Login} options={{ title: 'Iniciar sesión' }} options={{ headerShown: false }} />
     		<Stack.Screen name='PreRegister' component={PreRegister} />
 			<Stack.Screen name='Register' component={Register} options={{ title: 'Registrarse' }} options={{ headerShown: false }} />
-     		<Stack.Screen name='Profile' component={Profile} options={{ title: 'Perfil' }} options={{ headerShown: false }} />
+     		<Stack.Screen name='Profile' component={Profile} options={{ title: 'Perfil' }} options={{ headerShown: false }} /> */}
+			<Stack.Screen name='contactsList' component={contactsList} options={{ title: 'Mis Contactos' }} options={{ headerShown: false }} />
+			<Stack.Screen name='addContact' component={addContact} options={{ title: 'Mis Contactos' }} options={{ headerShown: false }} />
+			<Stack.Screen name='editContact' component={editContact} options={{ title: 'Mis Contactos' }} options={{ headerShown: false }} />
 		</Stack.Navigator>
 	);
 }

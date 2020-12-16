@@ -1,4 +1,3 @@
-
 import React, { Component, useEffect } from 'react'
 import {
   TouchableOpacity,
@@ -40,7 +39,7 @@ const list = [
 
 export default function contactos({ navigation }) {
 
- 
+        
     
       return ( 
         <ScrollView style={styles.fondo}>
