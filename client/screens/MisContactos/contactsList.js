@@ -9,7 +9,9 @@ import {
   TextInput,
   FlatList,
 } from 'react-native'
-import { Card, ListItem, Button, Icon,Avatar } from 'react-native-elements'
+import { Card, ListItem, Button, Icon,Avatar } from 'react-native-elements';
+import axios from 'axios';
+import {API} from '../../env.js';
 
 
 const list = [
@@ -39,46 +41,41 @@ const list = [
 
 export default function contactos({ navigation }) {
 
-        
+  const getContacts = async() => {
+    if(userId){
+      axios.get(`${API}/api/addContact/${id_cli}`)
+      .then((res) =>{
+        console.log(res)
+      })
+      .catch((error)=>{console.log(error)})
+  } 
+} 
+  
     
-      return ( 
-        <ScrollView style={styles.fondo}>
-         <View style={{ flex: 1}}>
-        <SafeAreaView />
-            <TextInput
-            placeholder= "Search"
-            placeholderTextColor= "#dddddd"
-            style={styles.input}
-            />
-         <View style={{flex:1, backgroundColor: "#fff"}}>
-          <Card>
-           <Card.Title style={styles.contacts}>MIS CONTACTOS</Card.Title>
-           <Card.Divider/>
-           <Button type="outline"  title="Agregar Contacto" style={styles.boton}  onPress={() => navigation.navigate("addContact")}/>
-           <Card.Divider/>
-            {
-          list.map((u, i) => {
-          return ( 
-          <View key={i}>
-          <TouchableOpacity onPress={() => navigation.navigate("editContact")}>
-          <ListItem
-          key={i}
-          roundAvatar
-          title={u.name}
-          leftAvatar={{ source: { uri: 'https://media.istockphoto.com/vectors/vector-of-cute-dog-head-cartoon-character-for-avatar-icon-or-symbol-vector-id1189777293' } }}
-          />
-         </TouchableOpacity>
-          
-        </View>
-      );
-    })
-  }
-</Card>
-          </View>
-        </View>
-        </ScrollView>
-       
-      );
+  return ( 
+    <ScrollView style={styles.fondo}>
+      <View style={{flex:1, backgroundColor: "#fff"}}>
+        <Card>
+          <Card.Title style={styles.contacts}>MIS CONTACTOS</Card.Title>
+        <Card.Divider/>
+          <Button type="outline"  title="Agregar Contacto" style={styles.boton}  onPress={() => navigation.navigate("addContact")}/>
+        <Card.Divider/>
+            { list.map((u, i) => {
+              return ( 
+                  <View key={i}>
+                    <TouchableOpacity onPress={() => navigation.navigate("editContact")}>
+                    <ListItem key={i} roundAvatar title={u.name} 
+                    leftAvatar={{ source: { uri: 'https://media.istockphoto.com/vectors/vector-of-cute-dog-head-cartoon-character-for-avatar-icon-or-symbol-vector-id1189777293' } }}
+                    />
+                    </TouchableOpacity>
+                  </View>
+                );
+              })
+            }
+        </Card>
+      </View>
+    </ScrollView>     
+ );
 }
 
 const styles = StyleSheet.create({

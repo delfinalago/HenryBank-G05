@@ -12,7 +12,7 @@ module.exports = {
     name: "contacts",
 
     mixins: [DbService],
-	adapter: new SqlAdapter("veski", "root", "", {
+	adapter: new SqlAdapter("veski", "rocco", "Rocco", {
 		host: "127.0.0.1",
 		dialect: "mysql",
 	}),
@@ -72,7 +72,7 @@ module.exports = {
     
     findContact: {
         rest: "GET",
-        path: "/findContact",
+        path: "/allcontacts",
 
 		async handler(ctx) {
 	

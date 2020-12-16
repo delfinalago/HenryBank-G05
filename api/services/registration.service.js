@@ -33,7 +33,7 @@ module.exports = {
 	 * Mixins
 	 */
 	mixins: [DbService],
-	adapter: new SqlAdapter("veski", "root", "Rocco", {
+	adapter: new SqlAdapter("veski", "rocco", "Rocco", {
 		host: "127.0.0.1",
 		dialect: "mysql",
 	}),
