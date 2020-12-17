@@ -87,21 +87,20 @@ module.exports = {
 			},
 		},
 
-		associateContact: {
-			rest: "POST",
-			path: "/associateContact",
+		associate: {
+			rest: "POST /associate",
 
 			async handler(ctx) {
-				const { alias, username, id_cli } = ctx.params;
+				const { alias, username } = ctx.params;
+				const { id: id_cli } = ctx.meta.user;
 
-				const contact = await this.adapter.db
-					.query(
-						`SELECT id FROM client WHERE username = '${username}'`
-					)
-					.then((e) => Object.values(e[0][0]));
+				const [[{ id: contact }]] = await this.adapter.db.query(
+					`SELECT id FROM client WHERE username = '${username}'`
+				);
+
 				console.log(contact);
 
-				if (!contact[0].length) {
+				if (contact) {
 					const insertContact = await this.adapter.db.query(
 						"INSERT INTO `contacts` (`alias` , `id_cli`, `id_contact` )" +
 							`VALUES ('${alias}','${id_cli}' , '${contact}');`
@@ -109,6 +108,8 @@ module.exports = {
 					//id_cli es un dato externo que lo tomamos de la auth hecha al usuario, asi sabemos quien hace las peticiones
 
 					console.log(insertContact);
+				} else {
+					return { error: "no existe el usuario" };
 				}
 			},
 		},
@@ -117,26 +118,30 @@ module.exports = {
 			rest: "PUT /modifContact",
 
 			async handler(ctx) {
-				const id_contact = ctx.params.id_contact;
-				const alias = ctx.params.alias;
+				const { id_contact, alias } = ctx.params;
+				const { id } = ctx.meta.user;
 
 				console.log(alias);
 
 				const modcontact = await this.adapter.db.query(
-					`UPDATE contacts SET alias = '${alias}' WHERE id_contact ='${id_contact}' `
+					`UPDATE contacts SET alias = '${alias}' WHERE id_contact ='${id_contact}' AND id_cli = '${id}' `
 				);
+
+				return modcontact;
 			},
 		},
 
 		deleteContact: {
-			rest: "DELETE",
-			path: "/deleteContact",
+			rest: "DELETE /delete",
 
 			async handler(ctx) {
-				const contact = ctx.params.id_contact;
+				const { id_contact } = ctx.params;
+				const { id } = ctx.meta.user;
 				const delContact = await this.adapter.db.query(
-					`DELETE FROM contacts WHERE id_contact ='${contact}' `
+					`DELETE FROM contacts WHERE id_contact ='${id_contact}' AND id_cli = '${id}' `
 				);
+				console.log(ctx.params);
+				return delContact;
 			},
 		},
 	},
