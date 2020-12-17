@@ -48,7 +48,7 @@ export default function sendMoney({ route, navigation }) {
   return (
     <ScrollView style={styles.scrollView}>
       <View style={styles.container}>
-        <Text style={styles.textTitle}>Transferir Dinero</Text>
+        <Text style={styles.textTitle}>Enviar Dinero</Text>
         <Text style={styles.textSub}>
           Ingresá cuanto dinero le queres transferir a tu contacto
         </Text>
@@ -84,9 +84,11 @@ const styles = StyleSheet.create({
   input: {
     alignItems: "center",
     width: "auto",
+    height: 50,
     marginHorizontal: 10,
     borderWidth: 2,
-    marginTop: 50,
+    marginTop: 120,
+    marginBottom: 20,
     paddingHorizontal: 10,
     borderColor: "#00716F",
     borderRadius: 10,
@@ -102,10 +104,13 @@ const styles = StyleSheet.create({
     borderRadius: 23,
   },
   container: {
+    paddingTop: 100,
+    paddingHorizontal: 30,
     backgroundColor: "#FFF",
     height: "100%",
-    flex: 2,
+    flex: 3,
     flexDirection: "column",
     justifyContent: "space-between",
+    alignItems: "stretch",
   },
 });
