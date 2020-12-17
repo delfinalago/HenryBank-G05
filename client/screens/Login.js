@@ -42,8 +42,12 @@ export default function Login({ navigation, setToken }) {
             try {
               await AsyncStorage.setItem("@localUser", JSON.stringify(data));
               setToken(data.token);
+              console.log("entrandiiiiiiing");
             } catch (error) {
               // Error saving data
+              console.log(error);
+            } finally {
+              navigation.navigate("Profile");
             }
           })();
         });
@@ -53,54 +57,52 @@ export default function Login({ navigation, setToken }) {
   return (
     <ScrollView>
       <View style={{ height: "100%" }}>
-        <ImageBackground source={background}>
-          <Text style={styles.correo}> Email :</Text>
-          <TextInput
-            placeholder="Correo"
-            placeholderTextColor="#000000"
-            onChangeText={handleChange("login")}
-            value={values.login}
-            id="login"
-            name="login"
-            type="text"
-            style={style.input}
-          />
-          {touched.login && errors.login ? <Text>{errors.login}</Text> : null}
-          <Text style={style.text}> Contraseña :</Text>
-          <TextInput
-            placeholder="Contraseña"
-            placeholderTextColor="#000000"
-            onChangeText={handleChange("password")}
-            value={values.password}
-            id="password"
-            name="password"
-            type="password"
-            style={styles.input}
-          />
-          {touched.password && errors.password ? (
-            <div>{errors.password}</div>
-          ) : null}
+        <Text style={styles.correo}> Email :</Text>
+        <TextInput
+          placeholder="Correo"
+          placeholderTextColor="#000000"
+          onChangeText={handleChange("login")}
+          value={values.login}
+          id="login"
+          name="login"
+          type="text"
+          style={styles.input}
+        />
+        {touched.login && errors.login ? <Text>{errors.login}</Text> : null}
+        <Text style={styles.text}> Contraseña :</Text>
+        <TextInput
+          placeholder="Contraseña"
+          placeholderTextColor="#000000"
+          onChangeText={handleChange("password")}
+          value={values.password}
+          id="password"
+          name="password"
+          type="password"
+          style={styles.input}
+        />
+        {touched.password && errors.password ? (
+          <div>{errors.password}</div>
+        ) : null}
 
-          <TouchableOpacity
-            mode="contained"
-            secureTextEntry={true}
-            title=""
-            onPress={handleSubmit}
-            style={style.touchable}
-          >
-            <Text>Ingresar</Text>
-          </TouchableOpacity>
+        <TouchableOpacity
+          mode="contained"
+          secureTextEntry={true}
+          title=""
+          onPress={handleSubmit}
+          style={styles.touchable}
+        >
+          <Text>Ingresar</Text>
+        </TouchableOpacity>
 
-          <TouchableOpacity
-            mode="contained"
-            secureTextEntry={true}
-            title=""
-            onPress={() => navigation.navigate("PreRegister")}
-            style={styles.touchable}
-          >
-            <Text>Registrarse</Text>
-          </TouchableOpacity>
-        </ImageBackground>
+        <TouchableOpacity
+          mode="contained"
+          secureTextEntry={true}
+          title=""
+          onPress={() => navigation.navigate("PreRegister")}
+          style={styles.touchable}
+        >
+          <Text>Registrarse</Text>
+        </TouchableOpacity>
       </View>
     </ScrollView>
   );

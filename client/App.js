@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import {
-  createDrawerNavigator,
-  DrawerContentScrollView,
-  DrawerItemList,
-  DrawerItem,
-} from "@react-navigation/drawer";
+// import {
+//   createDrawerNavigator,
+//   DrawerContentScrollView,
+//   DrawerItemList,
+//   DrawerItem,
+// } from "@react-navigation/drawer";
+
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { StyleSheet, Text, View } from "react-native";
 import { StatusBar } from "expo-status-bar";
@@ -50,11 +53,9 @@ function RootStack() {
 
   return (
     <Stack.Navigator initialRouteName="Login">
-      <Stack.Screen
-        name="Login"
-        component={LoginStack}
-        options={{ headerShown: false }}
-      />
+      <Stack.Screen name="Login" options={{ headerShown: false }}>
+        {(props) => <LoginStack {...props} setToken={setToken} />}
+      </Stack.Screen>
       <Stack.Screen name="Profile" options={{ headerShown: false }}>
         {(props) => <ProfileStack {...props} setToken={setToken} />}
       </Stack.Screen>
@@ -88,17 +89,12 @@ function LoginStack() {
   );
 }
 
-function ProfileStack() {
+function ProfileStack({ setToken }) {
   return (
-    <Stack.Navigator
-      initialRouteName="Profile"
-      screenOptions={{
-        headerShown: false,
-      }}
-    >
-      <ProfileStack.Screen name="Profile">
+    <Stack.Navigator>
+      <Stack.Screen name="Me">
         {(props) => <Profile {...props} setToken={setToken} />}
-      </ProfileStack.Screen>
+      </Stack.Screen>
       <Stack.Screen
         name="contactsList"
         component={contactsList}

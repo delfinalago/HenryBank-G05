@@ -193,9 +193,9 @@ class Contact extends Component {
               />
               <Button
                 titleStyle={styles.listItem}
-                title="Mis datos"
+                title="Mis contactos"
                 type="outline"
-                onPress={() => this.onPressSetting()}
+                onPress={() => navigation.navigate("contactsList")}
                 containerStyle={styles.listItemContainer}
                 icon={
                   <BaseIcon

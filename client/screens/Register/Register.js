@@ -69,7 +69,7 @@ export default function register({ navigation }) {
             alert(data.error);
           } else {
             console.log(data);
-            navigation.navigate("Profile");
+            navigation.navigate("Login");
           }
         })
         .catch((error) => console.log(error));
@@ -78,127 +78,125 @@ export default function register({ navigation }) {
 
   return (
     <ScrollView style={styles.scrollView}>
-      <View style={{ backgroundColor: "#FFF", height: "100%" }}>
-        <ImageBackground source={background} style={styles.image}>
-          <Text style={styles.title}>Alta de cliente</Text>
+      <View style={{ backgroundColor: "gray", height: "100%" }}>
+        <Text style={styles.title}>Alta de cliente</Text>
 
-          <Text style={styles.subtitle}>
-            Complete los campos para registrarse.
-          </Text>
+        <Text style={styles.subtitle}>
+          Complete los campos para registrarse.
+        </Text>
 
-          <TextInput
-            placeholder="Nombre"
-            placeholderTextColor="#fff"
-            onChangeText={handleChange("first_name")}
-            onChange={handleChange}
-            onSubmit={handleSubmit}
-            value={values.first_name}
-            id="first_name"
-            name="first_name"
-            style={styles.input}
-          />
+        <TextInput
+          placeholder="Nombre"
+          placeholderTextColor="#fff"
+          onChangeText={handleChange("first_name")}
+          onChange={handleChange}
+          onSubmit={handleSubmit}
+          value={values.first_name}
+          id="first_name"
+          name="first_name"
+          style={styles.input}
+        />
 
-          {touched.first_name && errors.first_name ? (
-            <Text>{errors.first_name}</Text>
-          ) : null}
+        {touched.first_name && errors.first_name ? (
+          <Text>{errors.first_name}</Text>
+        ) : null}
 
-          <TextInput
-            placeholder="Apellido"
-            placeholderTextColor="#fff"
-            onChangeText={handleChange("last_name")}
-            onChange={handleChange}
-            onSubmit={handleSubmit}
-            id="last_name"
-            name="last_name"
-            value={values.last_name}
-            style={styles.input}
-          />
-          {touched.last_name && errors.last_name ? (
-            <Text>{errors.last_name}</Text>
-          ) : null}
+        <TextInput
+          placeholder="Apellido"
+          placeholderTextColor="#fff"
+          onChangeText={handleChange("last_name")}
+          onChange={handleChange}
+          onSubmit={handleSubmit}
+          id="last_name"
+          name="last_name"
+          value={values.last_name}
+          style={styles.input}
+        />
+        {touched.last_name && errors.last_name ? (
+          <Text>{errors.last_name}</Text>
+        ) : null}
 
-          <TextInput
-            placeholder="Telefono"
-            placeholderTextColor="#fff"
-            onChangeText={handleChange("cellphone")}
-            onChange={handleChange}
-            onSubmit={handleSubmit}
-            value={values.cellphone}
-            keyboardType="numeric"
-            id="cellphone"
-            name="cellphone"
-            style={styles.input}
-          />
-          {touched.cellphone && errors.cellphone ? (
-            <Text>{errors.cellphone}</Text>
-          ) : null}
+        <TextInput
+          placeholder="Telefono"
+          placeholderTextColor="#fff"
+          onChangeText={handleChange("cellphone")}
+          onChange={handleChange}
+          onSubmit={handleSubmit}
+          value={values.cellphone}
+          keyboardType="numeric"
+          id="cellphone"
+          name="cellphone"
+          style={styles.input}
+        />
+        {touched.cellphone && errors.cellphone ? (
+          <Text>{errors.cellphone}</Text>
+        ) : null}
 
-          <TextInput
-            placeholder="DNI"
-            placeholderTextColor="#fff"
-            onChangeText={handleChange("dni")}
-            onChange={handleChange}
-            onSubmit={handleSubmit}
-            value={values.dni}
-            keyboardType="numbers-and-punctuation"
-            id="dno"
-            name="dni"
-            style={styles.input}
-          />
+        <TextInput
+          placeholder="DNI"
+          placeholderTextColor="#fff"
+          onChangeText={handleChange("dni")}
+          onChange={handleChange}
+          onSubmit={handleSubmit}
+          value={values.dni}
+          keyboardType="numeric"
+          id="dno"
+          name="dni"
+          style={styles.input}
+        />
 
-          <TextInput
-            placeholder="DD/MM/AAAA"
-            placeholderTextColor="#fff"
-            onChangeText={handleChange("nacimiento")}
-            onChange={handleChange}
-            onSubmit={handleSubmit}
-            value={values.nacimiento}
-            id="nacimiento"
-            name="nacimiento"
-            style={styles.input}
-          />
+        <TextInput
+          placeholder="AAAA/MM/DD"
+          placeholderTextColor="#fff"
+          onChangeText={handleChange("nacimiento")}
+          onChange={handleChange}
+          onSubmit={handleSubmit}
+          value={values.nacimiento}
+          id="nacimiento"
+          name="nacimiento"
+          style={styles.input}
+        />
 
-          <TextInput
-            placeholder="Direccion"
-            placeholderTextColor="#fff"
-            onChangeText={handleChange("street")}
-            onChange={handleChange}
-            onSubmit={handleSubmit}
-            value={values.street}
-            id="street"
-            name="street"
-            style={styles.input}
-          />
+        <TextInput
+          placeholder="Direccion"
+          placeholderTextColor="#fff"
+          onChangeText={handleChange("street")}
+          onChange={handleChange}
+          onSubmit={handleSubmit}
+          value={values.street}
+          id="street"
+          name="street"
+          style={styles.input}
+        />
 
-          <TextInput
-            placeholder="Ciudad"
-            placeholderTextColor="#fff"
-            onChangeText={handleChange("city")}
-            onChange={handleChange}
-            id="city"
-            name="city"
-            onSubmit={handleSubmit}
-            value={values.city}
-            style={styles.input}
-          />
+        <TextInput
+          placeholder="Ciudad"
+          placeholderTextColor="#fff"
+          onChangeText={handleChange("city")}
+          onChange={handleChange}
+          id="city"
+          name="city"
+          onSubmit={handleSubmit}
+          value={values.city}
+          style={styles.input}
+        />
 
-          <TouchableOpacity
-            mode="contained"
-            secureTextEntry={true}
-            title="Register"
-            onPress={handleSubmit}
-            style={styles.boton}
-          >
-            <Text>Enviar</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            title="Go back"
-            onPress={() => navigation.goBack()}
-            style={styles.boton}
-          >
-            <Text>Volver</Text>
-          </TouchableOpacity>
-        </ImageBackground>
+        <TouchableOpacity
+          mode="contained"
+          secureTextEntry={true}
+          title="Register"
+          onPress={handleSubmit}
+          style={styles.boton}
+        >
+          <Text>Enviar</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          title="Go back"
+          onPress={() => navigation.goBack()}
+          style={styles.boton}
+        >
+          <Text>Volver</Text>
+        </TouchableOpacity>
       </View>
     </ScrollView>
   );
@@ -206,7 +204,7 @@ export default function register({ navigation }) {
 
 const styles = StyleSheet.create({
   scrollView: {
-    backgroundColor: "#fff",
+    backgroundColor: "#000000",
   },
   text: {
     fontSize: 50,
