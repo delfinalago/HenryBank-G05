@@ -1,5 +1,7 @@
-import React, { Component, useEffect } from "react";
+import React from "react";
 import { useFormik } from "formik";
+import axios from "axios";
+import { API } from "../../env.js";
 import {
   TouchableOpacity,
   ScrollView,
@@ -16,35 +18,46 @@ import { Card, ListItem, Button, Icon, Avatar } from "react-native-elements";
 export default function addContact({ navigation }) {
   const { handleSubmit, handleChange, values, touched, errors } = useFormik({
     initialValues: {
-      name: "",
-      email: "",
+      alias: "",
+      username: "",
     },
-    onSubmit: ({ name, email }) => {
+    onSubmit: () => {
       console.log("register params: ", values);
+
+      axios
+        .post(`${API}/api/contacts/associate`, values)
+        .then(({ data }) => {
+          console.log("VALUES = ", values);
+          if (data.error) {
+            alert(data.error);
+          } else {
+            console.log(data);
+            navigation.navigate("Me");
+          }
+        })
+        .catch((error) => console.log(error));
     },
   });
 
   return (
     <ScrollView style={styles.fondo}>
-      <Card>
-        <Card.Title style={styles.title}>Agregar Contacto : </Card.Title>
-        <Card.Divider />
+      <View>
+        <Text style={styles.title}>Agregar Contacto : </Text>
         <TextInput
-          onChangeText={handleChange("name")}
+          onChangeText={handleChange("alias")}
           onSubmit={handleSubmit}
-          value={values.name}
+          value={values.alias}
           style={styles.input}
           placeholder="Nombre"
         />
-        <Card.Divider />
         <TextInput
-          onChangeText={handleChange("email")}
+          onChangeText={handleChange("username")}
           onSubmit={handleSubmit}
-          value={values.email}
+          value={values.username}
           style={styles.input}
           placeholder="Email"
         />
-      </Card>
+      </View>
       <Button
         type="outline"
         onPress={handleSubmit}
