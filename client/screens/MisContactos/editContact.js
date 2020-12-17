@@ -1,5 +1,7 @@
 import React, { Component, useEffect } from "react";
 import { useFormik } from "formik";
+import axios from "axios";
+import { API } from "../../env";
 import {
   TouchableOpacity,
   ScrollView,
@@ -13,29 +15,30 @@ import {
 } from "react-native";
 import { Card, ListItem, Button, Icon, Avatar } from "react-native-elements";
 
-export default function editContact({ navigation }) {
+export default function editContact({ route, navigation }) {
   const { handleSubmit, handleChange, values, touched, errors } = useFormik({
     initialValues: {
-      name: "",
+      alias: "",
     },
-    onSubmit: ({ name, email }) => {
-      console.log("register params: ", values);
+    onSubmit: ({ alias }) => {
+      const { id_contact } = route.params;
+      console.log("contact id: ", route.params);
+      axios.put(`${API}/api/contacts/modifContact`, { alias, id_contact });
     },
   });
 
   return (
     <ScrollView style={styles.fondo}>
-      <Card>
-        <Card.Title style={styles.title}>Editar Contacto</Card.Title>
-        <Card.Divider />
+      <View>
+        <Text style={styles.title}>Editar Contacto</Text>
         <Text style={styles.text}>Nombre</Text>
-        <Card.Divider />
         <TextInput
           style={styles.input}
-          onChangeText={handleChange("name")}
+          name="alias"
+          onChangeText={handleChange("alias")}
           placeholder="Cambiar Nombre"
         />
-      </Card>
+      </View>
       <Button
         type="outline"
         onPress={handleSubmit}
