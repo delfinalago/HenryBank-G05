@@ -13,56 +13,63 @@ import {
   Button,
 } from "react-native";
 
-import { useDispatch, useSelector } from "react-redux";
 import Axios from "axios";
 import { API } from "../../env.js";
 const background = require("../../assets/Fondo1.png");
 
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 export default function register({ navigation }) {
-  const {
-    handleSubmit,
-    handleChange,
-    values,
-    touched,
-    errors
-  } = useFormik({
+  const { handleSubmit, handleChange, values, touched, errors } = useFormik({
     initialValues: {
-      name: "",
-      lastname: "",
-      phone: "",
+      first_name: "",
+      last_name: "",
+      cellphone: "",
       dni: "",
-      address: "",
-      postalcode: "",
-      province: "",
+      street: "",
       city: "",
       nacimiento: "",
     },
     validationSchema: Yup.object({
-      name: Yup.string()
+      first_name: Yup.string()
         .min(4, "El nombre ingresado debe tener mas de 4 caracteres")
         .max(50, "El nombre ingresado debe tener tener menos de 50 caracteres")
         .required("Campo requerido"),
-      lastname: Yup.string()
+      last_name: Yup.string()
         .min(4, "El nombre ingresado debe tener mas de 4 caracteres")
         .max(50, "El nombre ingresado debe tener tener menos de 50 caracteres")
         .required("Campo requerido"),
-      phone: Yup.string()
+      cellphone: Yup.string()
         .required("Ingrese su numero de telefono")
         .matches(
           /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/,
           "Numero de telefono no valido"
         ),
     }),
-    onSubmit: ({ name, lastname, phone }) => {
-      console.log("register params: ", values);
-      alert(`name: ${name}, lasname: ${lastname}, phone: ${phone}`);
-      Axios.post(`${API}/api/registration/create_users`, values)
+    onSubmit: async () => {
+      const { email: username, password } = await AsyncStorage.getItem(
+        "@localUserStore"
+      ).then((info) => {
+        if (info) {
+          return JSON.parse(info);
+        } else {
+          alert(
+            "hubo un probleba con tu email, pero podras recibir un nuevo codigo"
+          );
+        }
+      });
+
+      Axios.post(`${API}/api/registration/create_users`, {
+        ...values,
+        username,
+        password,
+      })
         .then(({ data }) => {
           if (data.error) {
             alert(data.error);
           } else {
             console.log(data);
-            navigation.navigate("Profile");
+            navigation.navigate("Login");
           }
         })
         .catch((error) => console.log(error));
@@ -71,149 +78,125 @@ export default function register({ navigation }) {
 
   return (
     <ScrollView style={styles.scrollView}>
-      <View style={{ backgroundColor: "#FFF", height: "100%" }}>
-        <ImageBackground source={background} style={styles.image}>
-          <Text style={styles.title}>
-            Alta de cliente
-          </Text>
+      <View style={{ backgroundColor: "gray", height: "100%" }}>
+        <Text style={styles.title}>Alta de cliente</Text>
 
-          <Text style={styles.subtitle}>
-            Complete los campos para registrarse.
-          </Text>
+        <Text style={styles.subtitle}>
+          Complete los campos para registrarse.
+        </Text>
 
-          <TextInput
-            placeholder="Nombre"
-            placeholderTextColor="#fff"
-            onChangeText={handleChange("name")}
-            onChange={handleChange}
-            onSubmit={handleSubmit}
-            value={values.name}
-            id="name"
-            name="name"
-            style={styles.input}
-          />
+        <TextInput
+          placeholder="Nombre"
+          placeholderTextColor="#fff"
+          onChangeText={handleChange("first_name")}
+          onChange={handleChange}
+          onSubmit={handleSubmit}
+          value={values.first_name}
+          id="first_name"
+          name="first_name"
+          style={styles.input}
+        />
 
-          {touched.name && errors.name ? <div>{errors.name}</div> : null}
+        {touched.first_name && errors.first_name ? (
+          <Text>{errors.first_name}</Text>
+        ) : null}
 
-          <TextInput
-            placeholder="Apellido"
-            placeholderTextColor="#fff"
-            onChangeText={handleChange("lastname")}
-            onChange={handleChange}
-            onSubmit={handleSubmit}
-            id="lastname"
-            name="lastname"
-            value={values.lastname}
-            style={styles.input}
-          />
-          {touched.lastname && errors.lastname ? (
-            <div>{errors.lastname}</div>
-          ) : null}
+        <TextInput
+          placeholder="Apellido"
+          placeholderTextColor="#fff"
+          onChangeText={handleChange("last_name")}
+          onChange={handleChange}
+          onSubmit={handleSubmit}
+          id="last_name"
+          name="last_name"
+          value={values.last_name}
+          style={styles.input}
+        />
+        {touched.last_name && errors.last_name ? (
+          <Text>{errors.last_name}</Text>
+        ) : null}
 
-          <TextInput
-            placeholder="Telefono"
-            placeholderTextColor="#fff"
-            onChangeText={handleChange("phone")}
-            onChange={handleChange}
-            onSubmit={handleSubmit}
-            value={values.phone}
-            keyboardType="numeric"
-            id="phone"
-            name="phone"
-            style={styles.input}
-          />
-          {touched.phone && errors.phone ? <div>{errors.phone}</div> : null}
+        <TextInput
+          placeholder="Telefono"
+          placeholderTextColor="#fff"
+          onChangeText={handleChange("cellphone")}
+          onChange={handleChange}
+          onSubmit={handleSubmit}
+          value={values.cellphone}
+          keyboardType="numeric"
+          id="cellphone"
+          name="cellphone"
+          style={styles.input}
+        />
+        {touched.cellphone && errors.cellphone ? (
+          <Text>{errors.cellphone}</Text>
+        ) : null}
 
-          <TextInput
-            placeholder="DNI"
-            placeholderTextColor="#fff"
-            onChangeText={handleChange("dni")}
-            onChange={handleChange}
-            onSubmit={handleSubmit}
-            value={values.dni}
-            keyboardType="numbers-and-punctuation"
-            id="dno"
-            name="dni"
-            style={styles.input}
-          />
+        <TextInput
+          placeholder="DNI"
+          placeholderTextColor="#fff"
+          onChangeText={handleChange("dni")}
+          onChange={handleChange}
+          onSubmit={handleSubmit}
+          value={values.dni}
+          keyboardType="numeric"
+          id="dno"
+          name="dni"
+          style={styles.input}
+        />
 
-          <TextInput
-            placeholder="DD/MM/AAAA"
-            placeholderTextColor="#fff"
-            onChangeText={handleChange("nacimiento")}
-            onChange={handleChange}
-            onSubmit={handleSubmit}
-            value={values.nacimiento}
-            id="nacimiento"
-            name="nacimiento"
-            style={styles.input}
-          />
+        <TextInput
+          placeholder="AAAA/MM/DD"
+          placeholderTextColor="#fff"
+          onChangeText={handleChange("nacimiento")}
+          onChange={handleChange}
+          onSubmit={handleSubmit}
+          value={values.nacimiento}
+          id="nacimiento"
+          name="nacimiento"
+          style={styles.input}
+        />
 
-          <TextInput
-            placeholder="Direccion"
-            placeholderTextColor="#fff"
-            onChangeText={handleChange("address")}
-            onChange={handleChange}
-            onSubmit={handleSubmit}
-            value={values.address}
-            id="address"
-            name="address"
-            style={styles.input}
-          />
+        <TextInput
+          placeholder="Direccion"
+          placeholderTextColor="#fff"
+          onChangeText={handleChange("street")}
+          onChange={handleChange}
+          onSubmit={handleSubmit}
+          value={values.street}
+          id="street"
+          name="street"
+          style={styles.input}
+        />
 
-          <TextInput
-            placeholder="Codigo Postal"
-            placeholderTextColor="#fff"
-            onChangeText={handleChange("postalcode")}
-            onChange={handleChange}
-            onSubmit={handleSubmit}
-            value={values.postalcode}
-            id="postalcode"
-            name="postalcode"
-            style={styles.input}
-          />
+        <TextInput
+          placeholder="Ciudad"
+          placeholderTextColor="#fff"
+          onChangeText={handleChange("city")}
+          onChange={handleChange}
+          id="city"
+          name="city"
+          onSubmit={handleSubmit}
+          value={values.city}
+          style={styles.input}
+        />
 
-          <TextInput
-            placeholder="Provincia"
-            placeholderTextColor="#fff"
-            onChangeText={handleChange("province")}
-            onChange={handleChange}
-            onSubmit={handleSubmit}
-            value={values.province}
-            id="province"
-            name="province"
-            style={styles.input}
-          />
-
-          <TextInput
-            placeholder="Ciudad"
-            placeholderTextColor="#fff"
-            onChangeText={handleChange("city")}
-            onChange={handleChange}
-            id="city"
-            name="city"
-            onSubmit={handleSubmit}
-            value={values.city}
-            style={styles.input}
-          />
-
-          <TouchableOpacity
-            mode="contained"
-            secureTextEntry={true}
-            title="Register"
-            onPress={handleSubmit}
-            style={styles.boton}
-          >
-            <Text>Enviar</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            title="Go back"
-            onPress={() => navigation.goBack()}
-            style={styles.boton}
-          >
-            <Text>Volver</Text>
-          </TouchableOpacity>
-        </ImageBackground>
+        <TouchableOpacity
+          mode="contained"
+          secureTextEntry={true}
+          title="Register"
+          onPress={handleSubmit}
+          style={styles.boton}
+        >
+          <Text>Enviar</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          title="Go back"
+          onPress={() => navigation.goBack()}
+          style={styles.boton}
+        >
+          <Text>Volver</Text>
+        </TouchableOpacity>
       </View>
     </ScrollView>
   );
@@ -221,7 +204,7 @@ export default function register({ navigation }) {
 
 const styles = StyleSheet.create({
   scrollView: {
-    backgroundColor: "#fff",
+    backgroundColor: "#000000",
   },
   text: {
     fontSize: 50,
@@ -264,5 +247,5 @@ const styles = StyleSheet.create({
     marginTop: 10,
     opacity: 0.8,
     color: "#FFF",
-  }
+  },
 });

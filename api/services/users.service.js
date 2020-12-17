@@ -72,7 +72,7 @@ module.exports = {
 
 			async handler(ctx) {
 				const [[user]] = await this.adapter.db.query(
-					`SELECT * FROM CLIENT WHERE username = '${ctx.params.username}'`
+					`SELECT * FROM client WHERE username = '${ctx.params.username}'`
 				);
 
 				const test = await bcrypt.compare(

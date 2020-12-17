@@ -21,13 +21,7 @@ import {
 } from "react-native";
 
 export default function Login({ navigation, setToken }) {
-  const {
-    handleSubmit,
-    handleChange,
-    values,
-    touched,
-    errors,
-  } = useFormik({
+  const { handleSubmit, handleChange, values, touched, errors } = useFormik({
     initialValues: {
       login: "",
       password: "",
@@ -48,8 +42,12 @@ export default function Login({ navigation, setToken }) {
             try {
               await AsyncStorage.setItem("@localUser", JSON.stringify(data));
               setToken(data.token);
+              console.log("entrandiiiiiiing");
             } catch (error) {
               // Error saving data
+              console.log(error);
+            } finally {
+              navigation.navigate("Profile");
             }
           })();
         });
@@ -57,59 +55,56 @@ export default function Login({ navigation, setToken }) {
   });
 
   return (
-    <ScrollView >
-    <View style={{  height: "100%" }}>
-      <ImageBackground source={background} >
-      <Text style={styles.correo} >
-        {" "}
-        Email :
-      </Text>
-      <TextInput
-        placeholder="Correo"
-        placeholderTextColor="#000000"
-        onChangeText={handleChange("login")}
-        value={values.login}
-        onChange={handleChange}
-        id="login"
-        name="login"
-        type="text"
-        style={styles.input}
-      />
-      {touched.login && errors.login ? <Text>{errors.login}</Text> : null}
-      <Text style={styles.text}> Contraseña :</Text>
-      <TextInput
-        placeholder="Contraseña"
-        placeholderTextColor="#000000"
-        onChangeText={handleChange("password")}
-        value={values.password}
-        onChange={handleChange}
-        type="password"
-        style={styles.input}/>
-      {touched.password && errors.password ? (
-        <div>{errors.password}</div>
-      ) : null}
+    <ScrollView>
+      <View style={{ height: "100%" }}>
+        <Text style={styles.correo}> Email :</Text>
+        <TextInput
+          placeholder="Correo"
+          placeholderTextColor="#000000"
+          onChangeText={handleChange("login")}
+          value={values.login}
+          id="login"
+          name="login"
+          type="text"
+          style={styles.input}
+        />
+        {touched.login && errors.login ? <Text>{errors.login}</Text> : null}
+        <Text style={styles.text}> Contraseña :</Text>
+        <TextInput
+          placeholder="Contraseña"
+          placeholderTextColor="#000000"
+          onChangeText={handleChange("password")}
+          value={values.password}
+          id="password"
+          name="password"
+          type="password"
+          secureTextEntry={true}
+          style={styles.input}
+        />
+        {touched.password && errors.password ? (
+          <div>{errors.password}</div>
+        ) : null}
 
-      <TouchableOpacity
-        mode="contained"
-        secureTextEntry={true}
-        title=""
-        onPress={handleSubmit}
-        style={styles.touchable}
-      >
-        <Text>Ingresar</Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+          mode="contained"
+          secureTextEntry={true}
+          title=""
+          onPress={handleSubmit}
+          style={styles.touchable}
+        >
+          <Text>Ingresar</Text>
+        </TouchableOpacity>
 
-      <TouchableOpacity
-        mode="contained"
-        secureTextEntry={true}
-        title=""
-        onPress={() => navigation.navigate("PreRegister")}
-        style={styles.touchable}
-      >
-        <Text>Registrarse</Text>
-      </TouchableOpacity>
-      </ImageBackground>
-    </View>
+        <TouchableOpacity
+          mode="contained"
+          secureTextEntry={true}
+          title=""
+          onPress={() => navigation.navigate("PreRegister")}
+          style={styles.touchable}
+        >
+          <Text>Registrarse</Text>
+        </TouchableOpacity>
+      </View>
     </ScrollView>
   );
 }
@@ -147,10 +142,10 @@ const styles = StyleSheet.create({
     opacity: 0.8,
     color: "#000000",
   },
-  input:{
+  input: {
     flexDirection: "column",
-    marginRight:20,
-    marginLeft:20,
+    marginRight: 20,
+    marginLeft: 20,
     height: 50,
     color: "#000000",
     alignItems: "center",
@@ -170,5 +165,5 @@ const styles = StyleSheet.create({
     marginTop: 35,
     opacity: 0.8,
     color: "#000000",
-  }
+  },
 });
