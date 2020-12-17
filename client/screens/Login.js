@@ -87,7 +87,6 @@ export default function Login({ navigation, setToken }) {
 
         <TouchableOpacity
           mode="contained"
-          secureTextEntry={true}
           title=""
           onPress={handleSubmit}
           style={styles.touchable}

@@ -94,7 +94,7 @@ module.exports = {
 				const { alias, username } = ctx.params;
 				const { id: id_cli } = ctx.meta.user;
 
-				const [[{ id: contact }]] = await this.adapter.db.query(
+				const [[contact]] = await this.adapter.db.query(
 					`SELECT id FROM client WHERE username = '${username}'`
 				);
 
@@ -103,7 +103,7 @@ module.exports = {
 				if (contact) {
 					const insertContact = await this.adapter.db.query(
 						"INSERT INTO `contacts` (`alias` , `id_cli`, `id_contact` )" +
-							`VALUES ('${alias}','${id_cli}' , '${contact}');`
+							`VALUES ('${alias}','${id_cli}' , '${contact.id}');`
 					);
 					//id_cli es un dato externo que lo tomamos de la auth hecha al usuario, asi sabemos quien hace las peticiones
 

@@ -81,7 +81,8 @@ module.exports = {
 			//esta acción mantiene el estado del saldo de la cuenta en pesos de forma actualizada.
 			rest: { method: "GET", path: "/saldoarg" },
 			async handler(ctx) {
-				const id = ctx.params.id_client;
+				const id = ctx.params.id_client || ctx.meta.user.id;
+
 				const saldo = await this.adapter.db
 					.query(
 						`SELECT balance FROM accounts WHERE id_client = '${id}'`
@@ -93,6 +94,12 @@ module.exports = {
 
 				const balance = parseInt(saldo);
 				//devuelve saldo actualizado
+				if (ctx.params.nombre) {
+					return {
+						balance,
+						name: `${ctx.meta.user.first_name} ${ctx.meta.user.last_name}`,
+					};
+				}
 				return balance;
 			},
 		},
@@ -103,20 +110,24 @@ module.exports = {
 				const amount = parseInt(ctx.params.amount);
 
 				const destiny = ctx.params.destiny;
-
+				console.log("RECARGA PARAMS----------", ctx.params);
 				await ctx
 					.call("accounts.saldoARG", {
 						id_client: destiny,
 					})
 					.then((e) => {
 						const newAmount = e + amount;
+						console.log(
+							`NEWAMOUNT: ${newAmount} --- SALDOPREV: ${e}`
+						);
 						return newAmount;
 					})
-					.then((e) =>
-						this.adapter.db.query(
+					.then((e) => {
+						console.log("eeeeeeeeee--", e);
+						return this.adapter.db.query(
 							`UPDATE accounts SET balance = '${e}' WHERE id_client ='${destiny}' `
-						)
-					)
+						);
+					})
 
 					.catch((err) => console.log(err));
 
@@ -140,6 +151,7 @@ module.exports = {
 							id_client: origin,
 						})
 						.then((e) => {
+							console.log("SALDO ANTES DE EXTRAER--------   ", e);
 							const newAmount = e - amount; //extrae la plata//
 							return newAmount;
 						})
