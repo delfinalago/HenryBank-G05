@@ -13,11 +13,11 @@ import {
 import Axios from "axios";
 import { API } from "../../env.js";
 const { width, height } = Dimensions.get("window");
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function sendMoney({ route, navigation }) {
-  const transfData = route.params;
-
-  console.log(transfData);
+  const transfData = {};
+  transfData.destiny = route.params.id_contact;
 
   const {
     handleSubmit,
@@ -33,19 +33,28 @@ export default function sendMoney({ route, navigation }) {
     validationSchema: Yup.object({
       amount: Yup.number().required("Campo requerido"),
     }),
-    onSubmit: ({ email, password, confirmpassword }) => {
+    onSubmit: ({ amount }) => {
       transfData.amount = values.amount;
-      Axios.put(`${API}/api/accounts/transc`, transfData)
-        .then(({ data }) => {
-          if (data.error) {
-            alert(data.error);
-          } else {
-            console.log(data);
-            alert("Transferencia realizada con éxito.");
-            navigation.navigate("Profile");
-          }
-        })
-        .catch((error) => console.log(error));
+      // AsyncStorage.getItem("@localUser").then((data) => {
+      //   console.log(data);
+      // });
+      transfData.state = "COMPLETED";
+
+      AsyncStorage.getItem("@localUser").then((data) => {
+        transfData.origin = JSON.parse(data).id;
+        console.log("ONSUBMIT--------", transfData);
+        Axios.put(`${API}/api/accounts/transc`, transfData)
+          .then(({ data }) => {
+            if (data.error) {
+              alert(data.error);
+            } else {
+              console.log(data);
+              alert("Transferencia realizada con éxito.");
+              navigation.navigate("Profile");
+            }
+          })
+          .catch((error) => console.log(error));
+      });
     },
   });
   return (
@@ -58,9 +67,12 @@ export default function sendMoney({ route, navigation }) {
         <TextInput
           style={styles.input}
           placeholder="Cantidad a transferir"
+          value={values.amount}
+          onChangeText={handleChange("amount")}
           numeric
           keyboardType={"numeric"}
         />
+        {touched.amount && errors.amount ? <Text>{errors.amount}</Text> : null}
         <TouchableOpacity
           mode="contained"
           secureTextEntry={true}
