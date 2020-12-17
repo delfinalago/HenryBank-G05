@@ -15,7 +15,10 @@ import { API } from "../../env.js";
 const { width, height } = Dimensions.get("window");
 
 export default function sendMoney({ route, navigation }) {
-  const transfData = navigation.params;
+  const transfData = route.params;
+
+  console.log(transfData);
+
   const {
     handleSubmit,
     handleChange,
