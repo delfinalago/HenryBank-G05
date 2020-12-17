@@ -21,11 +21,12 @@ import Login from "./screens/Login";
 import Register from "./screens/Register/Register";
 import Profile from "./screens/Profile";
 import PreRegister from "./screens/Register/preRegister";
+import PreRegisterToken from "./screens/Register/preRegisterToken";
 import contactsList from "./screens/MisContactos/contactsList";
 import addContact from "./screens/MisContactos/addContact";
 import editContact from "./screens/MisContactos/editContact";
-
-import PreRegisterToken from "./screens/Register/preRegisterToken";
+import SendMoney from "./screens/SendMoney/sendMoney";
+import SelectContact from "./screens/SendMoney/selectContact";
 
 const Stack = createStackNavigator(); //contiene la navegacion
 
@@ -111,6 +112,18 @@ function ProfileStack({ setToken }) {
         name="editContact"
         component={editContact}
         options={{ title: "Mis Contactos" }}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="SendMoney"
+        component={SendMoney}
+        options={{ title: "Enviar Dinero" }}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="SelectContact"
+        component={SelectContact}
+        options={{ title: "Enviar Dinero" }}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
