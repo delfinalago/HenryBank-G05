@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Card, Button } from "react-native-elements";
 import BaseIcon from "./Icon";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Saldo from "./saldo";
 
 import {
   Image,
@@ -42,10 +43,8 @@ class Contact extends Component {
       <ScrollView style={styles.scroll}>
         <View style={styles.container}>
           <Card containerStyle={styles.cardContainer}>
-            {this.renderHeader()}
             <View style={styles.saldo}>
-              <Text style={styles.saldoActual}>Tu saldo actual es:</Text>
-              <Text style={styles.saldoNumber}>$22.580,06</Text>
+              <Saldo />
             </View>
             <View style={styles.buttons}>
               <Button
