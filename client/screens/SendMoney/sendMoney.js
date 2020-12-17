@@ -43,18 +43,22 @@ export default function sendMoney({ route, navigation }) {
       AsyncStorage.getItem("@localUser").then((data) => {
         transfData.origin = JSON.parse(data).id;
         console.log("ONSUBMIT--------", transfData);
-        Axios.put(`${API}/api/accounts/transc`, transfData)
-          .then((data) => {
-            console.log(data);
-            // if (data.error) {
-            //   alert(data.error);
-            // } else {
-            //   console.log(data);
-            //   alert("Transferencia realizada con éxito.");
-            //   navigation.navigate("Profile");
-            // }
-          })
-          .catch((error) => console.log(error));
+        Axios.get(`${API}/api/accounts/saldoarg`).then(({ data }) => {
+          if (transfData.amount > data) {
+            alert("Saldo insuficiente");
+          } else {
+            Axios.put(`${API}/api/accounts/transc`, transfData)
+              .then((data) => {
+                if (data.error) {
+                  alert(data.error);
+                } else {
+                  alert("Transferencia realizada con éxito.");
+                  navigation.navigate("Me");
+                }
+              })
+              .catch((error) => console.log(error));
+          }
+        });
       });
     },
   });
