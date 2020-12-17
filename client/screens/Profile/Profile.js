@@ -12,6 +12,7 @@ import {
   StyleSheet,
   Text,
   View,
+  RefreshControl,
 } from "react-native";
 
 class Contact extends Component {
@@ -47,7 +48,7 @@ class Contact extends Component {
               <Saldo />
             </View>
             <View style={styles.buttons}>
-              <Button
+              {/* <Button
                 titleStyle={styles.listItem}
                 type="outline"
                 title="Transacciones"
@@ -65,7 +66,7 @@ class Contact extends Component {
                     }}
                   />
                 }
-              />
+              /> */}
               <Button
                 titleStyle={styles.listItem}
                 type="outline"
@@ -85,7 +86,7 @@ class Contact extends Component {
                   />
                 }
               />
-              <Button
+              {/* <Button
                 titleStyle={styles.listItem}
                 type="outline"
                 title="Mis productos"
@@ -100,7 +101,7 @@ class Contact extends Component {
                     }}
                   />
                 }
-              />
+              /> */}
               <Button
                 titleStyle={styles.listItem}
                 title="Mis contactos"
@@ -150,20 +151,22 @@ class Contact extends Component {
                   />
                 }
               />
-              <Button
-                title="logout"
-                onPress={async () => {
-                  try {
-                    await AsyncStorage.setItem("@localUser", "");
-                    setToken("");
-                    navigation.navigate("Login");
-                  } catch (error) {
-                    console.log(this.props);
-                  }
-                }}
-              />
             </View>
           </Card>
+        </View>
+        <View style={styles.logout}>
+          <Button
+            title="logout"
+            onPress={async () => {
+              try {
+                await AsyncStorage.setItem("@localUser", "");
+                setToken("");
+                navigation.navigate("Login");
+              } catch (error) {
+                console.log(this.props);
+              }
+            }}
+          />
         </View>
       </ScrollView>
     );
@@ -174,7 +177,7 @@ export default Contact;
 
 const styles = StyleSheet.create({
   cardContainer: {
-    backgroundColor: "#29333d",
+    backgroundColor: "#fff",
     borderWidth: 0,
     flex: 1,
     margin: 0,
@@ -203,7 +206,8 @@ const styles = StyleSheet.create({
     }),
   },
   scroll: {
-    backgroundColor: "#29333d",
+    flex: 1,
+    backgroundColor: "#fff",
     marginTop: 10,
   },
   userImage: {
@@ -258,5 +262,9 @@ const styles = StyleSheet.create({
   buttons: {
     display: "flex",
     alignItems: "center",
+  },
+  logout: {
+    marginTop: 50,
+    marginHorizontal: 100,
   },
 });

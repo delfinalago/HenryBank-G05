@@ -19,14 +19,14 @@ export default function Saldo() {
       alignItems: "center",
     },
     name: {
-      color: "#FFF",
+      color: "#000000",
       fontSize: 22,
       fontWeight: "bold",
       paddingBottom: 8,
       textAlign: "center",
     },
     saldo: {
-      color: "#fafafa",
+      color: "#000000",
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
@@ -39,7 +39,7 @@ export default function Saldo() {
   return (
     <View style={styles.container}>
       <Text style={styles.name}>{saldo.name}</Text>
-      <Text style={styles.saldo}>mi saldo</Text>
+      <Text style={styles.saldo}>Mi saldo</Text>
       <Text style={styles.saldo}>${saldo.balance}</Text>
     </View>
   );
