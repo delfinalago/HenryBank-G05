@@ -12,10 +12,22 @@ module.exports = {
 	name: "contacts",
 
 	mixins: [DbService],
+<<<<<<< HEAD
 	adapter: new SqlAdapter("veski", "root", "", {
 		host: "127.0.0.1",
 		dialect: "mysql",
 	}),
+=======
+	adapter: new SqlAdapter(
+		"veski",
+		process.env.DB_USER,
+		process.env.DB_PASSWORD,
+		{
+			host: "127.0.0.1",
+			dialect: "mysql",
+		}
+	),
+>>>>>>> 027f7ff3af25cb07382cdfb91854b9e33834f445
 	model: { name: "contacts" },
 
 	/**
@@ -70,16 +82,15 @@ module.exports = {
 			},
 		},
 
-		allcontacts: {
-			rest: "GET",
-			path: "/allcontacts",
+		allContacts: {
+			rest: "GET /all",
 
 			async handler(ctx) {
-				const id_cli = ctx.params.id_cli;
-				const allContacts = await this.adapter.db.query(
+				const id_cli = ctx.meta.user.id;
+				const [allContact] = await this.adapter.db.query(
 					`SELECT * FROM contacts WHERE id_cli= '${id_cli}'`
 				);
-				return allContacts;
+				return allContact;
 			},
 		},
 

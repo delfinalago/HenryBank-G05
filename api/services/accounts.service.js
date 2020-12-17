@@ -25,10 +25,15 @@ module.exports = {
 	 * Mixins
 	 */
 	mixins: [DbService],
-	adapter: new SqlAdapter("veski", "root", "", {
-		host: "127.0.0.1",
-		dialect: "mysql",
-	}),
+	adapter: new SqlAdapter(
+		"veski",
+		process.env.DB_USER,
+		process.env.DB_PASSWORD,
+		{
+			host: "127.0.0.1",
+			dialect: "mysql",
+		}
+	),
 	model: {},
 
 	/**
@@ -119,17 +124,16 @@ module.exports = {
 				return ctx.call("accounts.saldoARG", {
 					id_client: destiny,
 				});
-
 			},
 		},
-			//	---------------------	 acciones para administrar las transactions---//
-			extrac: {
-				rest: "PUT /extraccion",
-				async handler(ctx) {
-					const amount = parseInt(ctx.params.amount);
-					const state = ctx.params.state
-					const origin = ctx.params.origin;
-                   if (state){
+		//	---------------------	 acciones para administrar las transactions---//
+		extrac: {
+			rest: "PUT /extraccion",
+			async handler(ctx) {
+				const amount = parseInt(ctx.params.amount);
+				const state = ctx.params.state;
+				const origin = ctx.params.origin;
+				if (state) {
 					await ctx
 
 						.call("accounts.saldoARG", {
@@ -139,7 +143,9 @@ module.exports = {
 							const newAmount = e - amount; //extrae la plata//
 							return newAmount;
 						})
-						.then((e) => //actualizo el monto//
+						.then((
+							e //actualizo el monto//
+						) =>
 							this.adapter.db.query(
 								`UPDATE accounts SET balance = '${e}' WHERE id_client ='${origin}' `
 							)
@@ -151,22 +157,21 @@ module.exports = {
 					return ctx.call("accounts.saldoARG", {
 						id_client: origin,
 					});
-				};
-				   },
-				},
+				}
+			},
+		},
 
-				transaction : {
-					rest: "PUT /transc",      //operacion que une la extraccion con la recarga de dinero //
+		transaction: {
+			rest: "PUT /transc", //operacion que une la extraccion con la recarga de dinero //
 
-					async handler(ctx) {
+			async handler(ctx) {
+				const { origin, destiny, amount, state } = ctx.params;
 
-						const { origin , destiny , amount ,state } = ctx.params
+				ctx.call("accounts.extrac", { origin, amount, state }); //invoca a la func  extrac y recarga //
 
-						ctx.call("accounts.extrac" , { origin , amount , state})  //invoca a la func  extrac y recarga //
-
-							ctx.call ("accounts.recarga" , { amount , destiny})
-							return "transferencia exitosa!"
-        	},
+				ctx.call("accounts.recarga", { amount, destiny });
+				return "transferencia exitosa!";
+			},
 		},
 	},
 	/**
