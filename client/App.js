@@ -34,13 +34,17 @@ function RootStack() {
   const [token, setToken] = useState(null);
 
   useEffect(() => {
-    AsyncStorage.getItem("@localUser")
-      .then((data) => {
-        if (data) return JSON.parse(data);
-      })
-      .then((data) => {
-        if (data) setToken(data.token);
-      });
+    try {
+      AsyncStorage.getItem("@localUser")
+        .then((data) => {
+          if (data) return JSON.parse(data);
+        })
+        .then((data) => {
+          if (data) setToken(data.token);
+        });
+    } catch (error) {
+      console.log(error);
+    }
   }, []);
 
   useEffect(() => {
@@ -53,12 +57,12 @@ function RootStack() {
   }, [token]);
 
   return (
-    <Stack.Navigator initialRouteName="Login">
-      <Stack.Screen name="Login" options={{ headerShown: false }}>
-        {(props) => <LoginStack {...props} setToken={setToken} />}
-      </Stack.Screen>
+    <Stack.Navigator initialRouteName="Profile">
       <Stack.Screen name="Profile" options={{ headerShown: false }}>
         {(props) => <ProfileStack {...props} setToken={setToken} />}
+      </Stack.Screen>
+      <Stack.Screen name="Login" options={{ headerShown: false }}>
+        {(props) => <LoginStack {...props} setToken={setToken} />}
       </Stack.Screen>
     </Stack.Navigator>
   );

@@ -1,5 +1,7 @@
-import React, { Component, useEffect, useState } from "react";
+import React from "react";
 import { useFormik } from "formik";
+import axios from "axios";
+import { API } from "../../env.js";
 import {
   TouchableOpacity,
   ScrollView,
@@ -19,33 +21,31 @@ export default function addContact({ navigation }) {
 
   const { handleSubmit, handleChange, values, touched, errors } = useFormik({
     initialValues: {
-      alias: ""
+      alias: "",
+      username: "",
     },
-    onSubmit: async () => {
+    onSubmit: () => {
       console.log("register params: ", values);
 
-      Axios.post(`${API}/api/contacts/associateContact`, {
-        ...values,
-        alias
-      })
+      axios
+        .post(`${API}/api/contacts/associate`, values)
         .then(({ data }) => {
-          console.log("VALUES=", values)
+          console.log("VALUES = ", values);
           if (data.error) {
             alert(data.error);
           } else {
             console.log(data);
+            navigation.navigate("Me");
           }
         })
         .catch((error) => console.log(error));
-    
     },
   });
 
   return (
     <ScrollView style={styles.fondo}>
-      <Card>
-        <Card.Title style={styles.title}>Agregar Contacto : </Card.Title>
-        <Card.Divider />
+      <View>
+        <Text style={styles.title}>Agregar Contacto : </Text>
         <TextInput
           onChangeText={handleChange("alias")}
           onSubmit={handleSubmit}
@@ -53,7 +53,6 @@ export default function addContact({ navigation }) {
           style={styles.input}
           placeholder="Nombre"
         />
-        <Card.Divider />
         <TextInput
           onChangeText={handleChange("username")}
           onSubmit={handleSubmit}
@@ -61,7 +60,7 @@ export default function addContact({ navigation }) {
           style={styles.input}
           placeholder="Email"
         />
-      </Card>
+      </View>
       <Button
         type="outline"
         onPress={handleSubmit}

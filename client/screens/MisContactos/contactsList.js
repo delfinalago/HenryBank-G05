@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   TouchableOpacity,
   ScrollView,
@@ -9,25 +9,32 @@ import {
   TextInput,
   FlatList,
 } from "react-native";
+
 import { Card, ListItem, Button, Icon, Avatar } from "react-native-elements";
 import axios from "axios";
 import { API } from "../../env.js";
 
-
-
 export default function contactos({ navigation }) {
   const [contacts, setContacts] = useState([]);
+  const [num, setNum] = useState(0);
 
   useEffect(() => {
     axios
       .get(`${API}/api/contacts/all`)
       .then(({ data }) => {
         setContacts(data);
+        console.log("el num es: ", num);
       })
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [num]);
+
+  const handleDelete = (id_contact) => {
+    axios
+      .delete(`${API}/api/contacts/delete?id_contact=${id_contact}`)
+      .then(({ data }) => setNum(num + 1));
+  };
 
   return (
     <ScrollView style={styles.fondo}>
@@ -42,28 +49,37 @@ export default function contactos({ navigation }) {
             onPress={() => navigation.navigate("addContact")}
           />
           <Card.Divider />
-          {contacts.length &&
-            contacts.map((u, i) => {
-              return (
-                <View key={i}>
-                  <TouchableOpacity
-                    onPress={() => navigation.navigate("editContact")}
-                  >
-                    <ListItem
-                      key={i}
-                      roundAvatar
-                      title={u.alias}
-                      leftAvatar={{
-                        source: {
-                          uri:
-                            "https://media.istockphoto.com/vectors/vector-of-cute-dog-head-cartoon-character-for-avatar-icon-or-symbol-vector-id1189777293",
-                        },
-                      }}
+          {contacts.length
+            ? contacts.map((u, i) => {
+                const { id_contact } = u;
+                return (
+                  <View key={i}>
+                    <TouchableOpacity
+                      onPress={() =>
+                        navigation.navigate("editContact", {
+                          id_contact,
+                        })
+                      }
+                    >
+                      <ListItem
+                        key={i}
+                        title={u.alias}
+                        leftAvatar={{
+                          source: {
+                            uri:
+                              "https://media.istockphoto.com/vectors/vector-of-cute-dog-head-cartoon-character-for-avatar-icon-or-symbol-vector-id1189777293",
+                          },
+                        }}
+                      />
+                    </TouchableOpacity>
+                    <Button
+                      title="delete"
+                      onPress={() => handleDelete(id_contact)}
                     />
-                  </TouchableOpacity>
-                </View>
-              );
-            })}
+                  </View>
+                );
+              })
+            : null}
         </Card>
       </View>
     </ScrollView>
