@@ -31,7 +31,7 @@ export default function Login({ navigation, setToken }) {
         .max(50, "Login must be shorter than 50 characters")
         .required("Required"),
       password: Yup.string()
-        .min(6, "Password should be longer than 6 characters")
+        .min(5, "Password should be longer than 6 characters")
         .required(),
     }),
     onSubmit: ({ login, password }) => {
@@ -82,7 +82,7 @@ export default function Login({ navigation, setToken }) {
           style={styles.input}
         />
         {touched.password && errors.password ? (
-          <div>{errors.password}</div>
+          <Text>{errors.password}</Text>
         ) : null}
 
         <TouchableOpacity

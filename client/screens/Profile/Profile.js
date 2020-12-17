@@ -13,96 +13,7 @@ import {
   View,
 } from "react-native";
 
-const styles = StyleSheet.create({
-  cardContainer: {
-    backgroundColor: "#29333d",
-    borderWidth: 0,
-    flex: 1,
-    margin: 0,
-    padding: 0,
-  },
-  container: {
-    flex: 1,
-    margin: 10,
-  },
-  headerBackgroundImage: {
-    paddingBottom: 20,
-    paddingTop: 45,
-  },
-  headerContainer: {},
-  headerColumn: {
-    alignItems: "center",
-    ...Platform.select({
-      ios: {
-        alignItems: "center",
-        elevation: 1,
-        marginTop: -1,
-      },
-      android: {
-        alignItems: "center",
-      },
-    }),
-  },
-  scroll: {
-    backgroundColor: "#29333d",
-    marginTop: 10,
-  },
-  userImage: {
-    borderColor: "#FFF",
-    borderRadius: 85,
-    borderWidth: 3,
-    height: 170,
-    marginBottom: 15,
-    width: 170,
-  },
-  userNameText: {
-    color: "#FFF",
-    fontSize: 22,
-    fontWeight: "bold",
-    paddingBottom: 8,
-    textAlign: "center",
-  },
-  saldo: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 28,
-    marginBottom: 16,
-  },
-  saldoActual: {
-    color: "#FFF",
-  },
-  saldoNumber: {
-    marginTop: 4,
-    fontSize: 42,
-    color: "#FFF",
-  },
-  listItemContainer: {
-    height: 55,
-    width: "80%",
-    color: "#FFF",
-  },
-  buttons: {
-    alignItems: "center",
-    color: "#FFF",
-    borderRadius: 50,
-
-    //   display: 'grid',
-    //   'grid-template-columns': '3fr 3fr'
-  },
-  button: {
-    width: "50%",
-  },
-  listItem: {
-    width: 250,
-  },
-  buttons: {
-    display: "flex",
-    alignItems: "center",
-  },
-});
-
-class Contact extends Component { 
+class Contact extends Component {
   renderHeader = () => {
     const { avatar, avatarBackground, name } = this.props;
 
@@ -228,7 +139,7 @@ class Contact extends Component {
                 titleStyle={styles.listItem}
                 type="outline"
                 title="Enviar dinero"
-                onPress={() => this.onPressSetting()}
+                onPress={() => navigation.navigate("SelectContact")}
                 containerStyle={styles.listItemContainer}
                 icon={
                   <BaseIcon
@@ -261,3 +172,92 @@ class Contact extends Component {
 }
 
 export default Contact;
+
+const styles = StyleSheet.create({
+  cardContainer: {
+    backgroundColor: "#29333d",
+    borderWidth: 0,
+    flex: 1,
+    margin: 0,
+    padding: 0,
+  },
+  container: {
+    flex: 1,
+    margin: 10,
+  },
+  headerBackgroundImage: {
+    paddingBottom: 20,
+    paddingTop: 45,
+  },
+  headerContainer: {},
+  headerColumn: {
+    alignItems: "center",
+    ...Platform.select({
+      ios: {
+        alignItems: "center",
+        elevation: 1,
+        marginTop: -1,
+      },
+      android: {
+        alignItems: "center",
+      },
+    }),
+  },
+  scroll: {
+    backgroundColor: "#29333d",
+    marginTop: 10,
+  },
+  userImage: {
+    borderColor: "#FFF",
+    borderRadius: 85,
+    borderWidth: 3,
+    height: 170,
+    marginBottom: 15,
+    width: 170,
+  },
+  userNameText: {
+    color: "#FFF",
+    fontSize: 22,
+    fontWeight: "bold",
+    paddingBottom: 8,
+    textAlign: "center",
+  },
+  saldo: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 28,
+    marginBottom: 16,
+  },
+  saldoActual: {
+    color: "#FFF",
+  },
+  saldoNumber: {
+    marginTop: 4,
+    fontSize: 42,
+    color: "#FFF",
+  },
+  listItemContainer: {
+    height: 55,
+    width: "80%",
+    color: "#FFF",
+  },
+  buttons: {
+    alignItems: "center",
+    color: "#FFF",
+    borderRadius: 50,
+
+    //   display: 'grid',
+    //   'grid-template-columns': '3fr 3fr'
+  },
+  button: {
+    width: "50%",
+  },
+  listItem: {
+    width: 250,
+  },
+  buttons: {
+    display: "flex",
+    alignItems: "center",
+  },
+});

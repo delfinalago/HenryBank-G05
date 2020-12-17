@@ -50,22 +50,25 @@ export default function preRegister({ navigation }) {
       Axios.post(`${API}/api/registration/auth`, {
         values,
       })
-        .then((response) => {
-          console.log(response);
-          alert(
-            `Se ha enviado un email a su casilla de correo (${email}) para continuar con el registro`
-          );
-          (async () => {
-            try {
-              await AsyncStorage.setItem(
-                "@localUserStore",
-                JSON.stringify(values)
-              );
-            } catch (error) {
-              // Error saving data
-            }
-          })();
-          navigation.navigate("PreRegisterToken");
+        .then(({ data }) => {
+          if (data.error) {
+            alert(data.error);
+          } else {
+            alert(
+              `Se ha enviado un email a su casilla de correo (${email}) para continuar con el registro`
+            );
+            (async () => {
+              try {
+                await AsyncStorage.setItem(
+                  "@localUserStore",
+                  JSON.stringify(values)
+                );
+              } catch (error) {
+                alert(error);
+              }
+            })();
+            navigation.navigate("PreRegisterToken");
+          }
         })
         .catch((error) => console.log(error));
     },
@@ -164,17 +167,9 @@ export default function preRegister({ navigation }) {
           secureTextEntry={true}
           title="Register"
           onPress={handleSubmit}
-          style={{
-            marginHorizontal: 55,
-            alignItems: "center",
-            justifyContent: "center",
-            marginTop: 30,
-            backgroundColor: "#00716F",
-            paddingVertical: 10,
-            borderRadius: 23,
-          }}
+          style={styles.button}
         >
-          <Text>Enviar</Text>
+          <Text>Confirmar</Text>
         </TouchableOpacity>
       </View>
     </ScrollView>
@@ -187,5 +182,14 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 42,
+  },
+  button: {
+    marginHorizontal: 55,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 30,
+    backgroundColor: "#00716F",
+    paddingVertical: 10,
+    borderRadius: 23,
   },
 });
