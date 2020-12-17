@@ -12,12 +12,6 @@ module.exports = {
 	name: "contacts",
 
 	mixins: [DbService],
-<<<<<<< HEAD
-	adapter: new SqlAdapter("veski", "root", "", {
-		host: "127.0.0.1",
-		dialect: "mysql",
-	}),
-=======
 	adapter: new SqlAdapter(
 		"veski",
 		process.env.DB_USER,
@@ -27,7 +21,6 @@ module.exports = {
 			dialect: "mysql",
 		}
 	),
->>>>>>> 027f7ff3af25cb07382cdfb91854b9e33834f445
 	model: { name: "contacts" },
 
 	/**
