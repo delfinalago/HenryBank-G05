@@ -73,10 +73,10 @@ export default function Login({ navigation, setToken }) {
         id="login"
         name="login"
         type="text"
-        style={style.input}
+        style={styles.input}
       />
       {touched.login && errors.login ? <Text>{errors.login}</Text> : null}
-      <Text style={style.text}> Contraseña :</Text>
+      <Text style={styles.text}> Contraseña :</Text>
       <TextInput
         placeholder="Contraseña"
         placeholderTextColor="#000000"
@@ -94,7 +94,7 @@ export default function Login({ navigation, setToken }) {
         secureTextEntry={true}
         title=""
         onPress={handleSubmit}
-        style={style.touchable}
+        style={styles.touchable}
       >
         <Text>Ingresar</Text>
       </TouchableOpacity>

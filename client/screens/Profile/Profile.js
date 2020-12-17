@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
   }
 });
 
-class Contact extends Component {
+class Contact extends Component { 
   renderHeader = () => {
     const { avatar, avatarBackground, name } = this.props;
 
@@ -187,9 +187,9 @@ class Contact extends Component {
               />
               <Button
                 titleStyle={styles.listItem}
-                title="Mis datos"
+                title="Mis Contactos"
                 type="outline"
-                onPress={() => this.onPressSetting()}
+                onPress={() => navigation.navigate("contactsList")}
                 containerStyle={styles.listItemContainer}
                 icon={
                   <BaseIcon
