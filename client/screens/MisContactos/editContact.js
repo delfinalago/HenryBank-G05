@@ -1,7 +1,6 @@
 import React, { Component, useEffect } from "react";
 import { useFormik } from "formik";
 import axios from "axios";
-import { API } from "../../env";
 import {
   TouchableOpacity,
   ScrollView,

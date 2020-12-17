@@ -14,8 +14,6 @@ import {
   Input,
 } from "react-native";
 import { Card, ListItem, Button, Icon, Avatar } from "react-native-elements";
-import Axios from 'axios';
-import {API} from '../../env.js';
 
 export default function addContact({ navigation }) {
 
