@@ -64,20 +64,17 @@ function RootStack() {
   );
 }
 
-function LoginStack() {
+function LoginStack({ setToken }) {
   return (
     <Stack.Navigator
-      initialRouteName="Home"
+      initialRouteName="Login"
       screenOptions={{
         headerShown: false,
       }}
     >
-      <Stack.Screen
-        name="Login"
-        component={Login}
-        options={{ title: "Iniciar sesión" }}
-        options={{ headerShown: false }}
-      />
+      <Stack.Screen name="Login" options={{ headerShown: false }}>
+        {(props) => <Login {...props} setToken={setToken} />}
+      </Stack.Screen>
       <Stack.Screen name="PreRegister" component={PreRegister} />
       <Stack.Screen name="PreRegisterToken" component={PreRegisterToken} />
       <Stack.Screen
