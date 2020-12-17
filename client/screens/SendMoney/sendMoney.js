@@ -44,14 +44,15 @@ export default function sendMoney({ route, navigation }) {
         transfData.origin = JSON.parse(data).id;
         console.log("ONSUBMIT--------", transfData);
         Axios.put(`${API}/api/accounts/transc`, transfData)
-          .then(({ data }) => {
-            if (data.error) {
-              alert(data.error);
-            } else {
-              console.log(data);
-              alert("Transferencia realizada con éxito.");
-              navigation.navigate("Profile");
-            }
+          .then((data) => {
+            console.log(data);
+            // if (data.error) {
+            //   alert(data.error);
+            // } else {
+            //   console.log(data);
+            //   alert("Transferencia realizada con éxito.");
+            //   navigation.navigate("Profile");
+            // }
           })
           .catch((error) => console.log(error));
       });

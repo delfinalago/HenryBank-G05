@@ -140,6 +140,7 @@ module.exports = {
 							id_client: origin,
 						})
 						.then((e) => {
+							console.log("SALDO ANTES DE EXTRAER--------   ", e);
 							const newAmount = e - amount; //extrae la plata//
 							return newAmount;
 						})
@@ -166,11 +167,19 @@ module.exports = {
 
 			async handler(ctx) {
 				const { origin, destiny, amount, state } = ctx.params;
+				console.log("amounttttttttttttttttttttt ", amount);
+				ctx.call("accounts.saldoARG", {
+					id_client: origin,
+				}).then((saldo) => {
+					console.log("saldo--------- ", saldo);
+					if (saldo > amount) {
+						ctx.call("accounts.extrac", { origin, amount, state }); //invoca a la func  extrac y recarga //
 
-				ctx.call("accounts.extrac", { origin, amount, state }); //invoca a la func  extrac y recarga //
-
-				ctx.call("accounts.recarga", { amount, destiny });
-				return "transferencia exitosa!";
+						ctx.call("accounts.recarga", { amount, destiny });
+						return "transferencia exitosa!";
+					}
+					return "NO TENES SALDO PELOTUDIN";
+				});
 			},
 		},
 	},
