@@ -78,6 +78,7 @@ export default function Login({ navigation, setToken }) {
           id="password"
           name="password"
           type="password"
+          secureTextEntry={true}
           style={styles.input}
         />
         {touched.password && errors.password ? (
@@ -86,7 +87,6 @@ export default function Login({ navigation, setToken }) {
 
         <TouchableOpacity
           mode="contained"
-          secureTextEntry={true}
           title=""
           onPress={handleSubmit}
           style={styles.touchable}

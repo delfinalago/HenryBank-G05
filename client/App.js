@@ -57,12 +57,12 @@ function RootStack() {
   }, [token]);
 
   return (
-    <Stack.Navigator initialRouteName="Profile">
-      <Stack.Screen name="Profile" options={{ headerShown: false }}>
-        {(props) => <ProfileStack {...props} setToken={setToken} />}
-      </Stack.Screen>
+    <Stack.Navigator initialRouteName="Login">
       <Stack.Screen name="Login" options={{ headerShown: false }}>
         {(props) => <LoginStack {...props} setToken={setToken} />}
+      </Stack.Screen>
+      <Stack.Screen name="Profile" options={{ headerShown: false }}>
+        {(props) => <ProfileStack {...props} setToken={setToken} />}
       </Stack.Screen>
     </Stack.Navigator>
   );
