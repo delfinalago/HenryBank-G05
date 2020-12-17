@@ -110,8 +110,9 @@ const styles = StyleSheet.create({
     marginTop: 120,
     marginBottom: 20,
     paddingHorizontal: 10,
-    borderColor: "#00716F",
+    borderWidth: 1,
     borderRadius: 10,
+    borderColor: "#00aae4",
     paddingVertical: 2,
   },
   button: {
@@ -119,9 +120,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginTop: 30,
-    backgroundColor: "#00716F",
     paddingVertical: 10,
-    borderRadius: 23,
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: "#00aae4",
   },
   container: {
     paddingTop: 100,

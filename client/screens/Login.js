@@ -3,6 +3,7 @@ import Fondo1 from "../assets/Fondo1.png";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
+import logo from "../assets/logo.png";
 import Register from "./Register/Register";
 import { Card, Button } from "react-native-elements";
 import { API } from "../env.js";
@@ -17,7 +18,7 @@ import {
   TouchableOpacity,
   Form,
   ScrollView,
-  ImageBackground,
+  Image,
 } from "react-native";
 
 export default function Login({ navigation, setToken }) {
@@ -55,9 +56,12 @@ export default function Login({ navigation, setToken }) {
   });
 
   return (
-    <ScrollView>
-      <View style={{ height: "100%" }}>
-        <Text style={styles.correo}> Email :</Text>
+    <ScrollView style={{ backgroundColor: "#fff" }}>
+      <View style={styles.container}>
+        <Image source={logo} style={styles.img} />
+        <Text style={{ alignSelf: "center" }}>
+          Bienvenidx a tu billetera virtual
+        </Text>
         <TextInput
           placeholder="Correo"
           placeholderTextColor="#000000"
@@ -69,7 +73,7 @@ export default function Login({ navigation, setToken }) {
           style={styles.input}
         />
         {touched.login && errors.login ? <Text>{errors.login}</Text> : null}
-        <Text style={styles.text}> Contraseña :</Text>
+
         <TextInput
           placeholder="Contraseña"
           placeholderTextColor="#000000"
@@ -94,6 +98,10 @@ export default function Login({ navigation, setToken }) {
           <Text>Ingresar</Text>
         </TouchableOpacity>
 
+        <Text style={{ alignSelf: "center", marginTop: 40 }}>
+          Si aun no te registraste
+        </Text>
+
         <TouchableOpacity
           mode="contained"
           secureTextEntry={true}
@@ -101,7 +109,7 @@ export default function Login({ navigation, setToken }) {
           onPress={() => navigation.navigate("PreRegister")}
           style={styles.touchable}
         >
-          <Text>Registrarse</Text>
+          <Text>Registrate</Text>
         </TouchableOpacity>
       </View>
     </ScrollView>
@@ -109,8 +117,11 @@ export default function Login({ navigation, setToken }) {
 }
 
 const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: "gray",
+  container: {
+    marginTop: 100,
+    flex: 1,
+    justifyContent: "center",
+    backgroundColor: "#fff",
   },
   text: {
     flexDirection: "column",
@@ -123,14 +134,14 @@ const styles = StyleSheet.create({
   },
   touchable: {
     color: "#000000",
-    marginHorizontal: 55,
+    marginHorizontal: 100,
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 30,
-    marginBottom: 30,
-    backgroundColor: "#00716F",
+    marginTop: 20,
     paddingVertical: 10,
-    borderRadius: 23,
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: "#00aae4",
   },
   correo: {
     flexDirection: "column",
@@ -149,10 +160,11 @@ const styles = StyleSheet.create({
     color: "#000000",
     alignItems: "center",
     borderWidth: 3,
-    marginTop: 50,
+    marginTop: 25,
     paddingHorizontal: 10,
-    borderColor: "#00716F",
-    borderRadius: 23,
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: "#00aae4",
     paddingVertical: 2,
   },
   password: {
@@ -164,5 +176,9 @@ const styles = StyleSheet.create({
     marginTop: 35,
     opacity: 0.8,
     color: "#000000",
+  },
+  img: {
+    alignSelf: "center",
+    height: 200,
   },
 });

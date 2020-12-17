@@ -53,8 +53,9 @@ export default function contactos({ navigation }) {
             ? contacts.map((u, i) => {
                 const { id_contact } = u;
                 return (
-                  <View key={i}>
+                  <View key={i} style={styles.contact}>
                     <TouchableOpacity
+                      style={{ flexDirection: "row", alignItems: "center" }}
                       onPress={() =>
                         navigation.navigate("editContact", {
                           id_contact,
@@ -63,7 +64,6 @@ export default function contactos({ navigation }) {
                     >
                       <ListItem
                         key={i}
-                        title={u.alias}
                         leftAvatar={{
                           source: {
                             uri:
@@ -71,11 +71,14 @@ export default function contactos({ navigation }) {
                           },
                         }}
                       />
+                      <Text style={{ fontSize: 25 }}>{u.alias}</Text>
                     </TouchableOpacity>
-                    <Button
+                    <TouchableOpacity
                       title="delete"
                       onPress={() => handleDelete(id_contact)}
-                    />
+                    >
+                      <Text style={styles.delete}>Eliminar</Text>
+                    </TouchableOpacity>
                   </View>
                 );
               })
@@ -121,11 +124,27 @@ const styles = StyleSheet.create({
   contacts: {
     marginTop: 5,
     fontSize: 20,
-    color: "#00aae4",
     alignSelf: "center",
   },
+  contact: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginVertical: 4,
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: "#00aae4",
+  },
+  delete: {
+    color: "red",
+    borderColor: "red",
+    padding: 5,
+    borderWidth: 1,
+    borderRadius: 10,
+    alignSelf: "center",
+    marginRight: 30,
+  },
   boton: {
-    marginBottom: 5,
     flex: 1,
     color: "#03bb85",
     alignSelf: "flex-end",
