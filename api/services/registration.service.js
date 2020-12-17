@@ -114,9 +114,11 @@ module.exports = {
 				const emailDb = await this.adapter.db.query(
 					`SELECT * FROM CLIENT WHERE username = '${username}'`
 				);
-				console.log(emailDb);
-				if (emailDb[0].length) {
-					return "existe ....";
+				if (emailDb[0].length > 0) {
+					return {
+						error:
+							"El email ingresado corresponde a un usuario existente",
+					};
 				} else {
 					return ctx.call("registration.sendemail", ctx.params);
 				}
