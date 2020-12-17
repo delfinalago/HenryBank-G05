@@ -50,24 +50,23 @@ export default function SelectContact({ navigation }) {
       <View style={styles.container}>
         {contacts.map((contact, i) => (
           <ListItem key={i} bottomDivider>
-            <ListItem.Content>
-              <ListItem.Title>{contact.alias}</ListItem.Title>
-              <ListItem.Subtitle>
-                <TouchableOpacity
-                  mode="contained"
-                  secureTextEntry={true}
-                  title=""
-                  onPress={() =>
-                    navigation.navigate("SendMoney", {
-                      id_contact: contact.id_contact,
-                    })
-                  }
-                  style={styles.button}
-                >
-                  <Text>Enviar dinero</Text>
-                </TouchableOpacity>
-              </ListItem.Subtitle>
-            </ListItem.Content>
+            <View style={styles.contactContainer}>
+              <Text style={styles.textContact}>{contact.alias}</Text>
+
+              <TouchableOpacity
+                mode="contained"
+                secureTextEntry={true}
+                title=""
+                onPress={() =>
+                  navigation.navigate("SendMoney", {
+                    id_contact: contact.id_contact,
+                  })
+                }
+                style={styles.button}
+              >
+                <Text>Enviar dinero</Text>
+              </TouchableOpacity>
+            </View>
           </ListItem>
         ))}
       </View>
@@ -85,6 +84,10 @@ const styles = StyleSheet.create({
   textSub: {
     fontSize: 20,
   },
+  textContact: {
+    fontSize: 30,
+    paddingVertical: 10,
+  },
   input: {
     alignItems: "center",
     width: "auto",
@@ -100,12 +103,11 @@ const styles = StyleSheet.create({
   },
   button: {
     marginHorizontal: 55,
-    alignItems: "center",
-    justifyContent: "center",
     marginTop: 30,
     backgroundColor: "#00716F",
     paddingVertical: 10,
-    borderRadius: 23,
+    borderRadius: 10,
+    alignSelf: "flex-end",
   },
   container: {
     paddingTop: 100,
@@ -114,6 +116,12 @@ const styles = StyleSheet.create({
     height: "100%",
     flex: 3,
     flexDirection: "column",
+    justifyContent: "space-between",
+    alignItems: "stretch",
+  },
+  contactContainer: {
+    flex: 2,
+    flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "stretch",
   },
