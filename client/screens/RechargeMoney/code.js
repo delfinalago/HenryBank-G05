@@ -17,8 +17,8 @@ import { API } from "../../env.js";
 export default function Code({ navigation }) {
   const [code, setCode] = useState(null);
   const [amount, setAmount] = useState(null);
+
   const handleChange = (e) => {
-    console.log("valor Amount-----", e);
     setAmount(e);
   };
 
@@ -29,24 +29,25 @@ export default function Code({ navigation }) {
   const handleCode = () => {
     let num = randomNum();
     setCode(num);
+    console.log("codeeeeeeeeeeee------", code);
   };
   const handleSubmit = () => {
     let parms = {};
     parms.amount = amount;
     AsyncStorage.getItem("@localUser").then((data) => {
       parms.destiny = JSON.parse(data).id;
+      console.log("Parms para recarga-------", parms);
+      Axios.put(`${API}/api/accounts/accountarg`, parms)
+        .then((data) => {
+          if (data.error) {
+            alert(data.error);
+          } else {
+            alert("Recarga realizada con éxito.");
+            navigation.navigate("Me");
+          }
+        })
+        .catch((error) => console.log(error));
     });
-    console.log("Parms para recarga-------", parms);
-    Axios.put(`${API}/api/accounts/accountarg`, parms)
-      .then((data) => {
-        if (data.error) {
-          alert(data.error);
-        } else {
-          alert("Transferencia realizada con éxito.");
-          navigation.navigate("Me");
-        }
-      })
-      .catch((error) => console.log(error));
   };
   return (
     <ScrollView style={styles.scrollView}>
@@ -57,7 +58,7 @@ export default function Code({ navigation }) {
           placeholder="Cantidad"
           placeholderTextColor="#00716F"
           style={styles.input}
-          onChange={handleChange}
+          onChangeText={handleChange}
           numeric
           keyboardType={"numeric"}
         />
@@ -71,27 +72,30 @@ export default function Code({ navigation }) {
         >
           <Text>Obtener código</Text>
         </TouchableOpacity>
-      </View>
-      {code ? (
         <View>
-          <Text style={styles.title}>
-            Presentá este codigo en un RapiPago o PagoFácil para efectuar la
-            recarga
-          </Text>
-          <TouchableOpacity
-            mode="contained"
-            secureTextEntry={true}
-            title="Confirmar"
-            onPress={handleSubmit}
-            style={styles.button}
-          >
-            <Text>Confirmar</Text>
-          </TouchableOpacity>
-          <Text style={styles.text}>{code}</Text>
+          <Text style={styles.code}>{code}</Text>
+          {code ? (
+            <View>
+              <Text style={styles.title}>
+                Presentá este codigo en un RapiPago o PagoFácil para efectuar la
+                recarga
+              </Text>
+
+              <TouchableOpacity
+                mode="contained"
+                secureTextEntry={true}
+                title="Confirmar"
+                onPress={handleSubmit}
+                style={styles.button}
+              >
+                <Text>Confirmar</Text>
+              </TouchableOpacity>
+            </View>
+          ) : (
+            <></>
+          )}
         </View>
-      ) : (
-        <></>
-      )}
+      </View>
     </ScrollView>
   );
 }
@@ -102,6 +106,11 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 42,
+  },
+  code: {
+    fontSize: 42,
+    textAlign: "center",
+    marginTop: 100,
   },
   title: {
     fontSize: 20,
