@@ -122,7 +122,7 @@ class Contact extends Component {
                 titleStyle={styles.listItem}
                 title="Recargar dinero"
                 type="outline"
-                onPress={() => this.onPressSetting()}
+                onPress={() => navigation.navigate("RechargeMoney")}
                 containerStyle={styles.listItemContainer}
                 icon={
                   <BaseIcon
