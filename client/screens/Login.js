@@ -1,15 +1,14 @@
 import React from "react";
-import Fondo1 from "../assets/Fondo1.png";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 import logo from "../assets/logo.png";
-import Register from "./Register/Register";
 import { Card, Button } from "react-native-elements";
 import { API } from "../env.js";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const background = require("../assets/Fondo1.png");
+
+
 import {
   StyleSheet,
   Text,

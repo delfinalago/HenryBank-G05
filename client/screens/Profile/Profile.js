@@ -48,11 +48,11 @@ class Contact extends Component {
               <Saldo />
             </View>
             <View style={styles.buttons}>
-              {/* <Button
+              <Button
                 titleStyle={styles.listItem}
                 type="outline"
                 title="Transacciones"
-                onPress={() => this.onPressSetting()}
+                onPress={() => navigation.navigate("transacciones")}
                 containerStyle={styles.listItemContainer}
                 icon={
                   <BaseIcon
@@ -66,7 +66,7 @@ class Contact extends Component {
                     }}
                   />
                 }
-              /> */}
+              />
               <Button
                 titleStyle={styles.listItem}
                 type="outline"

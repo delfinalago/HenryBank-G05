@@ -141,6 +141,7 @@ CREATE TABLE `models` (
 
 CREATE TABLE `transactions` (
   `id` int(60) NOT NULL,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `state` int(60) NOT NULL,
   `type` varchar(60) NOT NULL,
   `description` varchar(60) DEFAULT NULL,

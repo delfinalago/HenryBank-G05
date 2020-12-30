@@ -84,6 +84,12 @@ export default function contactos({ navigation }) {
               })
             : null}
         </Card>
+          <Button
+            type="outline"
+            onPress={() => navigation.goBack()}
+            title="Volver"
+            style={styles.botonvolver}
+          />
       </View>
     </ScrollView>
   );
@@ -150,4 +156,11 @@ const styles = StyleSheet.create({
     alignSelf: "flex-end",
     backgroundColor: "#fff",
   },
+  botonvolver: {
+    flex: 1,
+    color: "#03bb85",
+    alignSelf: "center",
+    backgroundColor: "#fff",
+    paddingTop: 10,
+  }
 });
