@@ -188,6 +188,8 @@ module.exports = {
 	},
 	/**
 	 * Methods
+	 * trae todos los gastos generados por el cliente
+	 * trae todos los ingresos efectuados al cliente
 	 */
 	methods: {},
 

@@ -8,6 +8,7 @@ import {
   SafeAreaView,
   TextInput,
   FlatList,
+  Linking
 } from "react-native";
 
 import { Card, ListItem, Button, Icon, Avatar } from "react-native-elements";
@@ -36,6 +37,13 @@ export default function contactos({ navigation }) {
       .then(({ data }) => setNum(num + 1));
   };
 
+
+   const handleWhatsappPress = async () => {
+    await Linking.openURL("https://wa.me/?text= Hola!! Sumate a Veski, la nueva billetera virtual que hace tu vida mas facil @linkdeveski");
+
+   }
+ 
+
   return (
     <ScrollView style={styles.fondo}>
       <View style={{ flex: 1, backgroundColor: "#fff" }}>
@@ -48,6 +56,7 @@ export default function contactos({ navigation }) {
             style={styles.boton}
             onPress={() => navigation.navigate("addContact")}
           />
+      
           <Card.Divider />
           {contacts.length
             ? contacts.map((u, i) => {
@@ -79,11 +88,21 @@ export default function contactos({ navigation }) {
                     >
                       <Text style={styles.delete}>Eliminar</Text>
                     </TouchableOpacity>
+                    
                   </View>
                 );
               })
             : null}
         </Card>
+        <Text style={{ alignSelf: "center",marginTop: 20 }}>
+          El usuario que buscas aun no es cliente de Veski? Podes enviar una invitacion
+        </Text>
+        <Button
+            type="outline"
+            title="Invitar"
+            style={styles.boton}
+            onPress={handleWhatsappPress}
+          />
       </View>
     </ScrollView>
   );
@@ -147,7 +166,7 @@ const styles = StyleSheet.create({
   boton: {
     flex: 1,
     color: "#03bb85",
-    alignSelf: "flex-end",
+    alignSelf: "center",
     backgroundColor: "#fff",
   },
 });
