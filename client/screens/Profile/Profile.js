@@ -1,8 +1,9 @@
-import React, { Component } from "react";
+import React, { useEffect, useState, useCallback } from "react";
+import { API } from "../../env";
+import axios from "axios";
 import { Card, Button } from "react-native-elements";
 import BaseIcon from "./Icon";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import Saldo from "./saldo";
 
 import {
   Image,
@@ -15,44 +16,52 @@ import {
   RefreshControl,
 } from "react-native";
 
-class Contact extends Component {
-  renderHeader = () => {
-    const { avatar, avatarBackground, name } = this.props;
+export default function Profile({ navigation, setToken }) {
+  const [refreshing, setRefreshing] = useState(false);
+  const [saldo, setSaldo] = useState({});
 
-    return (
-      <View style={styles.headerContainer}>
-        <ImageBackground
-          style={styles.headerBackgroundImage}
-          blurRadius={10}
-          source={{ uri: avatarBackground }}
-        >
-          <View style={styles.headerColumn}>
-            <Image style={styles.userImage} source={{ uri: avatar }} />
-            <Text style={styles.userNameText}>{name}</Text>
-            <View style={styles.userAddressRow}></View>
-          </View>
-        </ImageBackground>
-      </View>
-    );
+  const getSaldo = () => {
+    axios.get(`${API}/api/accounts/saldoarg?nombre=true`).then(({ data }) => {
+      setSaldo(data);
+      console.log(data);
+    });
+  };
+  const wait = (timeout) => {
+    return new Promise((resolve) => {
+      setTimeout(resolve, timeout);
+    });
   };
 
-  onPressSetting = () => {};
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    getSaldo();
+    wait(1300).then(() => setRefreshing(false));
+  }, []);
 
-  render() {
-    const { setToken, navigation } = this.props;
-    return (
-      <ScrollView style={styles.scroll}>
-        <View style={styles.container}>
-          <Card containerStyle={styles.cardContainer}>
-            <View style={styles.saldo}>
-              <Saldo />
-            </View>
-            <View style={styles.buttons}>
-              {/* <Button
+  useEffect(() => {
+    getSaldo();
+  }, []);
+
+  return (
+    <ScrollView
+      style={styles.scroll}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }
+    >
+      <View style={styles.container}>
+        <Card containerStyle={styles.cardContainer}>
+          <View style={styles.saldoContainer}>
+            <Text style={styles.name}>{saldo.name}</Text>
+            <Text style={styles.saldo}>Mi saldo</Text>
+            <Text style={styles.saldo}>${saldo.balance}</Text>
+          </View>
+          <View style={styles.buttons}>
+            {/* <Button
                 titleStyle={styles.listItem}
                 type="outline"
                 title="Transacciones"
-                onPress={() => this.onPressSetting()}
+                onPress={() => console.log("Transacciones")}
                 containerStyle={styles.listItemContainer}
                 icon={
                   <BaseIcon
@@ -67,26 +76,26 @@ class Contact extends Component {
                   />
                 }
               /> */}
-              <Button
-                titleStyle={styles.listItem}
-                type="outline"
-                title="Estadisticas"
-                onPress={() => this.onPressSetting()}
-                containerStyle={styles.listItemContainer}
-                icon={
-                  <BaseIcon
-                    containerStyle={{
-                      backgroundColor: "#29333d",
-                      marginLeft: 15,
-                    }}
-                    icon={{
-                      type: "font-awesome",
-                      name: "line-chart",
-                    }}
-                  />
-                }
-              />
-              {/* <Button
+            <Button
+              titleStyle={styles.listItem}
+              type="outline"
+              title="Estadisticas"
+              onPress={() => console.log("Estadisticas")}
+              containerStyle={styles.listItemContainer}
+              icon={
+                <BaseIcon
+                  containerStyle={{
+                    backgroundColor: "#29333d",
+                    marginLeft: 15,
+                  }}
+                  icon={{
+                    type: "font-awesome",
+                    name: "line-chart",
+                  }}
+                />
+              }
+            />
+            {/* <Button
                 titleStyle={styles.listItem}
                 type="outline"
                 title="Mis productos "
@@ -102,78 +111,77 @@ class Contact extends Component {
                   />
                 }
               /> */}
-              <Button
-                titleStyle={styles.listItem}
-                title="Mis contactos"
-                type="outline"
-                onPress={() => navigation.navigate("contactsList")}
-                containerStyle={styles.listItemContainer}
-                icon={
-                  <BaseIcon
-                    containerStyle={{ backgroundColor: "#29333d" }}
-                    icon={{
-                      type: "font-awesome",
-                      name: "user-circle",
-                    }}
-                  />
-                }
-              />
-              <Button
-                titleStyle={styles.listItem}
-                title="Recargar dinero"
-                type="outline"
-                onPress={() => navigation.navigate("RechargeMoney")}
-                containerStyle={styles.listItemContainer}
-                icon={
-                  <BaseIcon
-                    style={styles.listItem}
-                    containerStyle={{ backgroundColor: "#29333d" }}
-                    icon={{
-                      type: "font-awesome",
-                      name: "google-wallet",
-                    }}
-                  />
-                }
-              />
-              <Button
-                titleStyle={styles.listItem}
-                type="outline"
-                title="Enviar dinero"
-                onPress={() => navigation.navigate("SelectContact")}
-                containerStyle={styles.listItemContainer}
-                icon={
-                  <BaseIcon
-                    containerStyle={{ backgroundColor: "#29333d" }}
-                    icon={{
-                      type: "font-awesome",
-                      name: "money",
-                    }}
-                  />
-                }
-              />
-            </View>
-          </Card>
-        </View>
-        <View style={styles.logout}>
-          <Button
-            title="logout"
-            onPress={async () => {
-              try {
-                await AsyncStorage.setItem("@localUser", "");
-                setToken("");
-                navigation.navigate("Login");
-              } catch (error) {
-                console.log(this.props);
+            <Button
+              titleStyle={styles.listItem}
+              title="Mis contactos"
+              type="outline"
+              onPress={() => navigation.navigate("contactsList")}
+              containerStyle={styles.listItemContainer}
+              icon={
+                <BaseIcon
+                  containerStyle={{ backgroundColor: "#29333d" }}
+                  icon={{
+                    type: "font-awesome",
+                    name: "user-circle",
+                  }}
+                />
               }
-            }}
-          />
-        </View>
-      </ScrollView>
-    );
-  }
+            />
+            <Button
+              titleStyle={styles.listItem}
+              title="Recargar dinero"
+              type="outline"
+              onPress={() => navigation.navigate("RechargeMoney")}
+              containerStyle={styles.listItemContainer}
+              icon={
+                <BaseIcon
+                  style={styles.listItem}
+                  containerStyle={{ backgroundColor: "#29333d" }}
+                  icon={{
+                    type: "font-awesome",
+                    name: "google-wallet",
+                  }}
+                />
+              }
+            />
+            <Button
+              titleStyle={styles.listItem}
+              type="outline"
+              title="Enviar dinero"
+              onPress={() => navigation.navigate("SelectContact")}
+              containerStyle={styles.listItemContainer}
+              icon={
+                <BaseIcon
+                  containerStyle={{ backgroundColor: "#29333d" }}
+                  icon={{
+                    type: "font-awesome",
+                    name: "money",
+                  }}
+                />
+              }
+            />
+          </View>
+        </Card>
+      </View>
+      <View style={styles.logout}>
+        <Button
+          title="logout"
+          onPress={async () => {
+            try {
+              await AsyncStorage.setItem("@localUser", "");
+              setToken("");
+              navigation.navigate("Login");
+            } catch (error) {
+              console.log(error);
+            }
+          }}
+        />
+      </View>
+    </ScrollView>
+  );
 }
 
-export default Contact;
+// export default Contact;
 
 const styles = StyleSheet.create({
   cardContainer: {
@@ -225,26 +233,30 @@ const styles = StyleSheet.create({
     paddingBottom: 8,
     textAlign: "center",
   },
-  saldo: {
+  saldoContainer: {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
     marginTop: 28,
     marginBottom: 16,
   },
-  saldoActual: {
-    color: "#FFF",
+  saldo: {
+    fontSize: 30,
+    fontWeight: "bold",
   },
-  saldoNumber: {
-    marginTop: 4,
-    fontSize: 42,
-    color: "#FFF",
+  name: {
+    color: "#000000",
+    fontSize: 22,
+    fontWeight: "bold",
+    paddingBottom: 8,
+    textAlign: "center",
   },
   listItemContainer: {
     height: 55,
     width: "80%",
     color: "#FFF",
   },
+
   buttons: {
     alignItems: "center",
     color: "#FFF",
