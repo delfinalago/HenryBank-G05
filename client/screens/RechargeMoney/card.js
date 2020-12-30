@@ -1,8 +1,5 @@
 import React, { useState } from "react";
-import {
-  CreditCardInput,
-  LiteCreditCardInput,
-} from "react-native-credit-card-input";
+import { CreditCardInput } from "react-native-credit-card-input";
 import {
   StyleSheet,
   Text,
@@ -15,40 +12,16 @@ import {
   TextInput,
   //   Picker,
 } from "react-native";
-// import {
-//   rechargeByCard,
-//   getTransactions,
-// } from "../store/actions/acountActions";
-
-import Spinner from "react-native-loading-spinner-overlay";
 
 const { width, height } = Dimensions.get("window");
+import Toast from "react-native-toast-message";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import Axios from "axios";
+import { API } from "../../env.js";
 
-const Card = () => {
-  //   const dispatch = useDispatch();
-  //   const session = useSelector((state) => state.session.userDetail);
-  //   const accounts = useSelector((state) => state.acoount.account);
-  // const accountP = accounts[0];
-  // const accountD = accounts[1];
-  // const cvuP = accountP && accountP.cvu;
-  // const cvuD = accountD && accountD.cvu;
-  // const [selectedValue, setSelectedValue] = useState(cvuP);
-  // const [show, setShow] = useState(false);
-
+export default function Card({ route, navigation }) {
   const [loading, setLoading] = useState(false);
-
-  const startLoading = () => {
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-    }, 4000);
-  };
-
-  const [value, setValue] = useState();
-  const [inputText, setInputText] = useState({
-    cvu: "",
-    amount: "",
-  });
+  const amount = route.params.amount;
 
   const onChange = (formData) => {
     return;
@@ -56,235 +29,165 @@ const Card = () => {
 
   const onFocus = (field) => console.log("focus", field);
 
-  const handlerSubmit = () => {
-    // let obj = {
-    //   cvu: selectedValue,
-    //   amount: inputText.amount,
-    // };
-    // dispatch(getTransactions(selectedValue));
-    // startLoading();
-    // dispatch(rechargeByCard(obj, cvuD, cvuP));
-    // return;
-  };
+  const handleSubmit = () => {
+    let parms = {};
+    parms.amount = amount;
+    AsyncStorage.getItem("@localUser").then((data) => {
+      parms.destiny = JSON.parse(data).id;
+      console.log("Parms para recarga-------", parms);
+      Axios.put(`${API}/api/accounts/accountarg`, parms)
+        .then((data) => {
+          if (data.error) {
+            Toast.show({
+              type: "error",
+              position: "bottom",
+              text1: `Error: ${data.error}`,
+              visibilityTime: 2000,
+              autoHide: true,
+              topOffset: 30,
+              bottomOffset: 40,
+            });
+          } else {
+            setTimeout(() => {
+              Toast.show({
+                type: "success",
+                position: "bottom",
+                text1: ` Transaccion exitosa ... `,
+                visibilityTime: 3000,
+                autoHide: true,
+                topOffset: 30,
+                bottomOffset: 40,
+              });
+              navigation.navigate("Me");
+            }, 3000);
 
-  const handleChange = (value) => {
-    return setInputText({ ...inputText, amount: value });
+            Toast.show({
+              type: "success",
+              position: "bottom",
+              text1: `Cargando ... `,
+              visibilityTime: 2000,
+              autoHide: true,
+              topOffset: 30,
+              bottomOffset: 40,
+            });
+          }
+        })
+        .catch((error) => console.log(error));
+    });
   };
 
   return (
-    <ScrollView>
-      <Spinner
-        //visibility of Overlay Loading Spinner
-        visible={loading}
-        //Text with the Spinner
-        textContent={"Cargando..."}
-        //Text style of the Spinner Text
-        textStyle={styles.spinnerTextStyle}
-      />
-      <View style={styles.containerPrincipal}>
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            padding: 40,
-            paddingVertical: 60,
-            justifyContent: "center",
+    <ScrollView style={styles.scrollView}>
+      <View style={{ marginTop: 200 }}>
+        <CreditCardInput
+          autoFocus
+          requiresName
+          requiresCVC
+          // cardScale={1.1}
+          allowScroll={true}
+          labelStyle={styles.label}
+          inputStyle={styles.cardInput}
+          validColor={"black"}
+          invalidColor={"red"}
+          // placeholderColor={"darkgray"}
+          placeholders={{
+            number: "1234 5678 1234 5678",
+            name: "NOMBRE COMPLETO",
+            expiry: "MM/YY",
+            cvc: "CVC",
+          }}
+          labels={{
+            number: "NÚMERO TARJETA",
+            expiry: "EXPIRA",
+            name: "NOMBRE COMPLETO",
+            cvc: "CVC",
+          }}
+          onFocus={onFocus}
+          onChange={onChange}
+        />
+      </View>
+      <View>
+        <TouchableOpacity
+          mode="contained"
+          secureTextEntry={true}
+          style={styles.button}
+          onPress={() => {
+            handleSubmit();
           }}
         >
-          <Text style={styles.titleStyle}>
-            Recarga dinero con una tarjeta de credito o debito
-          </Text>
-        </View>
-        <View>
-          <Text style={styles.title}>¿Cuanto dinero queres recargar?</Text>
-          <TextInput
-            placeholder="Cantidad"
-            name="Cantidad"
-            returnKeyType="done"
-            onChangeText={(value) => handleChange(value)}
-            style={styles.inputCantidadDinero}
-            onFocus={() => setValue()}
-            value={value}
-          />
-        </View>
-        <View>
-          <CreditCardInput
-            autoFocus
-            requiresName
-            requiresCVC
-            cardScale={1.1}
-            allowScroll={true}
-            labelStyle={styles.label}
-            inputStyle={styles.input}
-            validColor={"black"}
-            invalidColor={"red"}
-            placeholderColor={"darkgray"}
-            placeholders={{
-              number: "1234 5678 1234 5678",
-              name: "NOMBRE COMPLETO",
-              expiry: "MM/YY",
-              cvc: "CVC",
-            }}
-            labels={{
-              number: "NÚMERO TARJETA",
-              expiry: "EXPIRA",
-              name: "NOMBRE COMPLETO",
-              cvc: "CVC",
-            }}
-            onFocus={onFocus}
-            onChange={onChange}
-          />
-        </View>
-
-        {/* <View style={styles.textSeleccionarContainer}>
-          <Text>Selecciona una cuenta desde la que transferir:</Text>
-          <Picker
-            selectedValue={selectedValue}
-            style={{ height: 50, width: 250 }}
-            style={styles.inputSelect}
-            onValueChange={(itemValue, itemIndex) =>
-              setSelectedValue(itemValue)
-            }
-          >
-            <Picker.Item label="Cuenta Pesos" value={cvuP} />
-            <Picker.Item label="Cuenta Dolares" value={cvuD} />
-          </Picker>
-        </View> */}
-        <View>
-          {/* <TouchableOpacity style={styles.buttonStyle} onPress={handlerSubmit}>
-					<Text style={styles.buttonTextStyle}>Recargar</Text>
-				</TouchableOpacity> */}
-          <TouchableOpacity
-            mode="contained"
-            secureTextEntry={true}
-            style={styles.buttonStyle}
-            onPress={() => {
-              handlerSubmit();
-              setValue("");
-            }}
-          >
-            <Text>Recargar</Text>
-          </TouchableOpacity>
-        </View>
+          <Text style={styles.innerText}>Recargar</Text>
+        </TouchableOpacity>
       </View>
     </ScrollView>
   );
-};
+}
 
 const styles = StyleSheet.create({
+  scrollView: {
+    backgroundColor: "#fff",
+  },
   containerPrincipal: {
     flexDirection: "column",
-    // height: height,
-    // flex: 1,
-    // backgroundColor: 'white',
-    justifyContent: "center",
-    textAlign: "center",
-    // alignItems: 'center',
-    // marginVertical: 80,
-  },
-  label: {
-    color: "black",
-    fontSize: 16,
-  },
-  input: {
-    fontSize: 18,
-    color: "black",
-  },
-  buttonStyle: {
-    marginTop: 20,
-    marginBottom: 30,
-    borderWidth: 1,
-    // borderColor: theme.colors.primary,
-    // backgroundColor: theme.colors.primary,
-    width: width * 0.5,
-    alignSelf: "center",
-  },
-  buttonTextStyle: {
-    color: "#FFFFFF",
-    paddingVertical: 10,
-    fontSize: 16,
-  },
-  input: {
-    height: 40,
-    backgroundColor: "white",
-    borderColor: "#fff",
-  },
-  inputCantidadDinero: {
-    height: 40,
-    backgroundColor: "white",
-    borderBottomColor: "black",
-    borderBottomWidth: 2,
-    width: width * 0.5,
-    alignSelf: "center",
-    marginTop: 20,
-  },
-  // Text
-  titleStyle: {
-    textAlign: "center",
-    fontSize: 20,
-    fontWeight: "bold",
-    color: "white",
-    paddingLeft: 5,
-  },
-  textInputStyle: {
-    flexDirection: "row",
-    height: 40,
-    width: "70%",
-    margin: "auto",
     justifyContent: "center",
     textAlign: "center",
   },
-  modalshut: {
-    marginTop: 10,
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-    borderWidth: 0.3,
-    borderRadius: 5,
-    borderColor: "#669",
-    width: width * 0.5,
-    alignSelf: "center",
+  text: {
+    fontSize: 42,
   },
-  modal: {
-    flex: 1,
-    backgroundColor: "red",
-  },
-  modalContent: {
-    marginLeft: width * 0.05,
-    marginRight: width * 0.05,
-    marginTop: height * 0.4,
-    height: height * 0.2,
-    width: width * 0.9,
-    backgroundColor: "white",
-    justifyContent: "center",
-    alignItems: "center",
-    borderWidth: 0.3,
-    borderRadius: 5,
-  },
-  itemText: {
-    fontSize: 20,
+  code: {
+    fontSize: 42,
     textAlign: "center",
-    // color: theme.colors.secondary,
-    justifyContent: "center",
-  },
-  textSeleccionarContainer: {
-    // width: width * 0.5,
-    alignSelf: "center",
-    textAlign: "center",
-    marginVertical: 10,
-    justifyContent: "center",
-  },
-  inputSelect: {
-    borderBottomColor: "black",
-    borderBottomWidth: 6,
-    width: 400,
+    marginTop: 100,
   },
   title: {
     fontSize: 20,
-    marginHorizontal: 55,
+    marginHorizontal: 20,
     textAlign: "center",
     marginTop: 5,
     opacity: 0.4,
   },
+  input: {
+    flexDirection: "column",
+    marginHorizontal: 20,
+    height: 50,
+    color: "#000000",
+    alignItems: "center",
+    borderWidth: 3,
+    marginVertical: 25,
+    paddingHorizontal: 10,
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: "#00aae4",
+    paddingVertical: 2,
+  },
+  cardInput: {
+    flexDirection: "column",
+    marginHorizontal: 20,
+    height: 50,
+    color: "#000000",
+    alignItems: "center",
+    borderWidth: 3,
+    marginVertical: 10,
+    paddingHorizontal: 10,
+    borderWidth: 0,
+    borderColor: "#FFF",
+    paddingVertical: 2,
+  },
+  label: {
+    color: "black",
+    fontSize: 16,
+    textAlign: "center",
+  },
+  button: {
+    marginHorizontal: 55,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 30,
+    backgroundColor: "#00aae4",
+    paddingVertical: 10,
+    borderRadius: 10,
+  },
+  innerText: {
+    color: "white",
+  },
 });
-
-export default Card;
