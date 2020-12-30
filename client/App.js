@@ -13,6 +13,7 @@ import axios from "axios";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { StyleSheet, Text, View } from "react-native";
 import { StatusBar } from "expo-status-bar";
+import Toast from "react-native-toast-message";
 
 // Screens
 
@@ -29,6 +30,8 @@ import SendMoney from "./screens/SendMoney/sendMoney";
 import SelectContact from "./screens/SendMoney/selectContact";
 import RechargeMoney from "./screens/RechargeMoney/rechargeMoney";
 import Card from "./screens/RechargeMoney/card";
+import Code from "./screens/RechargeMoney/code";
+import SelectMethod from "./screens/RechargeMoney/selectMethod";
 
 const Stack = createStackNavigator(); //contiene la navegacion
 
@@ -136,6 +139,18 @@ function ProfileStack({ setToken }) {
         options={{ headerShown: false }}
       />
       <Stack.Screen
+        name="SelectMethod"
+        component={SelectMethod}
+        options={{ title: "Elegir metodo de pago" }}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Code"
+        component={Code}
+        options={{ title: "Código" }}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
         name="Card"
         component={Card}
         options={{ title: "Tarjeta" }}
@@ -151,6 +166,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <RootStack />
+      <Toast ref={(ref) => Toast.setRef(ref)} />
     </NavigationContainer>
   );
 }
