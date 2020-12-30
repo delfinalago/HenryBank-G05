@@ -89,7 +89,7 @@ class Contact extends Component {
               {/* <Button
                 titleStyle={styles.listItem}
                 type="outline"
-                title="Mis productos"
+                title="Mis productos "
                 onPress={() => this.onPressSetting()}
                 containerStyle={styles.listItemContainer}
                 icon={
