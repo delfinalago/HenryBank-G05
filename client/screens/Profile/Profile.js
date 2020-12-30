@@ -15,11 +15,21 @@ import {
   View,
   RefreshControl,
 } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 export default function Profile({ navigation, setToken }) {
   const [refreshing, setRefreshing] = useState(false);
   const [saldo, setSaldo] = useState({});
 
+  const Logout = async () => {
+    try {
+      await AsyncStorage.setItem("@localUser", "");
+      setToken("");
+      navigation.navigate("Login");
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const getSaldo = () => {
     axios.get(`${API}/api/accounts/saldoarg?nombre=true`).then(({ data }) => {
       setSaldo(data);
@@ -51,10 +61,20 @@ export default function Profile({ navigation, setToken }) {
     >
       <View style={styles.container}>
         <Card containerStyle={styles.cardContainer}>
+          <View style={styles.logout}>
+            <TouchableOpacity onPress={Logout}>
+              <BaseIcon
+                icon={{
+                  type: "font-awesome",
+                  name: "sign-out",
+                }}
+              />
+            </TouchableOpacity>
+          </View>
           <View style={styles.saldoContainer}>
-            <Text style={styles.name}>{saldo.name}</Text>
-            <Text style={styles.saldo}>Mi saldo</Text>
-            <Text style={styles.saldo}>${saldo.balance}</Text>
+            {/* <Text style={styles.saldo}>Mi saldo</Text> */}
+            <Text style={styles.name}>¡Hola, {saldo.name}!</Text>
+            <Text style={styles.saldo}>Saldo: ${saldo.balance}</Text>
           </View>
           <View style={styles.buttons}>
             {/* <Button
@@ -163,20 +183,6 @@ export default function Profile({ navigation, setToken }) {
           </View>
         </Card>
       </View>
-      <View style={styles.logout}>
-        <Button
-          title="logout"
-          onPress={async () => {
-            try {
-              await AsyncStorage.setItem("@localUser", "");
-              setToken("");
-              navigation.navigate("Login");
-            } catch (error) {
-              console.log(error);
-            }
-          }}
-        />
-      </View>
     </ScrollView>
   );
 }
@@ -199,7 +205,6 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
     paddingTop: 45,
   },
-  headerContainer: {},
   headerColumn: {
     alignItems: "center",
     ...Platform.select({
@@ -238,18 +243,19 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginTop: 28,
-    marginBottom: 16,
+    marginBottom: 50,
   },
   saldo: {
     fontSize: 30,
     fontWeight: "bold",
+    marginVertical: 50,
   },
   name: {
     color: "#000000",
     fontSize: 22,
     fontWeight: "bold",
-    paddingBottom: 8,
-    textAlign: "center",
+    // paddingBottom: 8,
+    // textAlign: "center",
   },
   listItemContainer: {
     height: 55,
@@ -276,7 +282,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   logout: {
-    marginTop: 50,
-    marginHorizontal: 100,
+    flexDirection: "row-reverse",
+
+    // marginTop: 20,
+    // marginHorizontal: 100,
   },
 });
