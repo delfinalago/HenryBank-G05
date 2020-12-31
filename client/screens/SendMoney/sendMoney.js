@@ -1,10 +1,11 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import React from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
   View,
+  Modal,
   TextInput,
   TouchableOpacity,
   ScrollView,
@@ -16,6 +17,8 @@ const { width, height } = Dimensions.get("window");
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function sendMoney({ route, navigation }) {
+  const [modalVisible, setModalVisible] = useState(false);
+
   const transfData = {};
   transfData.destiny = route.params.id_contact;
 
@@ -29,12 +32,15 @@ export default function sendMoney({ route, navigation }) {
   } = useFormik({
     initialValues: {
       amount: "",
+      description: "",
     },
     validationSchema: Yup.object({
       amount: Yup.number().required("Campo requerido"),
     }),
-    onSubmit: ({ amount }) => {
+    onSubmit: () => {
+      console.log("eeeeeeh");
       transfData.amount = values.amount;
+      transfData.description = values.description;
       // AsyncStorage.getItem("@localUser").then((data) => {
       //   console.log(data);
       // });
@@ -74,19 +80,46 @@ export default function sendMoney({ route, navigation }) {
           placeholder="Cantidad a transferir"
           value={values.amount}
           onChangeText={handleChange("amount")}
-          numeric
           keyboardType={"numeric"}
         />
         {touched.amount && errors.amount ? <Text>{errors.amount}</Text> : null}
         <TouchableOpacity
-          mode="contained"
-          secureTextEntry={true}
-          title="Register"
-          onPress={handleSubmit}
           style={styles.button}
+          onPress={() => {
+            setModalVisible(!modalVisible);
+          }}
         >
-          <Text>Transferir</Text>
+          <Text style={styles.textStyle}>Transferir</Text>
         </TouchableOpacity>
+        <Modal
+          animationType="fade"
+          transparent={true}
+          visible={modalVisible}
+          syle={styles.modal}
+        >
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Text style={styles.modalText}>Ya esta todo listo!</Text>
+
+              <TextInput
+                style={styles.input}
+                placeholder="Incluir un mensaje?"
+                value={values.description}
+                onChangeText={handleChange("description")}
+              />
+
+              <TouchableOpacity
+                style={styles.button}
+                onPress={(e) => {
+                  handleSubmit(e);
+                  setModalVisible(!modalVisible);
+                }}
+              >
+                <Text style={styles.textStyle}>Confirmar</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
       </View>
     </ScrollView>
   );
@@ -107,7 +140,7 @@ const styles = StyleSheet.create({
     height: 50,
     marginHorizontal: 10,
     borderWidth: 2,
-    marginTop: 120,
+    marginTop: 30,
     marginBottom: 20,
     paddingHorizontal: 10,
     borderWidth: 1,
@@ -134,5 +167,41 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "space-between",
     alignItems: "stretch",
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "stretch",
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  openButton: {
+    backgroundColor: "#F194FF",
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+  },
+  textStyle: {
+    color: "black",
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: "center",
+    fontSize: 30,
   },
 });

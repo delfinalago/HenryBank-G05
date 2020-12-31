@@ -30,6 +30,7 @@ export default function Code({ route, navigation }) {
     parms.amount = amount;
     AsyncStorage.getItem("@localUser").then((data) => {
       parms.destiny = JSON.parse(data).id;
+      parms.type = "recarga";
       console.log("Parms para recarga-------", parms);
       Axios.put(`${API}/api/accounts/accountarg`, parms)
         .then((data) => {
