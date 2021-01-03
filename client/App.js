@@ -33,66 +33,66 @@ import transacciones from "./screens/Transacciones/transacciones";
 
 const Stack = createStackNavigator(); //contiene la navegacion
 
-function RootStack() {
-  const [token, setToken] = useState(null);
+// function RootStack() {
+//   const [token, setToken] = useState(null);
 
-  useEffect(() => {
-    try {
-      AsyncStorage.getItem("@localUser")
-        .then((data) => {
-          if (data) return JSON.parse(data);
-        })
-        .then((data) => {
-          if (data) setToken(data.token);
-        });
-    } catch (error) {
-      console.log(error);
-    }
-  }, []);
+//   useEffect(() => {
+//     try {
+//       AsyncStorage.getItem("@localUser")
+//         .then((data) => {
+//           if (data) return JSON.parse(data);
+//         })
+//         .then((data) => {
+//           if (data) setToken(data.token);
+//         });
+//     } catch (error) {
+//       console.log(error);
+//     }
+//   }, []);
 
-  useEffect(() => {
-    console.log(token);
-    if (token) {
-      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-    } else {
-      axios.defaults.headers.common["Authorization"] = ``;
-    }
-  }, [token]);
+//   useEffect(() => {
+//     console.log(token);
+//     if (token) {
+//       axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+//     } else {
+//       axios.defaults.headers.common["Authorization"] = ``;
+//     }
+//   }, [token]);
 
-  return (
-    <Stack.Navigator initialRouteName="Login">
-      <Stack.Screen name="Login" options={{ headerShown: false }}>
-        {(props) => <LoginStack {...props} setToken={setToken} />}
-      </Stack.Screen>
-      <Stack.Screen name="Profile" options={{ headerShown: false }}>
-        {(props) => <ProfileStack {...props} setToken={setToken} />}
-      </Stack.Screen>
-    </Stack.Navigator>
-  );
-}
+//   return (
+//     <Stack.Navigator initialRouteName="Login">
+//       <Stack.Screen name="Login" options={{ headerShown: false }}>
+//         {(props) => <LoginStack {...props} setToken={setToken} />}
+//       </Stack.Screen>
+//       <Stack.Screen name="Profile" options={{ headerShown: false }}>
+//         {(props) => <ProfileStack {...props} setToken={setToken} />}
+//       </Stack.Screen>
+//     </Stack.Navigator>
+//   );
+// }
 
-function LoginStack({ setToken }) {
-  return (
-    <Stack.Navigator
-      initialRouteName="Login"
-      screenOptions={{
-        headerShown: false,
-      }}
-    >
-      <Stack.Screen name="Login" options={{ headerShown: false }}>
-        {(props) => <Login {...props} setToken={setToken} />}
-      </Stack.Screen>
-      <Stack.Screen name="PreRegister" component={PreRegister} />
-      <Stack.Screen name="PreRegisterToken" component={PreRegisterToken} />
-      <Stack.Screen
-        name="Register"
-        component={Register}
-        options={{ title: "Registrarse" }}
-        options={{ headerShown: false }}
-      />
-    </Stack.Navigator>
-  );
-}
+// function LoginStack({ setToken }) {
+//   return (
+//     <Stack.Navigator
+//       initialRouteName="Login"
+//       screenOptions={{
+//         headerShown: false,
+//       }}
+//     >
+//       <Stack.Screen name="Login" options={{ headerShown: false }}>
+//         {(props) => <Login {...props} setToken={setToken} />}
+//       </Stack.Screen>
+//       <Stack.Screen name="PreRegister" component={PreRegister} />
+//       <Stack.Screen name="PreRegisterToken" component={PreRegisterToken} />
+//       <Stack.Screen
+//         name="Register"
+//         component={Register}
+//         options={{ title: "Registrarse" }}
+//         options={{ headerShown: false }}
+//       />
+//     </Stack.Navigator>
+//   );
+// }
 
 function ProfileStack({ setToken }) {
   return (
@@ -130,7 +130,7 @@ function ProfileStack({ setToken }) {
         options={{ title: "Enviar Dinero" }}
         options={{ headerShown: false }}
       />
-      <Stack.Screen
+       <Stack.Screen
         name="transacciones"
         component={transacciones}
         options={{ title: "transacciones" }}
@@ -145,7 +145,7 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <RootStack />
+      <ProfileStack />
     </NavigationContainer>
   );
 }

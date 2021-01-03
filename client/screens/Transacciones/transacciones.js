@@ -93,15 +93,15 @@ export default function transacciones({navigation}){
 
   
       
-    <ScrollView > 
+    <ScrollView style= {{ backgroundColor: "#fff"}}> 
        
-      <LinearGradient
+      {/* <LinearGradient
       // Background Linear Gradient
       colors={["#9FD5D1", "#03BD85"]}
       start={[0, 1]}
       end={[1, 0]}
       style={styles.linearGradient}
-    > 
+    >  */}
           <Card containerStyle={{marginHorizontal: 20, marginVertical: 20, }}>
             <Card.Title style={styles.titulo}>TRANSACCIONES</Card.Title>
               <Card.Divider />
@@ -135,7 +135,7 @@ export default function transacciones({navigation}){
               style={styles.botonvolver}
           />
          
-          </LinearGradient>
+          {/* </LinearGradient> */}
   </ScrollView>     
   
    
