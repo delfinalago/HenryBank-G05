@@ -15,6 +15,6 @@ web-build/
 jspm_packages/
 
 package-lock.json
-
+client/package-lock.json
 #entorno
 env.js
