@@ -42,34 +42,47 @@ export default function SelectContact({ navigation }) {
 
   return (
     <ScrollView style={styles.scrollView}>
-      <View style={styles.container}>
-        <Text style={styles.textSub}>
-          Seleccioná un contacto para enviarle dinero
-        </Text>
-      </View>
-      <View style={styles.container}>
-        {contacts.map((contact, i) => (
-          <ListItem key={i} bottomDivider>
-            <View style={styles.contactContainer}>
-              <Text style={styles.textContact}>{contact.alias}</Text>
+      {contacts.length > 0 ? (
+        <>
+          <View style={styles.container}>
+            <Text style={styles.textSub}>
+              Seleccioná un contacto para enviarle dinero
+            </Text>
+          </View>
+          <View style={styles.container}>
+            {contacts.map((contact, i) => (
+              <ListItem key={i} bottomDivider>
+                <View style={styles.contactContainer}>
+                  <Text style={styles.textContact}>{contact.alias}</Text>
 
-              <TouchableOpacity
-                mode="contained"
-                secureTextEntry={true}
-                title=""
-                onPress={() =>
-                  navigation.navigate("SendMoney", {
-                    id_contact: contact.id_contact,
-                  })
-                }
-                style={styles.button}
-              >
-                <Text>Enviar dinero</Text>
-              </TouchableOpacity>
-            </View>
-          </ListItem>
-        ))}
-      </View>
+                  <TouchableOpacity
+                    mode="contained"
+                    secureTextEntry={true}
+                    title=""
+                    onPress={() =>
+                      navigation.navigate("SendMoney", {
+                        id_contact: contact.id_contact,
+                      })
+                    }
+                    style={styles.button}
+                  >
+                    <Text>Enviar dinero</Text>
+                  </TouchableOpacity>
+                </View>
+              </ListItem>
+            ))}
+          </View>
+        </>
+      ) : (
+        <>
+          <View style={styles.container}>
+            <Text style={styles.textSub}>
+              Todavía no tenés ningun contacto, dirigite a Mis Contactos para
+              agregar a algún contacto Veski.
+            </Text>
+          </View>
+        </>
+      )}
     </ScrollView>
   );
 }
