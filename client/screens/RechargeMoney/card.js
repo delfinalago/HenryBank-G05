@@ -22,64 +22,81 @@ import { API } from "../../env.js";
 export default function Card({ route, navigation }) {
   const [loading, setLoading] = useState(false);
   const amount = route.params.amount;
+  const [valid, setValid] = useState(false);
 
   const onChange = (formData) => {
+    formData.valid && setValid(formData.valid);
     return;
   };
 
   const onFocus = (field) => console.log("focus", field);
 
-  const handleSubmit = () => {
-    let parms = {};
-    parms.amount = amount;
-    AsyncStorage.getItem("@localUser").then((data) => {
-      parms.destiny = JSON.parse(data).id;
-      console.log("Parms para recarga-------", parms);
-      Axios.put(`${API}/api/accounts/accountarg`, parms)
-        .then((data) => {
-          if (data.error) {
-            Toast.show({
-              type: "error",
-              position: "bottom",
-              text1: `Error: ${data.error}`,
-              visibilityTime: 2000,
-              autoHide: true,
-              topOffset: 30,
-              bottomOffset: 40,
-            });
-          } else {
-            setTimeout(() => {
+  const handleSubmit = (formData) => {
+    console.log("valid---------", valid);
+    if(valid){
+      let parms = {};
+      parms.amount = amount;
+      AsyncStorage.getItem("@localUser").then((data) => {
+        parms.destiny = JSON.parse(data).id;
+        console.log("Parms para recarga-------", parms);
+        Axios.put(`${API}/api/accounts/accountarg`, parms)
+          .then((data) => {
+            if (data.error) {
               Toast.show({
-                type: "success",
+                type: "error",
                 position: "bottom",
-                text1: ` Transaccion exitosa ... `,
-                visibilityTime: 3000,
+                text1: `Error: ${data.error}`,
+                visibilityTime: 2000,
                 autoHide: true,
                 topOffset: 30,
                 bottomOffset: 40,
               });
-              navigation.navigate("Me");
-            }, 3000);
+            } else {
+              setTimeout(() => {
+                Toast.show({
+                  type: "success",
+                  position: "bottom",
+                  text1: ` Transaccion exitosa ... `,
+                  visibilityTime: 3000,
+                  autoHide: true,
+                  topOffset: 30,
+                  bottomOffset: 40,
+                });
+                navigation.navigate("Me");
+              }, 3000);
+  
+              Toast.show({
+                type: "success",
+                position: "bottom",
+                text1: `Cargando ... `,
+                visibilityTime: 2000,
+                autoHide: true,
+                topOffset: 30,
+                bottomOffset: 40,
+              });
+            }
+          })
+          .catch((error) => console.log(error));
+      });
+    }else{
+      Toast.show({
+        type: "error",
+        position: "bottom",
+        text1: `Error: Datos de tarjeta inválidos`,
+        visibilityTime: 2000,
+        autoHide: true,
+        topOffset: 30,
+        bottomOffset: 40,
+      });
+    }
 
-            Toast.show({
-              type: "success",
-              position: "bottom",
-              text1: `Cargando ... `,
-              visibilityTime: 2000,
-              autoHide: true,
-              topOffset: 30,
-              bottomOffset: 40,
-            });
-          }
-        })
-        .catch((error) => console.log(error));
-    });
   };
 
   return (
     <ScrollView style={styles.scrollView}>
       <View style={{ marginTop: 200 }}>
         <CreditCardInput
+          valid={true}
           autoFocus
           requiresName
           requiresCVC
