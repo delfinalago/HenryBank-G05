@@ -4,7 +4,7 @@ const DbService = require("moleculer-db");
 const SqlAdapter = require("moleculer-db-adapter-sequelize");
 const nodemailer = require("nodemailer");
 const axios = require("axios");
-const crypto = require("crypto");
+const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
 const transporter = nodemailer.createTransport({
@@ -43,6 +43,7 @@ module.exports = {
 	 */
 	settings: {
 		// Available fields in the responses
+		secret: process.env.SECRET || "secret",
 	},
 
 	/**
@@ -169,7 +170,7 @@ module.exports = {
 						"SELECT id FROM `client` WHERE dni =" + dni
 					);
 
-					const code = await this.generateHash();
+					const code = await this.generateHash(username);
 
 					const res = this.adapter.db.query(
 						"INSERT INTO `accounts` (`id_client`, `code`)" +
@@ -224,10 +225,10 @@ module.exports = {
 			return { error: "necesitas tener 16 años para registrarte" };
 		},
 
-		generateHash() {
-			const numRam = crypto.createHash("sha256").digest("hex");
+		generateHash(username) {
+			const code = jwt.sign(username, this.settings.secret);
 			// aplicamos crypto con Gime y mati//
-			return numRam.slice(0, 10);
+			return code.slice(0, 10);
 		},
 	},
 
