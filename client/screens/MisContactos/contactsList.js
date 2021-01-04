@@ -33,7 +33,11 @@ export default function contactos({ navigation }) {
   const handleDelete = (id_contact) => {
     axios
       .delete(`${API}/api/contacts/delete?id_contact=${id_contact}`)
-      .then(({ data }) => setNum(num + 1));
+      .then(({ data }) => { setNum(num + 1); 
+      })
+      .catch((error) => {
+        console.log(error)
+      });
   };
 
   return (
