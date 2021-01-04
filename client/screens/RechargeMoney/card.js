@@ -31,6 +31,7 @@ export default function Card({ route, navigation }) {
 
   const onFocus = (field) => console.log("focus", field);
 
+
   const handleSubmit = (formData) => {
     console.log("valid---------", valid);
     if(valid){
@@ -64,7 +65,6 @@ export default function Card({ route, navigation }) {
                 });
                 navigation.navigate("Me");
               }, 3000);
-  
               Toast.show({
                 type: "success",
                 position: "bottom",

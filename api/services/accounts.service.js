@@ -58,9 +58,7 @@ module.exports = {
 				ctx.params.quantity = 0;
 			},
 
-			testear() {
-				console.log("aca toy broder");
-			},
+			testear() {},
 		},
 	},
 
@@ -109,21 +107,23 @@ module.exports = {
 			async handler(ctx) {
 				const amount = parseInt(ctx.params.amount);
 
-				const destiny = ctx.params.destiny;
-				console.log("RECARGA PARAMS----------", ctx.params);
+				const { destiny, type } = ctx.params;
+
 				await ctx
 					.call("accounts.saldoARG", {
 						id_client: destiny,
 					})
 					.then((e) => {
 						const newAmount = e + amount;
-						console.log(
-							`NEWAMOUNT: ${newAmount} --- SALDOPREV: ${e}`
-						);
 						return newAmount;
 					})
 					.then((e) => {
-						console.log("eeeeeeeeee--", e);
+						if (type === "recarga") {
+							this.adapter.db.query(
+								"INSERT INTO `transactions` (`state`, `type`, `description`, `amount`, `destiny`)" +
+									`VALUES ('1', 'recarga', '', '${amount}', '${destiny}');`
+							);
+						}
 						return this.adapter.db.query(
 							`UPDATE accounts SET balance = '${e}' WHERE id_client ='${destiny}' `
 						);
@@ -142,25 +142,30 @@ module.exports = {
 			rest: "PUT /extraccion",
 			async handler(ctx) {
 				const amount = parseInt(ctx.params.amount);
-				const state = ctx.params.state;
-				const origin = ctx.params.origin;
+				const { state, origin, type, description } = ctx.params;
 				if (state) {
 					await ctx
-
 						.call("accounts.saldoARG", {
 							id_client: origin,
 						})
 						.then((e) => {
-							console.log("SALDO ANTES DE EXTRAER--------   ", e);
 							const newAmount = e - amount; //extrae la plata//
 							return newAmount;
 						})
-						.then((
-							e //actualizo el monto//
-						) =>
-							this.adapter.db.query(
-								`UPDATE accounts SET balance = '${e}' WHERE id_client ='${origin}' `
-							)
+						.then(
+							(
+								e //actualizo el monto//
+							) => {
+								if (type === "gasto") {
+									this.adapter.db.query(
+										"INSERT INTO `transactions` (`state`, `type`, `description`, `amount`, `origin`)" +
+											`VALUES ('1', 'gasto', '${description}', '${amount}', '${origin}');`
+									);
+								}
+								return this.adapter.db.query(
+									`UPDATE accounts SET balance = '${e}' WHERE id_client ='${origin}' `
+								);
+							}
 						)
 
 						.catch((err) => console.log(err));
@@ -179,9 +184,25 @@ module.exports = {
 			async handler(ctx) {
 				const { origin, destiny, amount, state } = ctx.params;
 
-				ctx.call("accounts.extrac", { origin, amount, state }); //invoca a la func  extrac y recarga //
+				const description = ctx.params.description || "";
 
-				ctx.call("accounts.recarga", { amount, destiny });
+				try {
+					await ctx.call("accounts.extrac", {
+						origin,
+						amount,
+						state,
+					}); //invoca a la func  extrac y recarga //
+
+					await ctx.call("accounts.recarga", { amount, destiny });
+
+					await this.adapter.db.query(
+						"INSERT INTO `transactions` (`state`, `type`, `description`, `amount`, `origin`, `destiny`)" +
+							`VALUES ('1', 'transferencia', '${description}', '${amount}', '${origin}', '${destiny}');`
+					);
+				} catch (e) {
+					return e;
+				}
+
 				return "transferencia exitosa!";
 			},
 		},
