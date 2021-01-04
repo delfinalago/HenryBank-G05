@@ -35,11 +35,16 @@ export default function Login({ navigation, setToken }) {
         .required(),
     }),
     onSubmit: ({ login, password }) => {
+       console.log("ENTRANDO A AAXIOS L38 LOGIN login=", login, " password=", password, "API", API) 
       axios
-        .post(`${API}/api/users/login`, { username: login, password })
+        .post(`${API}/api/users/login`, 
+          { username: login, password: password },
+          { headers: {'X-Requested-With': 'XMLHttpRequest'} } )
         .then(({ data }) => {
+            console.log("ENTRANDO A AAXIOS L42 LOGIN")
           (async () => {
             try {
+              console.log("ENTRANDO A AAXIOS L45 LOGIN")
               await AsyncStorage.setItem("@localUser", JSON.stringify(data));
               setToken(data.token);
               console.log("entrandiiiiiiing");
@@ -50,6 +55,11 @@ export default function Login({ navigation, setToken }) {
               navigation.navigate("Profile");
             }
           })();
+        })
+        .catch((error) => {
+          console.log("error.request.status:", error.request.status);
+          console.log("error.config.url:", error.config.url);
+          console.log("El error es :", JSON.stringify(error));
         });
     },
   });
