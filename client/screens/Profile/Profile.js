@@ -100,7 +100,7 @@ export default function Profile({ navigation, setToken }) {
               titleStyle={styles.listItem}
               type="outline"
               title="Estadisticas"
-              onPress={() => console.log("Estadisticas")}
+              onPress={() => navigation.navigate("Stats")}
               containerStyle={styles.listItemContainer}
               icon={
                 <BaseIcon

@@ -32,6 +32,7 @@ import RechargeMoney from "./screens/RechargeMoney/rechargeMoney";
 import Card from "./screens/RechargeMoney/card";
 import Code from "./screens/RechargeMoney/code";
 import SelectMethod from "./screens/RechargeMoney/selectMethod";
+import Stats from "./screens/Stats/Stats";
 
 const Stack = createStackNavigator(); //contiene la navegacion
 
@@ -154,6 +155,12 @@ function ProfileStack({ setToken }) {
         name="Card"
         component={Card}
         options={{ title: "Tarjeta" }}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Stats"
+        component={Stats}
+        options={{ title: "Estadísticas" }}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
