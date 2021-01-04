@@ -139,6 +139,7 @@ function ProfileStack({ setToken }) {
         name="transacciones"
         component={transacciones}
         options={{ title: "transacciones" }}
+        />
       <Stack.Screen
         name="RechargeMoney"
         component={RechargeMoney}
