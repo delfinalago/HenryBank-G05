@@ -51,6 +51,9 @@ export default function Login({ navigation, setToken }) {
               navigation.navigate("Profile");
             }
           })();
+        })
+        .catch((error) => {
+          console.log(error);
         });
     },
   });

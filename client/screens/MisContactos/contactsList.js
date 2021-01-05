@@ -85,6 +85,12 @@ export default function contactos({ navigation }) {
             : null}
         </Card>
       </View>
+      <Button
+        type="outline"
+        onPress={() => navigation.goBack()}
+        title="Volver"
+        style={styles.boton}
+      />
     </ScrollView>
   );
 }
