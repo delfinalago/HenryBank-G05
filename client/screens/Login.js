@@ -41,7 +41,6 @@ export default function Login({ navigation, setToken }) {
           { username: login, password: password },
           { headers: {'X-Requested-With': 'XMLHttpRequest'} } )
         .then(({ data }) => {
-            console.log("ENTRANDO A AAXIOS L42 LOGIN")
           (async () => {
             try {
               console.log("ENTRANDO A AAXIOS L45 LOGIN")
@@ -57,9 +56,7 @@ export default function Login({ navigation, setToken }) {
           })();
         })
         .catch((error) => {
-          console.log("error.request.status:", error.request.status);
-          console.log("error.config.url:", error.config.url);
-          console.log("El error es :", JSON.stringify(error));
+         console.log(error)
         });
     },
   });
