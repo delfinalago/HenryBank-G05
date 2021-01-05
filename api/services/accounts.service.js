@@ -206,7 +206,141 @@ module.exports = {
 				return "transferencia exitosa!";
 			},
 		},
-	},
+       //------------------ acciones para los graficos --------------- gg  //
+
+	    // egreso: {
+		// 	rest : "GET /egresos",
+
+		// async handler (ctx){
+		// 	const id = ctx.params.id;
+		// 	const [spending] = await this.adapter.db
+		// 			.query(
+		// 				`SELECT *  FROM transactions WHERE origin = '${id}'`
+		// 			)
+		// 			return spending[0] ;
+        //     }
+		// },
+		// ingreso : {
+		// 	rest : "GET /ingresos",
+
+		// async handler (ctx){
+		// 	const id = ctx.params.id;
+		// 	const [spending] = await this.adapter.db
+		// 			.query(
+		// 				`SELECT *  FROM transactions WHERE destiny = '${id}'`
+		// 			)
+		// 			return spending[0] ;
+        //     }
+		// },
+					//-----accion que se van a disparar con los botones ------//
+
+		ultMovMesEgr : {
+			rest: "GET /movMesEg",   //accion que muestra los egresos que se realizaron en los ultimos 3 meses.
+			async handler (ctx){
+				const id = ctx.params.id;
+				const today = new Date()
+				const dat = today.toLocaleDateString().split("/").reverse(). join("-");
+				const [movEgresosM] = await this.adapter.db
+						.query(
+							`SELECT * FROM transactions WHERE origin = '${id}' AND   const today = new Date()`
+
+						)
+						return movEgresosM[0] ;
+			},
+		},
+		ultMovSemEgr : {
+			rest: "GET /movSemEg",    //accion que muestra los ult egresos que se realizaron en las semanas anteriores a la fecha.
+			async handler (ctx){
+				const id = ctx.params.id;
+				const today = new Date()
+				const dat = today.toLocaleDateString().split("/").reverse(). join("-");
+
+				console.log (dat)
+
+				const [movEgresosS] = await this.adapter.db
+						.query(
+							`SELECT * FROM transactions WHERE origin = '${id}' AND  date_colum <=  '${dat}' `
+						)
+						console.log ([movEgresosS])
+						return movEgresosS[0] ;
+			},
+		},
+		ultMovDiaEgr : {
+			rest: "GET /movDiaEg",    //accion que muestra los ult egresos que se realizaron en los dias anteriores a la fecha.
+			async handler (ctx){
+				const id = ctx.params.id;
+				const today = new Date()
+				const dat = today.toLocaleDateString().split("/").reverse(). join("-");
+				const [movEgresosD] = await this.adapter.db
+						.query(
+							`SELECT * FROM transactions WHERE origin = '${id}' AND  date_colum <=  '${dat}' `
+						)
+						console.log(movEgresosD[0] ) ;
+			},
+		},
+		ultMovMesIngr : {
+			rest: "GET /movMesIng",    //accion que carga los ult ingresos  que se reallizaron en los meses anteriores.
+			async handler (ctx){
+				const id = ctx.params.id;
+				const today = new Date()
+				const dat = today.toLocaleDateString().split("/").reverse(). join("-");
+				const [movIngresosM] = await this.adapter.db
+						.query(
+							`SELECT * FROM transactions WHERE  destiny = '${id}' AND   date_colum <=  '${dat}' `
+						)
+						return movIngresosM[0] ;
+			},
+		},
+
+		ultMovSemIngr : {
+			rest: "GET /movSemIng",    //accion que carga los ult ingresos  que se realizaron en las ultimas semanas.
+			async handler (ctx){
+				const id = ctx.params.id;
+				const today = new Date()
+				const dat = today.toLocaleDateString().split("/").reverse(). join("-");
+				const [movIngresosS] = await this.adapter.db
+						.query(
+							`SELECT * FROM transactions WHERE destiny = '${id}' AND   date_colum <=  '${dat}' `
+						)
+						return movIngresosS[0] ;
+			},
+		},
+		ultMovDiaIngr : {
+			rest: "GET /movDiaIng",    //accion que carga los ult ingresos  que se reallizaron en los dias anteriores.
+			async handler (ctx){
+				const id = ctx.params.id;
+				const today = new Date()
+				const dat = today.toLocaleDateString().split("/").reverse(). join("-");
+				const [movIngresosD] = await this.adapter.db
+						.query(
+							`SELECT * FROM transactions WHERE destiny = '${id}' AND   date_colum <=  '${dat}'`
+						)
+						return movIngresosD[0] ;
+			},
+		},
+	   movements: {
+			rest : "GET /mov", //lista los  movimientos de un usuario por fecha  --tarea de delfi --//
+
+
+				async handler (ctx){
+					const id = ctx.params.id;
+					const today = new Date()
+				const dat = today.toLocaleDateString().split("/").reverse(). join("-");
+					const [movUser]= await this.adapter.db
+							.query(
+								`SELECT *  FROM transactions WHERE origin = '${id}' ORDER BY  date_colum <=  '${dat}'  DESC LIMIT 14`
+							)
+							return movUser;
+					},
+
+
+
+
+
+            },
+
+		},
+
 	/**
 	 * Methods
 	 */
