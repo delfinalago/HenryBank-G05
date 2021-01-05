@@ -27,6 +27,7 @@ import addContact from "./screens/MisContactos/addContact";
 import editContact from "./screens/MisContactos/editContact";
 import SendMoney from "./screens/SendMoney/sendMoney";
 import SelectContact from "./screens/SendMoney/selectContact";
+import Statistics from "./screens/Statistics/Statistics";
 
 const Stack = createStackNavigator(); //contiene la navegacion
 
@@ -127,7 +128,13 @@ function ProfileStack({ setToken }) {
         options={{ title: "Enviar Dinero" }}
         options={{ headerShown: false }}
       />
-    </Stack.Navigator>
+       <Stack.Screen
+        name="Statistics"
+        component={Statistics}
+        options={{ title: "Estadísticas" }}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator> 
   );
 }
 
