@@ -28,10 +28,13 @@ import addContact from "./screens/MisContactos/addContact";
 import editContact from "./screens/MisContactos/editContact";
 import SendMoney from "./screens/SendMoney/sendMoney";
 import SelectContact from "./screens/SendMoney/selectContact";
+
+import transacciones from "./screens/Transacciones/transacciones";
 import RechargeMoney from "./screens/RechargeMoney/rechargeMoney";
 import Card from "./screens/RechargeMoney/card";
 import Code from "./screens/RechargeMoney/code";
 import SelectMethod from "./screens/RechargeMoney/selectMethod";
+
 
 const Stack = createStackNavigator(); //contiene la navegacion
 
@@ -132,6 +135,11 @@ function ProfileStack({ setToken }) {
         options={{ title: "Enviar Dinero" }}
         options={{ headerShown: false }}
       />
+       <Stack.Screen
+        name="transacciones"
+        component={transacciones}
+        options={{ title: "transacciones" }}
+        />
       <Stack.Screen
         name="RechargeMoney"
         component={RechargeMoney}

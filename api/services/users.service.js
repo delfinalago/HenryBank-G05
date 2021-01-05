@@ -29,6 +29,7 @@ module.exports = {
 	),
 	model: {},
 
+
 	/**
 	 * Settings
 	 */
@@ -76,6 +77,10 @@ module.exports = {
 			rest: "POST /login",
 
 			async handler(ctx) {
+
+				console.log("-ctx=", ctx );
+
+			
 				const [[user]] = await this.adapter.db.query(
 					`SELECT * FROM client WHERE username = '${ctx.params.username}'`
 				);

@@ -1,7 +1,6 @@
 import React, { Component, useEffect } from "react";
 import { useFormik } from "formik";
 import axios from "axios";
-import { API } from "../../env";
 import {
   TouchableOpacity,
   ScrollView,
@@ -14,6 +13,8 @@ import {
   Input,
 } from "react-native";
 import { Card, ListItem, Button, Icon, Avatar } from "react-native-elements";
+import Axios from "axios";
+import {API} from "../../env.js"
 
 export default function editContact({ route, navigation }) {
   const { handleSubmit, handleChange, values, touched, errors } = useFormik({
@@ -43,6 +44,12 @@ export default function editContact({ route, navigation }) {
         type="outline"
         onPress={handleSubmit}
         title="Guardar"
+        style={styles.boton}
+      />
+       <Button
+        type="outline"
+        onPress={handleSubmit}
+        title="Borrar"
         style={styles.boton}
       />
       <Button
