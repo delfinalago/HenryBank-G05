@@ -24,17 +24,19 @@ export default function Statistics({ navigation}) {
 
     useEffect(() => {
       axios
-        .get(`${API}/api/accounts/gastos`) //todos los gastos
+        .get(`${API}/api/accounts/movMesEg`) // trae de la bd todos los gastos del usuario
         .then(({ data }) => {
           setGastos(data);
         })
         .catch((error) => {
           console.log(error);
         });
-    }, [gastos]);
+    }, []);
+   
+    console.log(gastos)
 
     const handleMovDiaEg = (gastos) => {
-    let movDia = [];
+    let movDia = [];   
 
     axios
       .get(`${API}/api/accounts/movDiaEg`)
@@ -85,10 +87,12 @@ export default function Statistics({ navigation}) {
         </View>
         <LineChart
           data={{
-            labels: ["January", "February", "March", "April", "May", "June"],
+            labels: ["January", "February", "March", "April", "May", "June"], 
             datasets: [
               {
                 data: [
+                
+                  //movSem 
                   Math.random() * 100,
                   Math.random() * 100,
                   Math.random() * 100,

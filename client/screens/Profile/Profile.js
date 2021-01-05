@@ -99,7 +99,7 @@ export default function Profile({ navigation, setToken }) {
             <Button
               titleStyle={styles.listItem}
               type="outline"
-              title="Estadisticas"
+              title="Balance de gastos"
               onPress={() => navigation.navigate("Statistics")}
               containerStyle={styles.listItemContainer}
               icon={

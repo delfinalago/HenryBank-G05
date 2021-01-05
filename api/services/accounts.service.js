@@ -5,6 +5,7 @@ const SqlAdapter = require("moleculer-db-adapter-sequelize");
 const nodemailer = require("nodemailer");
 const axios = require("axios");
 
+
 const transporter = nodemailer.createTransport({
 	service: "gmail",
 	auth: {
@@ -217,14 +218,20 @@ module.exports = {
 			rest: "GET /movMesEg",   //accion que muestra los egresos que se realizaron en los ultimos 3 meses.
 			async handler (ctx){
 				const id = ctx.params.id;
+	
 				const today = new Date()
-				const dat = today.toLocaleDateString().split("/").reverse(). join("-");
+				const dat = today.toLocaleDateString().split("/").reverse().join("-");
+				console.log(dat)
+					console.log(id)
 				const [movEgresosM] = await this.adapter.db
 						.query(
-							`SELECT * FROM transactions WHERE origin = '${id}' AND   const today = new Date()`
-
+							//  `SELECT * FROM transactions WHERE origin ='${id}' ORDER BY date_colum desc`
+							//  `SELECT * FROM transactions WHERE origin = '${id}' AND date_colum <= '${dat}'
+							//   ORDER BY date_colum DESC`
+							  `SELECT * FROM  transactions WHERE origin ='${id}' AND date_colum > DATE_SUB(NOW(),INTERVAL 90 DAY)`
 						)
-						return movEgresosM[0] ;
+						   return movEgresosM; 
+		
 			},
 		},
 		ultMovSemEgr : {
@@ -238,12 +245,12 @@ module.exports = {
 
 				const [movEgresosS] = await this.adapter.db
 						.query(
-							`SELECT * FROM transactions WHERE origin = '${id}' AND  date_colum <=  '${dat}' `
+							`SELECT * FROM  transactions WHERE origin ='${id}' AND date_colum > DATE_SUB(NOW(),INTERVAL 14 DAY)`
 						)
 						console.log ([movEgresosS])
-						return movEgresosS[0] ;
+						return movEgresosS;
 			},
-		},
+		},                
 		ultMovDiaEgr : {
 			rest: "GET /movDiaEg",    //accion que muestra los ult egresos que se realizaron en los dias anteriores a la fecha.
 			async handler (ctx){
@@ -252,9 +259,10 @@ module.exports = {
 				const dat = today.toLocaleDateString().split("/").reverse(). join("-");
 				const [movEgresosD] = await this.adapter.db
 						.query(
-							`SELECT * FROM transactions WHERE origin = '${id}' AND  date_colum <=  '${dat}' `
+							`SELECT * FROM  transactions WHERE origin ='${id}' AND date_colum > DATE_SUB(NOW(),INTERVAL 7 DAY)`
 						)
-						console.log(movEgresosD[0] ) ;
+						return movEgresosD;
+			
 			},
 		},
 		ultMovMesIngr : {
@@ -265,7 +273,7 @@ module.exports = {
 				const dat = today.toLocaleDateString().split("/").reverse(). join("-");
 				const [movIngresosM] = await this.adapter.db
 						.query(
-							`SELECT * FROM transactions WHERE  destiny = '${id}' AND   date_colum <=  '${dat}' `
+							`SELECT * FROM transactions WHERE  destiny = '${id}' AND   date_colum <='${dat}'`
 						)
 						return movIngresosM[0] ;
 			},
@@ -279,7 +287,7 @@ module.exports = {
 				const dat = today.toLocaleDateString().split("/").reverse(). join("-");
 				const [movIngresosS] = await this.adapter.db
 						.query(
-							`SELECT * FROM transactions WHERE destiny = '${id}' AND   date_colum <=  '${dat}' `
+							`SELECT * FROM transactions WHERE destiny = '${id}' AND   date_colum <='${dat}' `
 						)
 						return movIngresosS[0] ;
 			},
@@ -292,7 +300,7 @@ module.exports = {
 				const dat = today.toLocaleDateString().split("/").reverse(). join("-");
 				const [movIngresosD] = await this.adapter.db
 						.query(
-							`SELECT * FROM transactions WHERE destiny = '${id}' AND   date_colum <=  '${dat}'`
+							`SELECT * FROM transactions WHERE destiny = '${id}' AND   date_colum <='${dat}'`
 						)
 						return movIngresosD[0] ;
 			},
@@ -307,7 +315,7 @@ module.exports = {
 				const dat = today.toLocaleDateString().split("/").reverse(). join("-");
 					const [movUser]= await this.adapter.db
 							.query(
-								`SELECT *  FROM transactions WHERE origin = '${id}' ORDER BY  date_colum <=  '${dat}'  DESC LIMIT 14`
+								`SELECT *  FROM transactions WHERE origin = '${id}' ORDER BY  date_colum <='${dat}'  DESC LIMIT 14`
 							)
 							return movUser;
 					},

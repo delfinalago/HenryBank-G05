@@ -146,7 +146,7 @@ CREATE TABLE `transactions` (
   `description` varchar(60) DEFAULT NULL,
   `amount` int(60) NOT NULL,
   `origin` int(60) NOT NULL,
-  `destiny` int(8) NOT NULL
+  `destiny` int(8) NOT NULL,
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
