@@ -150,8 +150,8 @@ CREATE TABLE `transactions` (
   `type` varchar(60) NOT NULL,
   `description` varchar(60) DEFAULT NULL,
   `amount` int(60) NOT NULL,
-  `origin` int(60) NOT NULL,
-  `destiny` int(8) NOT NULL,
+  `origin` int(60),
+  `destiny` int(8)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -280,9 +280,7 @@ ALTER TABLE `transactions`
 COMMIT;
 
 ALTER TABLE `transactions` ADD `date_colum` DATE NOT NULL AFTER `state`;
-INSERT INTO `transactions` (`id`, `state`, `date_colum`, `type`, `description`, `amount`, `origin`, `destiny`) VALUES
-(1, 1, '2020-12-23', 'nose', 'nose', 10000, 6, 3),
-(2, 2, '2020-12-19', 'qi', 'blabla', 10000, 6, 4);
+
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
