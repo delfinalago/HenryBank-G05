@@ -79,8 +79,7 @@ export default function transacciones({navigation}){
     axios
       .get(`${API}/api/transactions/mov`)
       .then(({ data }) => {
-        setTransaction(data);
-        console.log("el num es: ", num);
+        console.log("data:", data );
       })
       .catch((error) => {
         console.log(error);

@@ -77,11 +77,11 @@ export default function Profile({ navigation, setToken }) {
             <Text style={styles.saldo}>Saldo: ${saldo.balance}</Text>
           </View>
           <View style={styles.buttons}>
-            {/* <Button
+            <Button
                 titleStyle={styles.listItem}
                 type="outline"
                 title="Transacciones"
-                onPress={() => console.log("Transacciones")}
+                onPress={() => navigation.navigate("transacciones")}
                 containerStyle={styles.listItemContainer}
                 icon={
                   <BaseIcon
@@ -95,7 +95,7 @@ export default function Profile({ navigation, setToken }) {
                     }}
                   />
                 }
-              /> */}
+              />
             <Button
               titleStyle={styles.listItem}
               type="outline"
