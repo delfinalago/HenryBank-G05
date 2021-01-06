@@ -279,6 +279,11 @@ ALTER TABLE `transactions`
   ADD CONSTRAINT `acc-transd` FOREIGN KEY (`destiny`) REFERENCES `accounts` (`id_client`);
 COMMIT;
 
+ALTER TABLE `transactions` ADD `date_colum` DATE NOT NULL AFTER `state`;
+INSERT INTO `transactions` (`id`, `state`, `date_colum`, `type`, `description`, `amount`, `origin`, `destiny`) VALUES
+(1, 1, '2020-12-23', 'nose', 'nose', 10000, 6, 3),
+(2, 2, '2020-12-19', 'qi', 'blabla', 10000, 6, 4);
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
