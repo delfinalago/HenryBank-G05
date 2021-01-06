@@ -6,8 +6,9 @@ import logo from "../assets/logo.png";
 import { Card, Button } from "react-native-elements";
 import { API } from "../env.js";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { forms as styles } from "./styles";
 
-
+import { LinearGradient } from "expo-linear-gradient";
 
 import {
   StyleSheet,
@@ -35,15 +36,24 @@ export default function Login({ navigation, setToken }) {
         .required(),
     }),
     onSubmit: ({ login, password }) => {
-       console.log("ENTRANDO A AAXIOS L38 LOGIN login=", login, " password=", password, "API", API) 
+      console.log(
+        "ENTRANDO A AAXIOS L38 LOGIN login=",
+        login,
+        " password=",
+        password,
+        "API",
+        API
+      );
       axios
-        .post(`${API}/api/users/login`, 
+        .post(
+          `${API}/api/users/login`,
           { username: login, password: password },
-          { headers: {'X-Requested-With': 'XMLHttpRequest'} } )
+          { headers: { "X-Requested-With": "XMLHttpRequest" } }
+        )
         .then(({ data }) => {
           (async () => {
             try {
-              console.log("ENTRANDO A AAXIOS L45 LOGIN")
+              console.log("ENTRANDO A AAXIOS L45 LOGIN");
               await AsyncStorage.setItem("@localUser", JSON.stringify(data));
               setToken(data.token);
               console.log("entrandiiiiiiing");
@@ -56,16 +66,20 @@ export default function Login({ navigation, setToken }) {
           })();
         })
         .catch((error) => {
-         console.log(error)
+          console.log(error);
         });
     },
   });
 
   return (
-    <ScrollView style={{ backgroundColor: "#fff" }}>
+    <LinearGradient
+      // Button Linear Gradient
+      colors={["#4c669f", "#3b5998", "#192f6a"]}
+      style={styles.button}
+    >
       <View style={styles.container}>
         <Image source={logo} style={styles.img} />
-        <Text style={{ alignSelf: "center" }}>
+        <Text style={{ alignSelf: "center", fontSize: 20 }}>
           Bienvenidx a tu billetera virtual
         </Text>
         <TextInput
@@ -101,7 +115,7 @@ export default function Login({ navigation, setToken }) {
           onPress={handleSubmit}
           style={styles.touchable}
         >
-          <Text>Ingresar</Text>
+          <Text style={{ color: "white", fontSize: 20 }}>Ingresar</Text>
         </TouchableOpacity>
 
         <Text style={{ alignSelf: "center", marginTop: 40 }}>
@@ -113,78 +127,66 @@ export default function Login({ navigation, setToken }) {
           secureTextEntry={true}
           title=""
           onPress={() => navigation.navigate("PreRegister")}
-          style={styles.touchable}
+          style={{ borderWidth: 0, marginTop: 10, alignSelf: "center" }}
         >
-          <Text>Registrate</Text>
+          <Text style={{ color: "#00aae4", fontSize: 20 }}>Registrate</Text>
         </TouchableOpacity>
       </View>
-    </ScrollView>
+    </LinearGradient>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    marginTop: 100,
-    flex: 1,
-    justifyContent: "center",
-    backgroundColor: "#fff",
-  },
-  text: {
-    flexDirection: "column",
-    fontSize: 30,
-    marginRight: 10,
-    textAlign: "center",
-    marginTop: 10,
-    opacity: 0.8,
-    color: "#000000",
-  },
-  touchable: {
-    color: "#000000",
-    marginHorizontal: 100,
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 20,
-    paddingVertical: 10,
-    borderWidth: 1,
-    borderRadius: 10,
-    borderColor: "#00aae4",
-  },
-  correo: {
-    flexDirection: "column",
-    fontSize: 35,
-    marginRight: 10,
-    textAlign: "center",
-    marginTop: 35,
-    opacity: 0.8,
-    color: "#000000",
-  },
-  input: {
-    flexDirection: "column",
-    marginRight: 20,
-    marginLeft: 20,
-    height: 50,
-    color: "#000000",
-    alignItems: "center",
-    borderWidth: 3,
-    marginTop: 25,
-    paddingHorizontal: 10,
-    borderWidth: 1,
-    borderRadius: 10,
-    borderColor: "#00aae4",
-    paddingVertical: 2,
-  },
-  password: {
-    flexDirection: "column",
-    fontSize: 35,
-    marginLeft: 50,
-    marginRight: 10,
-    textAlign: "center",
-    marginTop: 35,
-    opacity: 0.8,
-    color: "#000000",
-  },
-  img: {
-    alignSelf: "center",
-    height: 200,
-  },
-});
+// const styles = StyleSheet.create({
+//   container: {
+//     marginTop: 100,
+//     flex: 1,
+//     justifyContent: "center",
+//     backgroundColor: "#fff",
+//   },
+//   text: {
+//     flexDirection: "column",
+//     fontSize: 30,
+//     marginRight: 10,
+//     textAlign: "center",
+//     marginTop: 10,
+//     opacity: 0.8,
+//     color: "#000000",
+//   },
+//   touchable: {
+//     color: "#000000",
+//     marginHorizontal: 130,
+//     alignItems: "center",
+//     justifyContent: "center",
+//     marginTop: 20,
+//     paddingVertical: 10,
+//     borderRadius: 10,
+//     backgroundColor: "#00aae4",
+//   },
+//   correo: {
+//     flexDirection: "column",
+//     fontSize: 35,
+//     marginRight: 10,
+//     textAlign: "center",
+//     marginTop: 35,
+//     opacity: 0.8,
+//     color: "#000000",
+//   },
+//   input: {
+//     flexDirection: "column",
+//     marginHorizontal: 30,
+//     height: 50,
+//     color: "#000000",
+//     alignItems: "center",
+//     borderWidth: 3,
+//     marginTop: 25,
+//     paddingHorizontal: 10,
+//     borderWidth: 1,
+//     borderRadius: 10,
+//     borderColor: "#00aae4",
+//     paddingVertical: 2,
+//   },
+//   img: {
+//     alignSelf: "center",
+//     height: 200,
+//   },
+// });
