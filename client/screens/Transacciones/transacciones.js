@@ -5,86 +5,38 @@ import {TouchableOpacity, ScrollView, StyleSheet, View, Text, SafeAreaView, Text
   import { API } from "../../env.js";
   import { LinearGradient } from 'expo-linear-gradient';
   import { Dimensions } from "react-native";
+  import AsyncStorage from "@react-native-async-storage/async-storage";
 
 var width = Dimensions.get('window').width; //full width
 var height = Dimensions.get('window').height; //full height
 
- 
-  
 
-const list = [
-  {
-    avatar_url:"https://media.istockphoto.com/vectors/vector-of-cute-dog-head-cartoon-character-for-avatar-icon-or-symbol-vector-id1189777293",
-    id: 1,
-    date: "22 Jun",
-    state: 1,
-    type: 'Transaccion',
-    description: 'Henry',
-    amount: -6500,
-    origin: "7",
-    destiny: "3",
-  },
-  {
-    avatar_url:"https://media.istockphoto.com/vectors/vector-of-cute-dog-head-cartoon-character-for-avatar-icon-or-symbol-vector-id1189777293",
-    id: 1,
-    date: "25 Mayo",
-    state: 1,
-    type: 'YPF',
-    description: 'Carga de combustible',
-    amount: 500,
-    origin: "7",
-    destiny: "3",
-  },
-  {
-    avatar_url:"https://media.istockphoto.com/vectors/vector-of-cute-dog-head-cartoon-character-for-avatar-icon-or-symbol-vector-id1189777293",
-    id: 1,
-    date: "02 Abril",
-    state: 1,
-    type: 'Deposito',
-    description: 'Pago de alquiler',
-    amount: 15500,
-    origin: "3",
-    destiny: "1",
-  },
-  {
-    avatar_url:"https://media.istockphoto.com/vectors/vector-of-cute-dog-head-cartoon-character-for-avatar-icon-or-symbol-vector-id1189777293",
-    id: 1,
-    date: "5 Mayo",
-    state: 1,
-    type: 'Recarga',
-    description: 'Agrego 500 a mi cuenta',
-    amount: 500,
-    origin: "1",
-    destiny: "9",
-  },
-  {
-    avatar_url:"https://media.istockphoto.com/vectors/vector-of-cute-dog-head-cartoon-character-for-avatar-icon-or-symbol-vector-id1189777293",
-    id: 1,
-    date: "3 Agosto",
-    state: 1,
-    type: 'Envio dinero',
-    description: 'Envio $800',
-    amount: -800,
-    origin: "2",
-    destiny: "4",
-  },
-]
 
 export default function transacciones({navigation}){
 
   const [transaction, setTransaction] = useState([]);
-  const [num, setNum] = useState(0);
+  
+ 
 
   useEffect(() => {
-    axios
-      .get(`${API}/api/transactions/mov`)
+    AsyncStorage.getItem("@localUser")
+    .then((data) => {
+      const id = JSON.parse(data).id;
+      console.log("ONSUBMIT--------", id);
+
+      axios.get(`${API}/api/accounts/mov` , {id : id})
       .then(({ data }) => {
+        setTransaction(data);
+        console.log("transaction", transaction);
         console.log("data:", data );
       })
+
       .catch((error) => {
         console.log(error);
+      
       });
-  }, [num]);
+    })
+  }, []);
 
 
 
@@ -104,15 +56,13 @@ export default function transacciones({navigation}){
           <Card containerStyle={{marginHorizontal: 20, marginVertical: 20, }}>
             <Card.Title style={styles.titulo}>TRANSACCIONES</Card.Title>
               <Card.Divider />
-                {list.length
-                  ? list.map((u, i) => {
-                    const { id_contact } = u;
+                {transaction.length
+                  ? transaction.map((u, i) => {
                     return (
                       <View key={i} style={styles.contact}>
                           <ListItem key={i} bottomDivider>
-                            <Avatar source={{uri: u.avatar_url}} />
                           <ListItem.Content>
-                            <ListItem.Subtitle style={styles.fecha} >{u.date}</ListItem.Subtitle>
+                            <ListItem.Subtitle style={styles.fecha} >{u.date_colum}</ListItem.Subtitle>
                             <Card.Divider/>
                             
                             <ListItem.Title style={styles.tipo} >{u.type}</ListItem.Title>

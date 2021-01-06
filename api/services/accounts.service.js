@@ -323,12 +323,10 @@ module.exports = {
 
 
 				async handler (ctx){
-					const id = ctx.params.id;
-					const today = new Date()
-				const dat = today.toLocaleDateString().split("/").reverse(). join("-");
+					const id = ctx.params.id_client || ctx.meta.user.id;
 					const [movUser]= await this.adapter.db
 							.query(
-								`SELECT *  FROM transactions WHERE origin = '${id}' ORDER BY  date_colum <=  '${dat}'  DESC LIMIT 14`
+								`SELECT *  FROM transactions WHERE origin = '${id}'`
 							)
 							return movUser;
 					},
