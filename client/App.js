@@ -29,13 +29,13 @@ import editContact from "./screens/MisContactos/editContact";
 import SendMoney from "./screens/SendMoney/sendMoney";
 import SelectContact from "./screens/SendMoney/selectContact";
 import Statistics from "./screens/Statistics/Statistics";
+import UserData from "./screens/Profile/UserData";
 
 import transacciones from "./screens/Transacciones/transacciones";
 import RechargeMoney from "./screens/RechargeMoney/rechargeMoney";
 import Card from "./screens/RechargeMoney/card";
 import Code from "./screens/RechargeMoney/code";
 import SelectMethod from "./screens/RechargeMoney/selectMethod";
-
 
 const Stack = createStackNavigator(); //contiene la navegacion
 
@@ -136,13 +136,48 @@ function ProfileStack({ setToken }) {
         options={{ title: "Enviar Dinero" }}
         options={{ headerShown: false }}
       />
-       <Stack.Screen
+      <Stack.Screen
         name="Statistics"
         component={Statistics}
         options={{ title: "Estadísticas" }}
         options={{ headerShown: false }}
       />
-    </Stack.Navigator> 
+      <Stack.Screen
+        name="transacciones"
+        component={transacciones}
+        options={{ title: "transacciones" }}
+      />
+      <Stack.Screen
+        name="RechargeMoney"
+        component={RechargeMoney}
+        options={{ title: "Recargar Dinero" }}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="SelectMethod"
+        component={SelectMethod}
+        options={{ title: "Elegir metodo de pago" }}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Code"
+        component={Code}
+        options={{ title: "Código" }}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Card"
+        component={Card}
+        options={{ title: "Tarjeta" }}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="UserData"
+        component={UserData}
+        options={{ title: "Mis datos" }}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
   );
 }
 

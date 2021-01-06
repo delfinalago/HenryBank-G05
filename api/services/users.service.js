@@ -29,7 +29,6 @@ module.exports = {
 	),
 	model: {},
 
-
 	/**
 	 * Settings
 	 */
@@ -77,10 +76,6 @@ module.exports = {
 			rest: "POST /login",
 
 			async handler(ctx) {
-
-				console.log("-ctx=", ctx );
-
-			
 				const [[user]] = await this.adapter.db.query(
 					`SELECT * FROM client WHERE username = '${ctx.params.username}'`
 				);
@@ -99,6 +94,29 @@ module.exports = {
 					);
 					return { ...user, token };
 				}
+			},
+		},
+
+		getData: {
+			rest: "GET /data",
+			async handler(ctx) {
+				const [[user]] = await this.adapter.db.query(
+					`SELECT * FROM client WHERE username = '${ctx.meta.user.username}'`
+				);
+				delete user.password;
+				return user;
+			},
+		},
+
+		setData: {
+			rest: "PUT /data",
+			async handler(ctx) {
+				const { field } = ctx.params;
+				const [res] = await this.adapter.db.query(
+					`UPDATE client SET ${field} = '${ctx.params[field]}' WHERE username = '${ctx.meta.user.username}'`
+				);
+
+				return res;
 			},
 		},
 	},

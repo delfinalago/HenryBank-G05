@@ -329,6 +329,14 @@ module.exports = {
 		movements: {
 			rest: "GET /mov", //lista los  movimientos de un usuario por fecha  --tarea de delfi --//
 
+			async handler(ctx) {
+				const id = ctx.params.id_client || ctx.meta.user.id;
+				const [movUser] = await this.adapter.db
+					.query(
+						`SELECT *  FROM transactions WHERE origin = '${id}'`
+					)
+				return movUser;
+			},
 
 			async handler(ctx) {
 				const id = ctx.params.id_client || ctx.meta.user.id;
