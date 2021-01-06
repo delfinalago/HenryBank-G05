@@ -52,7 +52,7 @@ export default function contactos({ navigation }) {
             style={styles.boton}
             onPress={() => navigation.navigate("addContact")}
           />
-          <Card.Divider />
+          <Card.Divider  />
           {contacts.length
             ? contacts.map((u, i) => {
                 const { id_contact } = u;
@@ -66,16 +66,10 @@ export default function contactos({ navigation }) {
                         })
                       }
                     >
-                      <ListItem
+                      <ListItem styles={styles.List}
                         key={i}
-                        leftAvatar={{
-                          source: {
-                            uri:
-                              "https://media.istockphoto.com/vectors/vector-of-cute-dog-head-cartoon-character-for-avatar-icon-or-symbol-vector-id1189777293",
-                          },
-                        }}
                       />
-                      <Text style={{ fontSize: 25 }}>{u.alias}</Text>
+                      <Text style={{ fontSize: 25, padding:10}}>{u.alias}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                       title="delete"
@@ -95,12 +89,6 @@ export default function contactos({ navigation }) {
             style={styles.botonvolver}
           />
       </View>
-      <Button
-        type="outline"
-        onPress={() => navigation.goBack()}
-        title="Volver"
-        style={styles.boton}
-      />
     </ScrollView>
   );
 }
@@ -165,6 +153,7 @@ const styles = StyleSheet.create({
     color: "#03bb85",
     alignSelf: "flex-end",
     backgroundColor: "#fff",
+    paddingEnd: 10,
   },
   botonvolver: {
     flex: 1,
@@ -172,5 +161,8 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     backgroundColor: "#fff",
     paddingTop: 10,
+  },
+  List: {
+    width: 30,
   }
 });

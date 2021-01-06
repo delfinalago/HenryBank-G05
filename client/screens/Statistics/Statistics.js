@@ -20,7 +20,7 @@ import { Card, ListItem, Button, Icon, Avatar } from "react-native-elements";
 
 export default function Statistics({ navigation}) {
     // const [saldo, setSaldo] = useState([]);
-    const [gastos, setGastos] = useState(0);
+    const [gastos, setGastos] = useState([]);
 
     useEffect(() => {
       axios
@@ -56,6 +56,7 @@ export default function Statistics({ navigation}) {
     axios
       .get(`${API}/api/accounts/movDiaEg`)
       .then(({ data }) => {
+        console.log("DATA=",data);
         setGastos(data);
         movDia.length ? movDia.map((u) => {const { id } = u}) : null
       })
@@ -70,6 +71,7 @@ export default function Statistics({ navigation}) {
     axios
       .get(`${API}/api/accounts/movSemEg`)
       .then(({ data }) => {
+        console.log("DATASEM=",data);
         setGastos(data);
         movSem.length ? movSem.map((u) => {const { id } = u}) : null
       })
@@ -83,6 +85,7 @@ export default function Statistics({ navigation}) {
       axios
         .get(`${API}/api/accounts/movMesEg`)
         .then(({ data }) => {
+          console.log("DATAMES=",data);
           setGastos(data);
           movMes.length ? movMes.map((u) => {const { id } = u}) : null
         })
@@ -91,7 +94,15 @@ export default function Statistics({ navigation}) {
         });
       }
 
-    
+const element = [];
+    for (let i = 0; i < gastos.length; i++) {
+       element[i] = gastos[i].amount;
+    }
+      console.log("Gastos =" , gastos);
+      console.log("Element =" , element);
+
+
+
 
   return (
     <ScrollView style={styles.scrollView}>
@@ -105,16 +116,7 @@ export default function Statistics({ navigation}) {
             labels: ["January", "February", "March", "April", "May", "June"], 
             datasets: [
               {
-                data: [
-                
-                  //movSem 
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                ],
+                data: element
               },
             ],
           }}

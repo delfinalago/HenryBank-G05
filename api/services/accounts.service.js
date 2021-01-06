@@ -246,10 +246,10 @@ module.exports = {
 				console.log(id)
 				const [movEgresosM] = await this.adapter.db
 					.query(
-						//  `SELECT * FROM transactions WHERE origin ='${id}' ORDER BY date_colum desc`
-						//  `SELECT * FROM transactions WHERE origin = '${id}' AND date_colum <= '${dat}'
-						//   ORDER BY date_colum DESC`
-						`SELECT * FROM  transactions WHERE origin ='${id}' AND date_colum > DATE_SUB(NOW(),INTERVAL 90 DAY)`
+						//  `SELECT * FROM transactions WHERE origin ='${id}' ORDER BY date desc`
+						//  `SELECT * FROM transactions WHERE origin = '${id}' AND date <= '${dat}'
+						//   ORDER BY date DESC`
+						`SELECT * FROM  transactions WHERE origin ='${id}' AND ts > DATE_SUB(NOW(),INTERVAL 90 DAY)`
 					)
 				return movEgresosM;
 
@@ -266,7 +266,7 @@ module.exports = {
 
 				const [movEgresosS] = await this.adapter.db
 					.query(
-						`SELECT * FROM  transactions WHERE origin ='${id}' AND date_colum > DATE_SUB(NOW(),INTERVAL 14 DAY)`
+						`SELECT * FROM  transactions WHERE origin ='${id}' AND ts > DATE_SUB(NOW(),INTERVAL 14 DAY)`
 					)
 				console.log([movEgresosS])
 				return movEgresosS;
@@ -280,7 +280,7 @@ module.exports = {
 				const dat = today.toLocaleDateString().split("/").reverse().join("-");
 				const [movEgresosD] = await this.adapter.db
 					.query(
-						`SELECT * FROM  transactions WHERE origin ='${id}' AND date_colum > DATE_SUB(NOW(),INTERVAL 7 DAY)`
+						`SELECT * FROM  transactions WHERE origin ='${id}' AND ts > DATE_SUB(NOW(),INTERVAL 7 DAY)`
 					)
 				return movEgresosD;
 
@@ -294,7 +294,7 @@ module.exports = {
 				const dat = today.toLocaleDateString().split("/").reverse().join("-");
 				const [movIngresosM] = await this.adapter.db
 					.query(
-						`SELECT * FROM transactions WHERE  destiny = '${id}' AND   date_colum <='${dat}'`
+						`SELECT * FROM transactions WHERE  destiny = '${id}' AND   ts <='${dat}'`
 					)
 				return movIngresosM[0];
 			},
@@ -308,7 +308,7 @@ module.exports = {
 				const dat = today.toLocaleDateString().split("/").reverse().join("-");
 				const [movIngresosS] = await this.adapter.db
 					.query(
-						`SELECT * FROM transactions WHERE destiny = '${id}' AND   date_colum <='${dat}' `
+						`SELECT * FROM transactions WHERE destiny = '${id}' AND   ts <='${dat}' `
 					)
 				return movIngresosS[0];
 			},
@@ -321,7 +321,7 @@ module.exports = {
 				const dat = today.toLocaleDateString().split("/").reverse().join("-");
 				const [movIngresosD] = await this.adapter.db
 					.query(
-						`SELECT * FROM transactions WHERE destiny = '${id}' AND   date_colum <='${dat}'`
+						`SELECT * FROM transactions WHERE destiny = '${id}' AND   ts <='${dat}'`
 					)
 				return movIngresosD[0];
 			},
@@ -344,7 +344,7 @@ module.exports = {
 				const dat = today.toLocaleDateString().split("/").reverse().join("-");
 				const [movUser] = await this.adapter.db
 					.query(
-						`SELECT *  FROM transactions WHERE origin = '${id}' ORDER BY  date_colum <='${dat}'  DESC LIMIT 14`
+						`SELECT *  FROM transactions WHERE origin = '${id}' ORDER BY  ts <='${dat}'  DESC LIMIT 14`
 					)
 				return movUser;
 			},
