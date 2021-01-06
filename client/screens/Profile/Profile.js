@@ -142,6 +142,23 @@ export default function Profile({ navigation, setToken }) {
                   containerStyle={{ backgroundColor: "#29333d" }}
                   icon={{
                     type: "font-awesome",
+                    name: "handshake-o",
+                  }}
+                />
+              }
+            />
+            <Button
+              titleStyle={styles.listItem}
+              title="Mis datos"
+              type="outline"
+              onPress={() => navigation.navigate("UserData")}
+              containerStyle={styles.listItemContainer}
+              icon={
+                <BaseIcon
+                  style={styles.listItem}
+                  containerStyle={{ backgroundColor: "#29333d" }}
+                  icon={{
+                    type: "font-awesome",
                     name: "user-circle",
                   }}
                 />
