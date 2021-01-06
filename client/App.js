@@ -29,6 +29,7 @@ import editContact from "./screens/MisContactos/editContact";
 import SendMoney from "./screens/SendMoney/sendMoney";
 import SelectContact from "./screens/SendMoney/selectContact";
 import UserData from "./screens/Profile/UserData";
+import Statistics from "./screens/Statistics/Statistics";
 
 import transacciones from "./screens/Transacciones/transacciones";
 import RechargeMoney from "./screens/RechargeMoney/rechargeMoney";
@@ -170,7 +171,13 @@ function ProfileStack({ setToken }) {
         options={{ title: "Mis datos" }}
         options={{ headerShown: false }}
       />
-    </Stack.Navigator>
+       <Stack.Screen
+        name="Statistics"
+        component={Statistics}
+        options={{ title: "Estadísticas" }}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator> 
   );
 }
 
