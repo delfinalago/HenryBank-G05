@@ -13,6 +13,7 @@ import axios from "axios";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { StyleSheet, Text, View } from "react-native";
 import { StatusBar } from "expo-status-bar";
+import Toast from "react-native-toast-message";
 
 // Screens
 
@@ -28,6 +29,13 @@ import editContact from "./screens/MisContactos/editContact";
 import SendMoney from "./screens/SendMoney/sendMoney";
 import SelectContact from "./screens/SendMoney/selectContact";
 import Statistics from "./screens/Statistics/Statistics";
+
+import transacciones from "./screens/Transacciones/transacciones";
+import RechargeMoney from "./screens/RechargeMoney/rechargeMoney";
+import Card from "./screens/RechargeMoney/card";
+import Code from "./screens/RechargeMoney/code";
+import SelectMethod from "./screens/RechargeMoney/selectMethod";
+
 
 const Stack = createStackNavigator(); //contiene la navegacion
 
@@ -144,6 +152,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <RootStack />
+      <Toast ref={(ref) => Toast.setRef(ref)} />
     </NavigationContainer>
   );
 }

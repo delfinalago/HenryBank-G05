@@ -18,11 +18,17 @@ module.exports = {
 	 * Mixins
 	 */
 	mixins: [DbService],
-	adapter: new SqlAdapter("veski", "root", "", {
-		host: "127.0.0.1",
-		dialect: "mysql",
-	}),
+	adapter: new SqlAdapter(
+		"veski",
+		process.env.DB_USER,
+		process.env.DB_PASSWORD,
+		{
+			host: "127.0.0.1",
+			dialect: "mysql",
+		}
+	),
 	model: {},
+
 
 	/**
 	 * Settings
@@ -71,8 +77,12 @@ module.exports = {
 			rest: "POST /login",
 
 			async handler(ctx) {
+
+				console.log("-ctx=", ctx );
+
+			
 				const [[user]] = await this.adapter.db.query(
-					`SELECT * FROM CLIENT WHERE username = '${ctx.params.username}'`
+					`SELECT * FROM client WHERE username = '${ctx.params.username}'`
 				);
 
 				const test = await bcrypt.compare(

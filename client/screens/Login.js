@@ -1,15 +1,14 @@
 import React from "react";
-import Fondo1 from "../assets/Fondo1.png";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 import logo from "../assets/logo.png";
-import Register from "./Register/Register";
 import { Card, Button } from "react-native-elements";
 import { API } from "../env.js";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const background = require("../assets/Fondo1.png");
+
+
 import {
   StyleSheet,
   Text,
@@ -36,11 +35,15 @@ export default function Login({ navigation, setToken }) {
         .required(),
     }),
     onSubmit: ({ login, password }) => {
+       console.log("ENTRANDO A AAXIOS L38 LOGIN login=", login, " password=", password, "API", API) 
       axios
-        .post(`${API}/api/users/login`, { username: login, password })
+        .post(`${API}/api/users/login`, 
+          { username: login, password: password },
+          { headers: {'X-Requested-With': 'XMLHttpRequest'} } )
         .then(({ data }) => {
           (async () => {
             try {
+              console.log("ENTRANDO A AAXIOS L45 LOGIN")
               await AsyncStorage.setItem("@localUser", JSON.stringify(data));
               setToken(data.token);
               console.log("entrandiiiiiiing");
@@ -51,6 +54,9 @@ export default function Login({ navigation, setToken }) {
               navigation.navigate("Profile");
             }
           })();
+        })
+        .catch((error) => {
+         console.log(error)
         });
     },
   });

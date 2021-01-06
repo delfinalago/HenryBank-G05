@@ -16,6 +16,7 @@ import {
 import { Card, ListItem, Button, Icon, Avatar } from "react-native-elements";
 
 export default function addContact({ navigation }) {
+
   const { handleSubmit, handleChange, values, touched, errors } = useFormik({
     initialValues: {
       alias: "",
