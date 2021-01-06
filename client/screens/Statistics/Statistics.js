@@ -32,6 +32,21 @@ export default function Statistics({ navigation}) {
           console.log(error);
         });
     }, []);
+
+    // useEffect(() => {
+    //   AsyncStorage.getItem("@localUser")
+    //   .then((data) => {
+    //     const id= JSON.parse(data).id;
+    //   axios
+    //     .get(`${API}/api/accounts/movMesEg`, id) // trae de la bd todos los gastos del usuario
+    //     .then(({ data }) => {
+    //       setGastos(data);
+    //     })
+    //     .catch((error) => {
+    //       console.log(error);
+    //     });
+    //   })
+    //  },[]);
    
     console.log(gastos)
 
@@ -126,19 +141,19 @@ export default function Statistics({ navigation}) {
             type="outline"
             title= "Mensual"
             style={styles.boton}
-            onPress={() => (`${handleMovMesEg}`)}
+            onPress={() => (`${handleMovMesEg()}`)}
           />
           <Button
             type="outline"
             title="Semanal"
             style={styles.boton}
-            onPress={() => (`${handleMovSemEg}`)}
+            onPress={() => (`${handleMovSemEg()}`)}
           />
           <Button
             type="outline"
             title="Diario"
             style={styles.boton}
-            onPress={() => (`${handleMovDiaEg}`)}
+            onPress={() => (`${handleMovDiaEg()}`)}
             //´${handler}
           />
       </View>
