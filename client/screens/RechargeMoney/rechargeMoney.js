@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+
+import { LinearGradient } from "expo-linear-gradient";
 import {
   StyleSheet,
   Text,
@@ -28,76 +30,71 @@ export default function RechargeMoney({ navigation }) {
 
   return (
     <ScrollView style={styles.scrollView}>
-      <View style={{ backgroundColor: "#FFF", height: "100%", marginTop: 200 }}>
-        <Text style={styles.title}>¿Cuanto dinero queres recargar?</Text>
+      <LinearGradient
+        // Button Linear Gradient
+        colors={["#00f27c", "#384b99"]}
+        start={[1, 0]}
+        end={[0, 1]}
+        style={styles.background}
+      >
+        <View style={styles.container}>
+          <Text style={styles.title}>¿Cuanto dinero queres recargar?</Text>
 
-        <TextInput
-          placeholder="Cantidad"
-          placeholderTextColor="#00716F"
-          style={styles.input}
-          onChangeText={handleChange}
-          numeric
-          keyboardType={"numeric"}
-        />
+          <TextInput
+            placeholder="Cantidad"
+            placeholderTextColor="#00716F"
+            style={styles.input}
+            onChangeText={handleChange}
+            numeric
+            keyboardType={"numeric"}
+          />
 
-        <TouchableOpacity
-          mode="contained"
-          secureTextEntry={true}
-          title="Obtener código"
-          onPress={handleSubmit}
-          style={styles.button}
-        >
-          <Text style={styles.innerText}>Elegir medio de pago</Text>
-        </TouchableOpacity>
-      </View>
+          <TouchableOpacity
+            mode="contained"
+            secureTextEntry={true}
+            title="Obtener código"
+            onPress={handleSubmit}
+            style={styles.touchable}
+          >
+            <Text style={styles.buttonTitle}>Elegir medio de pago</Text>
+          </TouchableOpacity>
+        </View>
+      </LinearGradient>
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: "#fff",
+  container: {
+    backgroundColor: "rgba(255, 255, 255, 0.6)",
+    marginHorizontal: 20,
+    borderRadius: 30,
+    paddingVertical: 30,
+    paddingHorizontal: 20,
   },
-  text: {
-    fontSize: 42,
-  },
-  code: {
-    fontSize: 42,
-    textAlign: "center",
-    marginTop: 100,
+  background: {
+    height: 770,
+    justifyContent: "center",
   },
   title: {
-    fontSize: 20,
-    marginHorizontal: 20,
+    fontSize: 30,
     textAlign: "center",
-    marginTop: 5,
-    opacity: 0.4,
   },
   input: {
-    flexDirection: "column",
-    marginRight: 20,
-    marginLeft: 20,
-    height: 50,
+    marginVertical: 20,
+    fontSize: 25,
+    paddingVertical: 20,
+  },
+  buttonTitle: {
+    fontSize: 20,
+    paddingVertical: 10,
+    color: "#00aae4",
+  },
+  touchable: {
     color: "#000000",
     alignItems: "center",
-    borderWidth: 3,
-    marginTop: 25,
-    paddingHorizontal: 10,
+    borderRadius: 10,
     borderWidth: 1,
-    borderRadius: 10,
     borderColor: "#00aae4",
-    paddingVertical: 2,
-  },
-  button: {
-    marginHorizontal: 55,
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 30,
-    backgroundColor: "#00aae4",
-    paddingVertical: 10,
-    borderRadius: 10,
-  },
-  innerText: {
-    color: "white",
   },
 });

@@ -5,9 +5,13 @@ export const forms = StyleSheet.create({
     marginTop: 60,
     flex: 1,
     justifyContent: "center",
-    borderRadius: 50,
-    backgroundColor: "#fff",
+    borderRadius: 30,
+    backgroundColor: "rgba(255, 255, 255, 0.7)",
     paddingVertical: 30,
+    marginHorizontal: 10,
+  },
+  background: {
+    paddingVertical: 50,
   },
   text: {
     flexDirection: "column",
@@ -27,15 +31,6 @@ export const forms = StyleSheet.create({
     paddingVertical: 10,
     borderRadius: 10,
     backgroundColor: "#00aae4",
-  },
-  correo: {
-    flexDirection: "column",
-    fontSize: 35,
-    marginRight: 10,
-    textAlign: "center",
-    marginTop: 35,
-    opacity: 0.8,
-    color: "#000000",
   },
   input: {
     flexDirection: "column",
