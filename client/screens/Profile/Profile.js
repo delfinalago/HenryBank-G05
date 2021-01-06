@@ -77,11 +77,11 @@ export default function Profile({ navigation, setToken }) {
             <Text style={styles.saldo}>Saldo: ${saldo.balance}</Text>
           </View>
           <View style={styles.buttons}>
-            {/* <Button
+            <Button
                 titleStyle={styles.listItem}
                 type="outline"
                 title="Transacciones"
-                onPress={() => console.log("Transacciones")}
+                onPress={() => navigation.navigate("transacciones")}
                 containerStyle={styles.listItemContainer}
                 icon={
                   <BaseIcon
@@ -95,7 +95,7 @@ export default function Profile({ navigation, setToken }) {
                     }}
                   />
                 }
-              /> */}
+              />
             <Button
               titleStyle={styles.listItem}
               type="outline"
@@ -139,6 +139,23 @@ export default function Profile({ navigation, setToken }) {
               containerStyle={styles.listItemContainer}
               icon={
                 <BaseIcon
+                  containerStyle={{ backgroundColor: "#29333d" }}
+                  icon={{
+                    type: "font-awesome",
+                    name: "handshake-o",
+                  }}
+                />
+              }
+            />
+            <Button
+              titleStyle={styles.listItem}
+              title="Mis datos"
+              type="outline"
+              onPress={() => navigation.navigate("UserData")}
+              containerStyle={styles.listItemContainer}
+              icon={
+                <BaseIcon
+                  style={styles.listItem}
                   containerStyle={{ backgroundColor: "#29333d" }}
                   icon={{
                     type: "font-awesome",
