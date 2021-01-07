@@ -103,6 +103,7 @@ export default function Login({ navigation, setToken }) {
               { transform: [{ rotate: interpolatedRotateAnimation }] },
             ]}
           />
+          <Text style={styles.logo}>VESKI</Text>
           <Text style={{ alignSelf: "center", fontSize: 20 }}>
             Bienvenidx a tu billetera virtual
           </Text>

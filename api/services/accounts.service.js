@@ -58,7 +58,7 @@ module.exports = {
 				ctx.params.quantity = 0;
 			},
 
-			testear() {},
+			testear() { },
 		},
 	},
 
@@ -121,7 +121,7 @@ module.exports = {
 						if (type === "recarga") {
 							this.adapter.db.query(
 								"INSERT INTO `transactions` (`state`, `type`, `description`, `amount`, `destiny`)" +
-									`VALUES ('1', 'recarga', '', '${amount}', '${destiny}');`
+								`VALUES ('1', 'recarga', '', '${amount}', '${destiny}');`
 							);
 						}
 						return this.adapter.db.query(
@@ -159,7 +159,7 @@ module.exports = {
 								if (type === "gasto") {
 									this.adapter.db.query(
 										"INSERT INTO `transactions` (`state`, `type`, `description`, `amount`, `origin`)" +
-											`VALUES ('1', 'gasto', '${description}', '${amount}', '${origin}');`
+										`VALUES ('1', 'gasto', '${description}', '${amount}', '${origin}');`
 									);
 								}
 								return this.adapter.db.query(
@@ -197,7 +197,7 @@ module.exports = {
 
 					await this.adapter.db.query(
 						"INSERT INTO `transactions` (`state`, `type`, `description`, `amount`, `origin`, `destiny`)" +
-							`VALUES ('1', 'transferencia', '${description}', '${amount}', '${origin}', '${destiny}');`
+						`VALUES ('1', 'transferencia', '${description}', '${amount}', '${origin}', '${destiny}');`
 					);
 				} catch (e) {
 					return e;
@@ -390,6 +390,8 @@ module.exports = {
 
 	/**
 	 * Methods
+	 * trae todos los gastos generados por el cliente
+	 * trae todos los ingresos efectuados al cliente
 	 */
 	methods: {
 		getWeekNumber(d) {
