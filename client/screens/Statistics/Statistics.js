@@ -63,7 +63,7 @@ export default function Statistics({ navigation }) {
       .get(`${API}/api/accounts/movDiaEg`)
       .then(({ data }) => {
         console.log("DATA=", data);
-        setLabels(new Array(12).fill("."));
+        setLabels(new Array(30).fill("."));
         setGastos(data);
       })
       .catch((error) => {
@@ -71,25 +71,20 @@ export default function Statistics({ navigation }) {
       });
   };
 
-  const handleMovSemEg = (gastos) => {
-    let movSem = [];
+  const handleMovSemEg = () => {
     axios
       .get(`${API}/api/accounts/movSemEg`)
       .then(({ data }) => {
         console.log("DATASEM=", data);
         setGastos(data);
-        movSem.length
-          ? movSem.map((u) => {
-              const { id } = u;
-            })
-          : null;
+        setLabels(new Array(12).fill("."));
       })
       .catch((error) => {
         console.log(error);
       });
   };
 
-  const handleMovMesEg = (gastos) => {
+  const handleMovMesEg = () => {
     axios
       .get(`${API}/api/accounts/movMesEg`)
       .then(({ data }) => {
@@ -144,20 +139,20 @@ export default function Statistics({ navigation }) {
           type="outline"
           title="Mensual"
           style={styles.boton}
-          onPress={() => `${handleMovMesEg()}`}
+          onPress={handleMovMesEg}
         />
         <Button
           type="outline"
           title="Semanal"
           style={styles.boton}
-          onPress={() => `${handleMovSemEg()}`}
+          onPress={handleMovSemEg}
         />
         <Button
           type="outline"
           title="Diario"
           style={styles.boton}
-          onPress={() => `${handleMovDiaEg()}`}
-          //´${handler}
+          onPress={handleMovDiaEg}
+        //´${handler}
         />
       </View>
     </ScrollView>

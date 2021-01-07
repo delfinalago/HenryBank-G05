@@ -270,20 +270,21 @@ module.exports = {
 			rest: "GET /movSemEg", //accion que muestra los ult egresos que se realizaron en las semanas anteriores a la fecha.
 			async handler(ctx) {
 				const id = ctx.params.id_client || ctx.meta.user.id;
-				const today = new Date();
-				const dat = today
-					.toLocaleDateString()
-					.split("/")
-					.reverse()
-					.join("-");
-
-				console.log(dat);
 
 				const [movEgresosS] = await this.adapter.db.query(
-					`SELECT * FROM  transactions WHERE origin ='${id}' AND ts > DATE_SUB(NOW(),INTERVAL 14 DAY)`
+					`SELECT SUM(amount) as amount, week(ts) as week FROM transactions WHERE origin ='${id}' AND ts > DATE_SUB(NOW(),INTERVAL 84 DAY) GROUP BY WEEK(ts)`
 				);
-				console.log([movEgresosS]);
-				return movEgresosS;
+
+				const gastos = new Array(52).fill(0);
+
+				movEgresosS.forEach((mov) => {
+					gastos[mov.week] += Number(mov.amount);
+				});
+
+				const thisWeek = this.getWeekNumber(new Date());
+				const weeksPast = gastos.slice(0, thisWeek);
+
+				return [...gastos, ...weeksPast].slice(-12);
 			},
 		},
 		ultMovDiaEgr: {
@@ -390,7 +391,15 @@ module.exports = {
 	/**
 	 * Methods
 	 */
-	methods: {},
+	methods: {
+		getWeekNumber(d) {
+			d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+			d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
+			var yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+			var weekNo = Math.ceil(((d - yearStart) / 86400000 + 1) / 7);
+			return weekNo;
+		},
+	},
 
 	/**
 	 * Fired after database connection establishing.

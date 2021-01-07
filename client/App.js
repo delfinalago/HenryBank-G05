@@ -173,12 +173,6 @@ function ProfileStack({ setToken }) {
         options={{ title: "Mis datos" }}
         options={{ headerShown: false }}
       />
-      <Stack.Screen
-        name="Statistics"
-        component={Statistics}
-        options={{ title: "Estadísticas" }}
-        options={{ headerShown: false }}
-      />
     </Stack.Navigator>
   );
 }
