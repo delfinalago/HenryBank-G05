@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { LinearGradient } from "expo-linear-gradient";
 import {
   TouchableOpacity,
   ScrollView,
   StyleSheet,
   View,
   Text,
-  SafeAreaView,
-  TextInput,
-  FlatList,
 } from "react-native";
 
 import { Card, ListItem, Button, Icon, Avatar } from "react-native-elements";
@@ -16,39 +14,40 @@ import { API } from "../../env.js";
 
 export default function contactos({ navigation }) {
   const [contacts, setContacts] = useState([]);
-  const [num, setNum] = useState(0);
+  const [reload, setReload] = useState(false);
 
   useEffect(() => {
     axios
       .get(`${API}/api/contacts/all`)
       .then(({ data }) => {
         setContacts(data);
-        console.log("el num es: ", num);
+        console.log("el reload es: ", reload);
       })
       .catch((error) => {
         console.log(error);
       });
-  }, [num]);
+  }, [reload]);
 
   const handleDelete = (id_contact) => {
     axios
       .delete(`${API}/api/contacts/delete?id_contact=${id_contact}`)
-      .then(({ data }) => { setNum(num + 1); 
+      .then(() => {
+        setReload(!reload);
       })
       .catch((error) => {
-        console.log(error)
+        console.log(error);
       });
   };
 
   return (
-    <ScrollView style={styles.fondo}>
-      <View style={{ flex: 1, backgroundColor: "#fff" }}>
-        <Card>
-          <Card.Title style={styles.contacts}>MIS CONTACTOS</Card.Title>
-          <Card.Divider />
+    <ScrollView>
+    
+        <View style={styles.container}>
+          <Card>
           <Button
-            type="outline"
+            type="clear"
             title="Agregar Contacto"
+            titleStyle={styles.buttonTitle}
             style={styles.boton}
             onPress={() => navigation.navigate("addContact")}
           />
@@ -95,32 +94,14 @@ export default function contactos({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  fondo: {
-    backgroundColor: "#fff",
-  },
-  input: {
-    backgroundColor: "#fff",
-    height: 50,
-    fontSize: 36,
+    backgroundColor: "rgba(255, 255, 255, 0.6)",
+    marginHorizontal: 20,
+    borderRadius: 30,
     padding: 10,
-    color: "#000000",
-    borderBottomWidth: 0.5,
-    borderBottomColor: "#7d90a0",
   },
-  containers: {
-    flex: 1,
-    marginTop: 10,
-  },
-  item: {
-    backgroundColor: "#fff",
-    padding: 20,
-    marginVertical: 8,
-    marginHorizontal: 16,
+  background: {
+    height: 680,
+    justifyContent: "center",
   },
   title: {
     fontSize: 32,
@@ -134,17 +115,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    marginVertical: 4,
-    borderWidth: 1,
-    borderRadius: 10,
-    borderColor: "#00aae4",
+    marginVertical: 8,
+    marginLeft: 15,
   },
   delete: {
-    color: "red",
-    borderColor: "red",
+    color: "#000000",
     padding: 5,
-    borderWidth: 1,
-    borderRadius: 10,
     alignSelf: "center",
     marginRight: 30,
   },

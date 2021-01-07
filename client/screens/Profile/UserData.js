@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { LinearGradient } from "expo-linear-gradient";
 import axios from "axios";
 import {
   ScrollView,
@@ -45,104 +46,125 @@ export default function UserData() {
       });
   };
 
-  const styles = StyleSheet.create({
-    text: {
-      fontSize: 20,
-    },
-    container: {
-      alignItems: "center",
-      justifyContent: "center",
-    },
-    title: {
-      fontSize: 30,
-      marginVertical: 50,
-    },
-    field: {
-      flexDirection: "row",
-      justifyContent: "space-between",
-    },
-    input: {
-      borderColor: "#000000",
-      borderWidth: 1,
-      width: 220,
-      paddingHorizontal: 15,
-    },
-  });
-
   return (
-    <View style={styles.container}>
-      <View>
-        <Text
-          style={styles.title}
-        >{`${data.first_name} ${data.last_name}`}</Text>
-      </View>
-      <View>
-        <View style={styles.field}>
-          <Text style={styles.text}>Teléfono: {data.cellphone}</Text>
-          <TouchableOpacity
-            onPress={() => {
-              setInputVisible({
-                ...inputVisible,
-                cellphone: !inputVisible.cellphone,
-              });
-            }}
-          >
-            <Text>Editar</Text>
-          </TouchableOpacity>
-        </View>
-        {inputVisible.cellphone && (
-          <View style={styles.field}>
-            <TextInput
-              value={input.cellphone}
-              style={styles.input}
-              keyboardType="numeric"
-              onChangeText={(text) => setInput({ ...input, cellphone: text })}
-            />
-            <TouchableOpacity
-              onPress={() => {
-                handleSubmit("cellphone");
-              }}
-            >
-              <Text>Confirmar</Text>
-            </TouchableOpacity>
-          </View>
-        )}
-        <View style={styles.field}>
-          <Text style={styles.text}>Dirección: {data.street}</Text>
-          <TouchableOpacity
-            onPress={() => {
-              setInputVisible({
-                ...inputVisible,
-                street: !inputVisible.street,
-              });
-            }}
-          >
-            <Text>Editar</Text>
-          </TouchableOpacity>
-        </View>
-        {inputVisible.street && (
-          <View style={styles.field}>
-            <TextInput
-              style={styles.input}
-              value={input.street}
-              onChangeText={(text) => setInput({ ...input, street: text })}
-            />
-            <TouchableOpacity
-              onPress={() => {
-                handleSubmit("street");
-              }}
-            >
-              <Text>Confirmar</Text>
-            </TouchableOpacity>
-          </View>
-        )}
+    <LinearGradient
+      // Button Linear Gradient
+      colors={["#00f27c", "#384b99"]}
+      start={[1, 0]}
+      end={[0, 1]}
+      style={styles.background}
+    >
+      <View style={styles.container}>
         <View>
-          <Text style={styles.text}>Email: {data.username}</Text>
+          <Text
+            style={styles.title}
+          >{`${data.first_name} ${data.last_name}`}</Text>
         </View>
         <View>
-          <Text style={styles.text}>DNI: {data.dni}</Text>
+          <View style={styles.field}>
+            <Text style={styles.text}>{`Teléfono: \n${data.cellphone}`}</Text>
+            <TouchableOpacity
+              onPress={() => {
+                setInputVisible({
+                  ...inputVisible,
+                  cellphone: !inputVisible.cellphone,
+                });
+              }}
+            >
+              <Text style={styles.button}>Editar</Text>
+            </TouchableOpacity>
+          </View>
+          {inputVisible.cellphone && (
+            <View style={styles.field}>
+              <TextInput
+                value={input.cellphone}
+                style={styles.input}
+                placeholder="nuevo teléfono"
+                keyboardType="numeric"
+                onChangeText={(text) => setInput({ ...input, cellphone: text })}
+              />
+              <TouchableOpacity
+                onPress={() => {
+                  handleSubmit("cellphone");
+                }}
+              >
+                <Text style={styles.button}>Confirmar</Text>
+              </TouchableOpacity>
+            </View>
+          )}
+          <View style={styles.field}>
+            <Text style={styles.text}>{`Dirección: \n${data.street}`}</Text>
+            <TouchableOpacity
+              onPress={() => {
+                setInputVisible({
+                  ...inputVisible,
+                  street: !inputVisible.street,
+                });
+              }}
+            >
+              <Text style={styles.button}>Editar</Text>
+            </TouchableOpacity>
+          </View>
+          {inputVisible.street && (
+            <View style={styles.field}>
+              <TextInput
+                style={styles.input}
+                value={input.street}
+                placeholder="nueva dirección"
+                onChangeText={(text) => setInput({ ...input, street: text })}
+              />
+              <TouchableOpacity
+                onPress={() => {
+                  handleSubmit("street");
+                }}
+              >
+                <Text style={styles.button}>Confirmar</Text>
+              </TouchableOpacity>
+            </View>
+          )}
+          <View style={styles.field}>
+            <Text style={styles.text}>{`Email: \n${data.username}`}</Text>
+          </View>
+          <View style={styles.field}>
+            <Text style={styles.text}>{`DNI: \n${data.dni}`}</Text>
+          </View>
         </View>
       </View>
-    </View>
+    </LinearGradient>
   );
 }
+
+const styles = StyleSheet.create({
+  text: {
+    fontSize: 20,
+  },
+  container: {
+    backgroundColor: "rgba(255, 255, 255, 0.7)",
+    borderRadius: 30,
+    paddingVertical: 30,
+    paddingHorizontal: 30,
+  },
+  title: {
+    fontSize: 30,
+    marginVertical: 50,
+  },
+  field: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginVertical: 20,
+  },
+  input: {
+    width: 220,
+    paddingHorizontal: 15,
+    fontSize: 20,
+  },
+  background: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  button: {
+    color: "#00aae4",
+    fontSize: 15,
+  },
+});

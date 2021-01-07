@@ -103,26 +103,23 @@ function LoginStack({ setToken }) {
 function ProfileStack({ setToken }) {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Me">
+      <Stack.Screen name="Me" options={{ headerShown: false }}>
         {(props) => <Profile {...props} setToken={setToken} />}
       </Stack.Screen>
       <Stack.Screen
         name="contactsList"
         component={contactsList}
         options={{ title: "Mis Contactos" }}
-        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="addContact"
         component={addContact}
         options={{ title: "Mis Contactos" }}
-        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="editContact"
         component={editContact}
-        options={{ title: "Mis Contactos" }}
-        options={{ headerShown: false }}
+        options={{ title: "Editar contacto" }}
       />
       <Stack.Screen
         name="SendMoney"
