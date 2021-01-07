@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
@@ -19,9 +19,24 @@ import {
   Form,
   ScrollView,
   Image,
+  Animated,
 } from "react-native";
 
 export default function Login({ navigation, setToken }) {
+  const animatedValue = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    Animated.timing(animatedValue, {
+      toValue: 100,
+      duration: 3000,
+    }).start();
+  }, [animatedValue]);
+
+  const interpolatedRotateAnimation = animatedValue.interpolate({
+    inputRange: [0, 100],
+    outputRange: ["0deg", "360deg"],
+  });
+
   const { handleSubmit, handleChange, values, touched, errors } = useFormik({
     initialValues: {
       login: "",
@@ -81,7 +96,13 @@ export default function Login({ navigation, setToken }) {
         style={styles.background}
       >
         <View style={styles.container}>
-          <Image source={logo} style={styles.img} />
+          <Animated.Image
+            source={logo}
+            style={[
+              styles.img,
+              { transform: [{ rotate: interpolatedRotateAnimation }] },
+            ]}
+          />
           <Text style={{ alignSelf: "center", fontSize: 20 }}>
             Bienvenidx a tu billetera virtual
           </Text>

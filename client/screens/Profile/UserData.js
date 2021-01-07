@@ -46,6 +46,19 @@ export default function UserData() {
       });
   };
 
+  const verifyDirection = (street) =>
+    axios
+      .get(
+        `http://servicios.usig.buenosaires.gob.ar/normalizar/?direccion=${street}`
+      )
+      .then(({ data }) => {
+        if (data.direccionesNormalizadas.length) {
+          return true;
+        } else {
+          return false;
+        }
+      });
+
   return (
     <LinearGradient
       // Button Linear Gradient
@@ -114,8 +127,12 @@ export default function UserData() {
                 onChangeText={(text) => setInput({ ...input, street: text })}
               />
               <TouchableOpacity
-                onPress={() => {
-                  handleSubmit("street");
+                onPress={async () => {
+                  if (await verifyDirection(input.street)) {
+                    handleSubmit("street");
+                  } else {
+                    alert("Direccion inválida");
+                  }
                 }}
               >
                 <Text style={styles.button}>Confirmar</Text>
