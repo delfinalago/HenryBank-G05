@@ -1,14 +1,12 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { API } from "../../env";
 import axios from "axios";
-import { Card, Button } from "react-native-elements";
+import { Button } from "react-native-elements";
 import BaseIcon from "./Icon";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { LinearGradient } from "expo-linear-gradient";
 
 import {
-  Image,
-  ImageBackground,
-  Platform,
   ScrollView,
   StyleSheet,
   Text,
@@ -54,53 +52,30 @@ export default function Profile({ navigation, setToken }) {
 
   return (
     <ScrollView
-      style={styles.scroll}
       refreshControl={
         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
       }
     >
-      <View style={styles.container}>
-        <Card containerStyle={styles.cardContainer}>
-          <View style={styles.logout}>
-            <TouchableOpacity onPress={Logout}>
-              <BaseIcon
-                icon={{
-                  type: "font-awesome",
-                  name: "sign-out",
-                }}
-              />
-            </TouchableOpacity>
-          </View>
-          <View style={styles.saldoContainer}>
-            {/* <Text style={styles.saldo}>Mi saldo</Text> */}
-            <Text style={styles.name}>¡Hola, {saldo.name}!</Text>
-            <Text style={styles.saldo}>Saldo: ${saldo.balance}</Text>
-          </View>
+      <LinearGradient
+        // Button Linear Gradient
+        colors={["#00f27c", "#384b99"]}
+        start={[1, 0]}
+        end={[0, 1]}
+        style={styles.background}
+        containerStyle={styles.scroll}
+      >
+        <View style={styles.saldoContainer}>
+          <Text style={styles.name}>¡Hola {saldo.name?.split(" ")[0]}!</Text>
+          <Text style={styles.saldo}>Saldo: ${saldo.balance}</Text>
+        </View>
+
+        <View style={styles.container}>
           <View style={styles.buttons}>
             <Button
-                titleStyle={styles.listItem}
-                type="outline"
-                title="Transacciones"
-                onPress={() => navigation.navigate("transacciones")}
-                containerStyle={styles.listItemContainer}
-                icon={
-                  <BaseIcon
-                    containerStyle={{
-                      backgroundColor: "#29333d",
-                      marginLeft: 10,
-                    }}
-                    icon={{
-                      type: "font-awesome",
-                      name: "bank",
-                    }}
-                  />
-                }
-              />
-            <Button
               titleStyle={styles.listItem}
-              type="outline"
+              type="clear"
               title="Estadisticas"
-              onPress={() => console.log("Estadisticas")}
+              onPress={() => navigation.navigate("Statistics")}
               containerStyle={styles.listItemContainer}
               icon={
                 <BaseIcon
@@ -115,26 +90,10 @@ export default function Profile({ navigation, setToken }) {
                 />
               }
             />
-            {/* <Button
-                titleStyle={styles.listItem}
-                type="outline"
-                title="Mis productos "
-                onPress={() => this.onPressSetting()}
-                containerStyle={styles.listItemContainer}
-                icon={
-                  <BaseIcon
-                    containerStyle={{ backgroundColor: "#29333d" }}
-                    icon={{
-                      type: "font-awesome",
-                      name: "credit-card",
-                    }}
-                  />
-                }
-              /> */}
             <Button
               titleStyle={styles.listItem}
-              title="Mis contactos"
-              type="outline"
+              title="Contactos"
+              type="clear"
               onPress={() => navigation.navigate("contactsList")}
               containerStyle={styles.listItemContainer}
               icon={
@@ -150,12 +109,11 @@ export default function Profile({ navigation, setToken }) {
             <Button
               titleStyle={styles.listItem}
               title="Mis datos"
-              type="outline"
+              type="clear"
               onPress={() => navigation.navigate("UserData")}
               containerStyle={styles.listItemContainer}
               icon={
                 <BaseIcon
-                  style={styles.listItem}
                   containerStyle={{ backgroundColor: "#29333d" }}
                   icon={{
                     type: "font-awesome",
@@ -166,13 +124,12 @@ export default function Profile({ navigation, setToken }) {
             />
             <Button
               titleStyle={styles.listItem}
-              title="Recargar dinero"
-              type="outline"
+              title="Recarga"
+              type="clear"
               onPress={() => navigation.navigate("RechargeMoney")}
               containerStyle={styles.listItemContainer}
               icon={
                 <BaseIcon
-                  style={styles.listItem}
                   containerStyle={{ backgroundColor: "#29333d" }}
                   icon={{
                     type: "font-awesome",
@@ -183,7 +140,7 @@ export default function Profile({ navigation, setToken }) {
             />
             <Button
               titleStyle={styles.listItem}
-              type="outline"
+              type="clear"
               title="Enviar dinero"
               onPress={() => navigation.navigate("SelectContact")}
               containerStyle={styles.listItemContainer}
@@ -197,9 +154,25 @@ export default function Profile({ navigation, setToken }) {
                 />
               }
             />
+            <Button
+              titleStyle={styles.listItem}
+              type="clear"
+              title="Sign out"
+              onPress={Logout}
+              containerStyle={styles.listItemContainer}
+              icon={
+                <BaseIcon
+                  containerStyle={{ backgroundColor: "#29333d" }}
+                  icon={{
+                    type: "font-awesome",
+                    name: "sign-out",
+                  }}
+                />
+              }
+            />
           </View>
-        </Card>
-      </View>
+        </View>
+      </LinearGradient>
     </ScrollView>
   );
 }
@@ -207,101 +180,55 @@ export default function Profile({ navigation, setToken }) {
 // export default Contact;
 
 const styles = StyleSheet.create({
-  cardContainer: {
-    backgroundColor: "#fff",
+  container: {
+    backgroundColor: "rgba(255, 255, 255, 0.6)",
     borderWidth: 0,
     flex: 1,
-    margin: 0,
-    padding: 0,
-  },
-  container: {
-    flex: 1,
-    margin: 10,
-  },
-  headerBackgroundImage: {
-    paddingBottom: 20,
-    paddingTop: 45,
-  },
-  headerColumn: {
-    alignItems: "center",
-    ...Platform.select({
-      ios: {
-        alignItems: "center",
-        elevation: 1,
-        marginTop: -1,
-      },
-      android: {
-        alignItems: "center",
-      },
-    }),
+    borderRadius: 20,
+    marginVertical: 50,
+    marginHorizontal: 15,
+    padding: 15,
   },
   scroll: {
     flex: 1,
-    backgroundColor: "#fff",
-    marginTop: 10,
-  },
-  userImage: {
-    borderColor: "#FFF",
-    borderRadius: 85,
-    borderWidth: 3,
-    height: 170,
-    marginBottom: 15,
-    width: 170,
-  },
-  userNameText: {
-    color: "#FFF",
-    fontSize: 22,
-    fontWeight: "bold",
-    paddingBottom: 8,
-    textAlign: "center",
+    justifyContent: "center",
+    alignItems: "center",
   },
   saldoContainer: {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 28,
-    marginBottom: 50,
+    marginTop: 150,
+    borderRadius: 30,
+    padding: 5,
+    backgroundColor: "rgba(255, 255, 255, 0.7)",
   },
   saldo: {
     fontSize: 30,
     fontWeight: "bold",
-    marginVertical: 50,
+    marginVertical: 30,
   },
   name: {
     color: "#000000",
     fontSize: 22,
     fontWeight: "bold",
-    // paddingBottom: 8,
-    // textAlign: "center",
   },
-  listItemContainer: {
-    height: 55,
-    width: "80%",
-    color: "#FFF",
-  },
-
   buttons: {
     alignItems: "center",
-    color: "#FFF",
-    borderRadius: 50,
-
-    //   display: 'grid',
-    //   'grid-template-columns': '3fr 3fr'
-  },
-  button: {
-    width: "50%",
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-around",
   },
   listItem: {
-    width: 250,
-  },
-  buttons: {
-    display: "flex",
-    alignItems: "center",
+    marginVertical: 10,
   },
   logout: {
     flexDirection: "row-reverse",
-
-    // marginTop: 20,
-    // marginHorizontal: 100,
+  },
+  background: {
+    marginTop: 10,
+    paddingBottom: 260,
+    alignItems: "center",
+    flex: 1,
   },
 });

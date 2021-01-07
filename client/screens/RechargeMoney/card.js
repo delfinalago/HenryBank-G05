@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-// import  CreditCardInput  from "react-native-credit-card-input";
+import { CreditCardInput } from "react-native-credit-card-input";
+import { LinearGradient } from "expo-linear-gradient";
 import {
   StyleSheet,
   Text,
@@ -31,10 +32,9 @@ export default function Card({ route, navigation }) {
 
   const onFocus = (field) => console.log("focus", field);
 
-
   const handleSubmit = (formData) => {
     console.log("valid---------", valid);
-    if(valid){
+    if (valid) {
       let parms = {};
       parms.amount = amount;
       AsyncStorage.getItem("@localUser").then((data) => {
@@ -78,7 +78,7 @@ export default function Card({ route, navigation }) {
           })
           .catch((error) => console.log(error));
       });
-    }else{
+    } else {
       Toast.show({
         type: "error",
         position: "bottom",
@@ -89,52 +89,57 @@ export default function Card({ route, navigation }) {
         bottomOffset: 40,
       });
     }
-
   };
 
   return (
     <ScrollView style={styles.scrollView}>
-      <View style={{ marginTop: 200 }}>
-        <CreditCardInput
-          valid={true}
-          autoFocus
-          requiresName
-          requiresCVC
-          // cardScale={1.1}
-          allowScroll={true}
-          labelStyle={styles.label}
-          inputStyle={styles.cardInput}
-          validColor={"black"}
-          invalidColor={"red"}
-          // placeholderColor={"darkgray"}
-          placeholders={{
-            number: "1234 5678 1234 5678",
-            name: "NOMBRE COMPLETO",
-            expiry: "MM/YY",
-            cvc: "CVC",
-          }}
-          labels={{
-            number: "NÚMERO TARJETA",
-            expiry: "EXPIRA",
-            name: "NOMBRE COMPLETO",
-            cvc: "CVC",
-          }}
-          onFocus={onFocus}
-          onChange={onChange}
-        />
-      </View>
-      <View>
-        <TouchableOpacity
-          mode="contained"
-          secureTextEntry={true}
-          style={styles.button}
-          onPress={() => {
-            handleSubmit();
-          }}
-        >
-          <Text style={styles.innerText}>Recargar</Text>
-        </TouchableOpacity>
-      </View>
+      <LinearGradient
+        colors={["#00f27c", "#384b99"]}
+        start={[1, 0]}
+        end={[0, 1]}
+        style={styles.background}
+      >
+        <View style={styles.container}>
+          <CreditCardInput
+            valid={true}
+            autoFocus
+            requiresName
+            requiresCVC
+            // cardScale={1.1}
+            allowScroll={true}
+            labelStyle={styles.label}
+            inputStyle={styles.cardInput}
+            validColor={"black"}
+            invalidColor={"red"}
+            // placeholderColor={"darkgray"}
+            placeholders={{
+              number: "1234 5678 1234 5678",
+              name: "NOMBRE COMPLETO",
+              expiry: "MM/YY",
+              cvc: "CVC",
+            }}
+            labels={{
+              number: "NÚMERO TARJETA",
+              expiry: "EXPIRA",
+              name: "NOMBRE COMPLETO",
+              cvc: "CVC",
+            }}
+            onFocus={onFocus}
+            onChange={onChange}
+          />
+
+          <TouchableOpacity
+            mode="contained"
+            secureTextEntry={true}
+            style={styles.button}
+            onPress={() => {
+              handleSubmit();
+            }}
+          >
+            <Text style={styles.innerText}>Recargar</Text>
+          </TouchableOpacity>
+        </View>
+      </LinearGradient>
     </ScrollView>
   );
 }
@@ -206,5 +211,16 @@ const styles = StyleSheet.create({
   },
   innerText: {
     color: "white",
+  },
+  background: {
+    paddingBottom: 190,
+  },
+  container: {
+    marginTop: 200,
+    backgroundColor: "rgba(255, 255, 255, 0.6)",
+    borderRadius: 30,
+    paddingVertical: 30,
+    paddingHorizontal: 10,
+    marginHorizontal: 10,
   },
 });

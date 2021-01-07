@@ -95,6 +95,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderColor: "#00aae4",
     borderRadius: 23,
+    marginHorizontal: 25,
   },
   boton: {
     paddingTop: 15,
