@@ -113,7 +113,7 @@ const style = StyleSheet.create({
     marginVertical: 4,
     borderWidth: 2,
     borderRadius:30,
-    borderColor: "#000000",
+    borderColor: "#fff",
     backgroundColor: "rgba(255, 255, 255, 0.7)",
     margin: 60,
 
