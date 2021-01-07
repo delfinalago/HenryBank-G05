@@ -145,23 +145,19 @@ CREATE TABLE `models` (
 
 CREATE TABLE `transactions` (
   `id` int(60) NOT NULL,
-  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `ts` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `state` int(60) NOT NULL,
   `type` varchar(60) NOT NULL,
   `description` varchar(60) DEFAULT NULL,
   `amount` int(60) NOT NULL,
-  `origin` int(60),
-  `destiny` int(8)
+  `origin` int(60) NOT NULL,
+  `destiny` int(8) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `transactions`
 --
 
-INSERT INTO `transactions` (`id`, `state`, `type`, `description`, `amount`, `origin`, `destiny`) VALUES
-(1, 1, 'transferencia', 'te mando lo que me falto del asado', 750, 4, 5),
-(2, 1, 'transferencia', 'aca va una ayuda para tu viaje', 50, 3, 4),
-(4, 1, 'transferencia', '50 pe?, deja, quedatelos', 50, 4, 3);
 
 --
 -- Índices para tablas volcadas
@@ -279,7 +275,20 @@ ALTER TABLE `transactions`
   ADD CONSTRAINT `acc-transd` FOREIGN KEY (`destiny`) REFERENCES `accounts` (`id_client`);
 COMMIT;
 
-ALTER TABLE `transactions` ADD `date_colum` DATE NOT NULL AFTER `state`;
+
+INSERT INTO `transactions` (`id`, `state`, `ts`, `type`, `description`, `amount`, `origin`, `destiny`) VALUES
+(1, 1, '2020-12-23', 'nose', 'nose', 5000, 4, 3),
+(2, 2, '2020-12-19', 'qi', 'blabla', 10000, 4, 4),
+(3, 1, '2020-12-23', 'nose', 'nose', 150, 4, 3),
+(4, 2, '2020-05-19', 'qi', 'blabla', 300, 4, 4),
+(5, 1, '2020-12-23', 'nose', 'nose', 5000, 4, 3),
+(6, 2, '2020-05-19', 'qi', 'blabla', 800, 4, 4),
+(7, 1, '2020-01-03', 'nose', 'nose', 5000, 4, 3),
+(8, 2, '2020-05-06', 'qi', 'blabla', 111, 4, 4),
+(9, 1, '2020-01-03', 'nose', 'nose', 423, 4, 3),
+(10, 2, '2020-05-19', 'qi', 'blabla', 800, 4, 4);
+
+
 
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
