@@ -20,20 +20,25 @@ import {
   ScrollView,
   Image,
   Animated,
+  Easing,
 } from "react-native";
 
 export default function Login({ navigation, setToken }) {
   const animatedValue = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
-    Animated.timing(animatedValue, {
-      toValue: 100,
-      duration: 3000,
-    }).start();
+    Animated.loop(
+      Animated.timing(animatedValue, {
+        toValue: 200,
+        duration: 3000,
+        useNativeDriver: true,
+        easing: Easing.bezier(0.25, 0.75, 0.75, 0.25),
+      })
+    ).start();
   }, [animatedValue]);
 
   const interpolatedRotateAnimation = animatedValue.interpolate({
-    inputRange: [0, 100],
+    inputRange: [0, 200],
     outputRange: ["0deg", "360deg"],
   });
 
