@@ -82,6 +82,9 @@ export default function Login({ navigation, setToken }) {
       >
         <View style={styles.container}>
           <Image source={logo} style={styles.img} />
+          <Text style={styles.logo}>
+            VESKI
+          </Text>
           <Text style={{ alignSelf: "center", fontSize: 20 }}>
             Bienvenidx a tu billetera virtual
           </Text>
