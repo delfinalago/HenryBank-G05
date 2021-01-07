@@ -73,7 +73,7 @@ export default function transacciones({navigation}){
                           
                           <View Style={style.contact}>
                             <Card.Divider/>
-                            <Text style={style.fecha} >{u.ts}</Text>
+                            <Text style={style.fecha} >{u.date}</Text>
                            
                             
                             <Text style={style.tipo} >{u.type}</Text>
