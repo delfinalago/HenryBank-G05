@@ -102,10 +102,11 @@ export default function Statistics({ navigation }) {
 
   return (
     <ScrollView style={styles.scrollView}>
+      
+        <Text style={styles.title}>MIS GASTOS</Text>
+        
+      
       <View style={styles.container}>
-        <Text>MIS GASTOS</Text>
-      </View>
-
       <LineChart
         data={{
           labels: labels,
@@ -125,6 +126,7 @@ export default function Statistics({ navigation }) {
           color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
           style: {
             borderRadius: 16,
+            
           },
         }}
         bezier
@@ -133,27 +135,35 @@ export default function Statistics({ navigation }) {
           borderRadius: 16,
         }}
       />
-
+      </View>
       <View>
-        <Button
+        <TouchableOpacity
           type="outline"
           title="Mensual"
           style={styles.boton}
           onPress={handleMovMesEg}
-        />
-        <Button
+        >
+        <Text style={{color: "#fff" , fontSize: 20}}>Mensual</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
           type="outline"
           title="Semanal"
           style={styles.boton}
           onPress={handleMovSemEg}
-        />
-        <Button
+        >
+           <Text style={{color: "#fff" , fontSize: 20}}>Semanal</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
           type="outline"
           title="Diario"
           style={styles.boton}
           onPress={handleMovDiaEg}
         //´${handler}
-        />
+        >
+        <Text style={{color: "#fff" , fontSize: 20}}>Diario</Text>
+        </TouchableOpacity>
+       
       </View>
     </ScrollView>
   );
@@ -161,20 +171,13 @@ export default function Statistics({ navigation }) {
 
 const styles = StyleSheet.create({
   scrollView: {
-    backgroundColor: "#fff",
+    backgroundColor: "rgba(255, 255, 255, 0.7)",
   },
   container: {
-    marginTop: 100,
+    marginTop: 50,
   },
   text: {
     fontSize: 42,
-  },
-  title: {
-    fontSize: 20,
-    marginHorizontal: 20,
-    textAlign: "center",
-    marginTop: 5,
-    opacity: 0.4,
   },
   input: {
     flexDirection: "column",
@@ -191,16 +194,24 @@ const styles = StyleSheet.create({
     borderColor: "#00aae4",
     paddingVertical: 2,
   },
-  button: {
-    marginHorizontal: 55,
+  boton: {
+    color: "#fff",
+    marginHorizontal: 130,
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 30,
-    backgroundColor: "#00aae4",
+    marginTop: 20,
     paddingVertical: 10,
     borderRadius: 10,
+    backgroundColor: "#00aae4",
   },
   innerText: {
     color: "white",
+  },
+  title: {
+    paddingTop: 50,
+    fontSize: 30,
+    alignSelf: "center",
+    color: "#00aae4",
+    fontWeight: "bold",
   },
 });

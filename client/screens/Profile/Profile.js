@@ -90,18 +90,19 @@ export default function Profile({ navigation, setToken }) {
                 />
               }
             />
+          
             <Button
               titleStyle={styles.listItem}
-              title="Contactos"
+              title="Transacciones"
               type="clear"
-              onPress={() => navigation.navigate("contactsList")}
+              onPress={() => navigation.navigate("transacciones")}
               containerStyle={styles.listItemContainer}
               icon={
                 <BaseIcon
                   containerStyle={{ backgroundColor: "#29333d" }}
                   icon={{
                     type: "font-awesome",
-                    name: "handshake-o",
+                    name: "bank",
                   }}
                 />
               }
