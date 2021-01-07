@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { LinearGradient } from "expo-linear-gradient";
 import {
   StyleSheet,
   Text,
@@ -30,6 +31,7 @@ export default function Code({ route, navigation }) {
     parms.amount = amount;
     AsyncStorage.getItem("@localUser").then((data) => {
       parms.destiny = JSON.parse(data).id;
+      parms.type = "recarga";
       console.log("Parms para recarga-------", parms);
       Axios.put(`${API}/api/accounts/accountarg`, parms)
         .then((data) => {
@@ -73,21 +75,13 @@ export default function Code({ route, navigation }) {
   };
   return (
     <ScrollView style={styles.scrollView}>
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          paddingTop: 30,
-          // paddingVertical: 20,
-          justifyContent: "center",
-        }}
+      <LinearGradient
+        colors={["#00f27c", "#384b99"]}
+        start={[1, 0]}
+        end={[0, 1]}
+        style={styles.background}
       >
-        <Text style={styles.title}>
-          Recarga dinero con un código de pago electrónico
-        </Text>
-      </View>
-      <View style={{ backgroundColor: "#FFF", height: "100%" }}>
-        <View>
+        <View style={styles.container}>
           <Text style={styles.code}>{code}</Text>
           <View>
             <Text style={styles.title}>
@@ -106,7 +100,7 @@ export default function Code({ route, navigation }) {
             </TouchableOpacity>
           </View>
         </View>
-      </View>
+      </LinearGradient>
     </ScrollView>
   );
 }
@@ -115,13 +109,20 @@ const styles = StyleSheet.create({
   scrollView: {
     backgroundColor: "#fff",
   },
+  container: {
+    backgroundColor: "rgba(255, 255, 255, 0.6)",
+    marginHorizontal: 20,
+    borderRadius: 30,
+    paddingVertical: 20,
+    paddingHorizontal: 20,
+  },
   text: {
     fontSize: 42,
   },
   code: {
     fontSize: 42,
     textAlign: "center",
-    marginTop: 100,
+    marginVertical: 20,
   },
   title: {
     fontSize: 20,
@@ -156,5 +157,9 @@ const styles = StyleSheet.create({
   },
   innerText: {
     color: "white",
+  },
+  background: {
+    height: 760,
+    justifyContent: "center",
   },
 });

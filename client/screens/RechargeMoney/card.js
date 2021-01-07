@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { CreditCardInput } from "react-native-credit-card-input";
+import { LinearGradient } from "expo-linear-gradient";
 import {
   StyleSheet,
   Text,
@@ -22,102 +23,123 @@ import { API } from "../../env.js";
 export default function Card({ route, navigation }) {
   const [loading, setLoading] = useState(false);
   const amount = route.params.amount;
+  const [valid, setValid] = useState(false);
 
   const onChange = (formData) => {
+    formData.valid && setValid(formData.valid);
     return;
   };
 
   const onFocus = (field) => console.log("focus", field);
 
-  const handleSubmit = () => {
-    let parms = {};
-    parms.amount = amount;
-    AsyncStorage.getItem("@localUser").then((data) => {
-      parms.destiny = JSON.parse(data).id;
-      console.log("Parms para recarga-------", parms);
-      Axios.put(`${API}/api/accounts/accountarg`, parms)
-        .then((data) => {
-          if (data.error) {
-            Toast.show({
-              type: "error",
-              position: "bottom",
-              text1: `Error: ${data.error}`,
-              visibilityTime: 2000,
-              autoHide: true,
-              topOffset: 30,
-              bottomOffset: 40,
-            });
-          } else {
-            setTimeout(() => {
+  const handleSubmit = (formData) => {
+    console.log("valid---------", valid);
+    if (valid) {
+      let parms = {};
+      parms.amount = amount;
+      AsyncStorage.getItem("@localUser").then((data) => {
+        parms.destiny = JSON.parse(data).id;
+        console.log("Parms para recarga-------", parms);
+        Axios.put(`${API}/api/accounts/accountarg`, parms)
+          .then((data) => {
+            if (data.error) {
               Toast.show({
-                type: "success",
+                type: "error",
                 position: "bottom",
-                text1: ` Transaccion exitosa ... `,
-                visibilityTime: 3000,
+                text1: `Error: ${data.error}`,
+                visibilityTime: 2000,
                 autoHide: true,
                 topOffset: 30,
                 bottomOffset: 40,
               });
-              navigation.navigate("Me");
-            }, 3000);
-
-            Toast.show({
-              type: "success",
-              position: "bottom",
-              text1: `Cargando ... `,
-              visibilityTime: 2000,
-              autoHide: true,
-              topOffset: 30,
-              bottomOffset: 40,
-            });
-          }
-        })
-        .catch((error) => console.log(error));
-    });
+            } else {
+              setTimeout(() => {
+                Toast.show({
+                  type: "success",
+                  position: "bottom",
+                  text1: ` Transaccion exitosa ... `,
+                  visibilityTime: 3000,
+                  autoHide: true,
+                  topOffset: 30,
+                  bottomOffset: 40,
+                });
+                navigation.navigate("Me");
+              }, 3000);
+              Toast.show({
+                type: "success",
+                position: "bottom",
+                text1: `Cargando ... `,
+                visibilityTime: 2000,
+                autoHide: true,
+                topOffset: 30,
+                bottomOffset: 40,
+              });
+            }
+          })
+          .catch((error) => console.log(error));
+      });
+    } else {
+      Toast.show({
+        type: "error",
+        position: "bottom",
+        text1: `Error: Datos de tarjeta inválidos`,
+        visibilityTime: 2000,
+        autoHide: true,
+        topOffset: 30,
+        bottomOffset: 40,
+      });
+    }
   };
 
   return (
     <ScrollView style={styles.scrollView}>
-      <View style={{ marginTop: 200 }}>
-        <CreditCardInput
-          autoFocus
-          requiresName
-          requiresCVC
-          // cardScale={1.1}
-          allowScroll={true}
-          labelStyle={styles.label}
-          inputStyle={styles.cardInput}
-          validColor={"black"}
-          invalidColor={"red"}
-          // placeholderColor={"darkgray"}
-          placeholders={{
-            number: "1234 5678 1234 5678",
-            name: "NOMBRE COMPLETO",
-            expiry: "MM/YY",
-            cvc: "CVC",
-          }}
-          labels={{
-            number: "NÚMERO TARJETA",
-            expiry: "EXPIRA",
-            name: "NOMBRE COMPLETO",
-            cvc: "CVC",
-          }}
-          onFocus={onFocus}
-          onChange={onChange}
-        />
-      </View>
-      <View>
-        <TouchableOpacity
-          mode="contained"
-          secureTextEntry={true}
-          style={styles.button}
-          onPress={() => {
-            handleSubmit();
-          }}
-        >
-          <Text style={styles.innerText}>Recargar</Text>
-        </TouchableOpacity>
-      </View>
+      <LinearGradient
+        colors={["#00f27c", "#384b99"]}
+        start={[1, 0]}
+        end={[0, 1]}
+        style={styles.background}
+      >
+        <View style={styles.container}>
+          <CreditCardInput
+            valid={true}
+            autoFocus
+            requiresName
+            requiresCVC
+            // cardScale={1.1}
+            allowScroll={true}
+            labelStyle={styles.label}
+            inputStyle={styles.cardInput}
+            validColor={"black"}
+            invalidColor={"red"}
+            // placeholderColor={"darkgray"}
+            placeholders={{
+              number: "1234 5678 1234 5678",
+              name: "NOMBRE COMPLETO",
+              expiry: "MM/YY",
+              cvc: "CVC",
+            }}
+            labels={{
+              number: "NÚMERO TARJETA",
+              expiry: "EXPIRA",
+              name: "NOMBRE COMPLETO",
+              cvc: "CVC",
+            }}
+            onFocus={onFocus}
+            onChange={onChange}
+          />
+
+          <TouchableOpacity
+            mode="contained"
+            secureTextEntry={true}
+            style={styles.button}
+            onPress={() => {
+              handleSubmit();
+            }}
+          >
+            <Text style={styles.innerText}>Recargar</Text>
+          </TouchableOpacity>
+        </View>
+      </LinearGradient>
     </ScrollView>
   );
 }
@@ -189,5 +211,16 @@ const styles = StyleSheet.create({
   },
   innerText: {
     color: "white",
+  },
+  background: {
+    paddingBottom: 190,
+  },
+  container: {
+    marginTop: 200,
+    backgroundColor: "rgba(255, 255, 255, 0.6)",
+    borderRadius: 30,
+    paddingVertical: 30,
+    paddingHorizontal: 10,
+    marginHorizontal: 10,
   },
 });

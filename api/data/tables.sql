@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 17-12-2020 a las 01:14:11
+-- Tiempo de generación: 18-12-2020 a las 17:08:53
 -- Versión del servidor: 10.4.17-MariaDB
 -- Versión de PHP: 8.0.0
 
@@ -41,11 +41,11 @@ CREATE TABLE `accounts` (
 --
 
 INSERT INTO `accounts` (`id`, `id_client`, `associateacount`, `cvu`, `code`, `balance`) VALUES
-(1, 3, NULL, NULL, 'e3b0c44298', 0),
-(2, 4, NULL, NULL, 'e3b0c44298', 0),
-(3, 5, NULL, NULL, 'e3b0c44298', 0),
+(1, 3, NULL, NULL, 'e3b0c44298', 50),
+(2, 4, NULL, NULL, 'e3b0c44298', 98770),
+(3, 5, NULL, NULL, 'e3b0c44298', 1000),
 (4, 6, NULL, NULL, 'e3b0c44298', 0),
-(5, 7, NULL, NULL, 'e3b0c44298', 0),
+(5, 7, NULL, NULL, 'e3b0c44298', 1330),
 (6, 8, NULL, NULL, 'e3b0c44298', 0);
 
 -- --------------------------------------------------------
@@ -117,9 +117,13 @@ CREATE TABLE `contacts` (
 
 INSERT INTO `contacts` (`id`, `id_contact`, `alias`, `id_cli`) VALUES
 (1, 8, 'Delfi Henry', 4),
-(2, 7, 'La Nona', 4),
-(3, 2, 'Tu Madre', 4),
-(4, 5, 'Mati', 4);
+(2, 7, 'Nahuel', 4),
+(5, 4, 'Santi', 7),
+(6, 6, 'Camilita', 2),
+(7, 2, 'Franquito', 6),
+(10, 7, 'La Nona', 6),
+(16, 4, 'Santi', 6),
+(17, 5, 'Mati', 4);
 
 -- --------------------------------------------------------
 
@@ -141,6 +145,7 @@ CREATE TABLE `models` (
 
 CREATE TABLE `transactions` (
   `id` int(60) NOT NULL,
+  `ts` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `state` int(60) NOT NULL,
   `type` varchar(60) NOT NULL,
   `description` varchar(60) DEFAULT NULL,
@@ -148,6 +153,11 @@ CREATE TABLE `transactions` (
   `origin` int(60) NOT NULL,
   `destiny` int(8) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `transactions`
+--
+
 
 --
 -- Índices para tablas volcadas
@@ -179,7 +189,6 @@ ALTER TABLE `client`
 --
 ALTER TABLE `contacts`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `id_contact` (`id_contact`,`id_cli`),
   ADD KEY `cli-cli` (`id_cli`);
 
 --
@@ -193,7 +202,6 @@ ALTER TABLE `models`
 --
 ALTER TABLE `transactions`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `origin` (`origin`,`destiny`),
   ADD KEY `acc-transd` (`destiny`);
 
 --
@@ -222,7 +230,7 @@ ALTER TABLE `client`
 -- AUTO_INCREMENT de la tabla `contacts`
 --
 ALTER TABLE `contacts`
-  MODIFY `id` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT de la tabla `models`
@@ -234,7 +242,7 @@ ALTER TABLE `models`
 -- AUTO_INCREMENT de la tabla `transactions`
 --
 ALTER TABLE `transactions`
-  MODIFY `id` int(60) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(60) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Restricciones para tablas volcadas
@@ -263,9 +271,25 @@ ALTER TABLE `contacts`
 -- Filtros para la tabla `transactions`
 --
 ALTER TABLE `transactions`
-  ADD CONSTRAINT `acc-trans` FOREIGN KEY (`origin`) REFERENCES `accounts` (`id`),
-  ADD CONSTRAINT `acc-transd` FOREIGN KEY (`destiny`) REFERENCES `accounts` (`id`);
+  ADD CONSTRAINT `acc-trans` FOREIGN KEY (`origin`) REFERENCES `accounts` (`id_client`),
+  ADD CONSTRAINT `acc-transd` FOREIGN KEY (`destiny`) REFERENCES `accounts` (`id_client`);
 COMMIT;
+
+
+INSERT INTO `transactions` (`id`, `state`, `ts`, `type`, `description`, `amount`, `origin`, `destiny`) VALUES
+(1, 1, '2020-12-23', 'nose', 'nose', 5000, 4, 3),
+(2, 2, '2020-12-19', 'qi', 'blabla', 10000, 4, 4),
+(3, 1, '2020-12-23', 'nose', 'nose', 150, 4, 3),
+(4, 2, '2020-05-19', 'qi', 'blabla', 300, 4, 4),
+(5, 1, '2020-12-23', 'nose', 'nose', 5000, 4, 3),
+(6, 2, '2020-05-19', 'qi', 'blabla', 800, 4, 4),
+(7, 1, '2020-01-03', 'nose', 'nose', 5000, 4, 3),
+(8, 2, '2020-05-06', 'qi', 'blabla', 111, 4, 4),
+(9, 1, '2020-01-03', 'nose', 'nose', 423, 4, 3),
+(10, 2, '2020-05-19', 'qi', 'blabla', 800, 4, 4);
+
+
+
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

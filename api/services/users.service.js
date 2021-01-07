@@ -18,10 +18,15 @@ module.exports = {
 	 * Mixins
 	 */
 	mixins: [DbService],
-	adapter: new SqlAdapter("veski", "root", "", {
-		host: "127.0.0.1",
-		dialect: "mysql",
-	}),
+	adapter: new SqlAdapter(
+		"veski",
+		process.env.DB_USER,
+		process.env.DB_PASSWORD,
+		{
+			host: "127.0.0.1",
+			dialect: "mysql",
+		}
+	),
 	model: {},
 
 	/**
@@ -72,7 +77,7 @@ module.exports = {
 
 			async handler(ctx) {
 				const [[user]] = await this.adapter.db.query(
-					`SELECT * FROM CLIENT WHERE username = '${ctx.params.username}'`
+					`SELECT * FROM client WHERE username = '${ctx.params.username}'`
 				);
 
 				const test = await bcrypt.compare(
@@ -89,6 +94,29 @@ module.exports = {
 					);
 					return { ...user, token };
 				}
+			},
+		},
+
+		getData: {
+			rest: "GET /data",
+			async handler(ctx) {
+				const [[user]] = await this.adapter.db.query(
+					`SELECT * FROM client WHERE username = '${ctx.meta.user.username}'`
+				);
+				delete user.password;
+				return user;
+			},
+		},
+
+		setData: {
+			rest: "PUT /data",
+			async handler(ctx) {
+				const { field } = ctx.params;
+				const [res] = await this.adapter.db.query(
+					`UPDATE client SET ${field} = '${ctx.params[field]}' WHERE username = '${ctx.meta.user.username}'`
+				);
+
+				return res;
 			},
 		},
 	},

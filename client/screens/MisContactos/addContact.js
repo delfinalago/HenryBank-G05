@@ -16,6 +16,7 @@ import {
 import { Card, ListItem, Button, Icon, Avatar } from "react-native-elements";
 
 export default function addContact({ navigation }) {
+
   const { handleSubmit, handleChange, values, touched, errors } = useFormik({
     initialValues: {
       alias: "",
@@ -94,6 +95,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderColor: "#00aae4",
     borderRadius: 23,
+    marginHorizontal: 25,
   },
   boton: {
     paddingTop: 15,

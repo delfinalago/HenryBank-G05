@@ -28,6 +28,9 @@ import addContact from "./screens/MisContactos/addContact";
 import editContact from "./screens/MisContactos/editContact";
 import SendMoney from "./screens/SendMoney/sendMoney";
 import SelectContact from "./screens/SendMoney/selectContact";
+import UserData from "./screens/Profile/UserData";
+import Statistics from "./screens/Statistics/Statistics";
+import transacciones from "./screens/Transacciones/transacciones";
 import RechargeMoney from "./screens/RechargeMoney/rechargeMoney";
 import Card from "./screens/RechargeMoney/card";
 import Code from "./screens/RechargeMoney/code";
@@ -99,26 +102,23 @@ function LoginStack({ setToken }) {
 function ProfileStack({ setToken }) {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Me">
+      <Stack.Screen name="Me" options={{ headerShown: false }}>
         {(props) => <Profile {...props} setToken={setToken} />}
       </Stack.Screen>
       <Stack.Screen
         name="contactsList"
         component={contactsList}
         options={{ title: "Mis Contactos" }}
-        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="addContact"
         component={addContact}
         options={{ title: "Mis Contactos" }}
-        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="editContact"
         component={editContact}
-        options={{ title: "Mis Contactos" }}
-        options={{ headerShown: false }}
+        options={{ title: "Editar contacto" }}
       />
       <Stack.Screen
         name="SendMoney"
@@ -131,6 +131,17 @@ function ProfileStack({ setToken }) {
         component={SelectContact}
         options={{ title: "Enviar Dinero" }}
         options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Statistics"
+        component={Statistics}
+        options={{ title: "Estadísticas" }}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="transacciones"
+        component={transacciones}
+        options={{ title: "transacciones" }}
       />
       <Stack.Screen
         name="RechargeMoney"
@@ -154,6 +165,12 @@ function ProfileStack({ setToken }) {
         name="Card"
         component={Card}
         options={{ title: "Tarjeta" }}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="UserData"
+        component={UserData}
+        options={{ title: "Mis datos" }}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
