@@ -6,6 +6,10 @@ import {
   StyleSheet,
   View,
   Text,
+  SafeAreaView,
+  TextInput,
+  FlatList,
+  Linking,
 } from "react-native";
 
 import { Card, ListItem, Button, Icon, Avatar } from "react-native-elements";
@@ -39,11 +43,23 @@ export default function contactos({ navigation }) {
       });
   };
 
+
+   const handleWhatsappPress = async () => {
+    await Linking.openURL("https://wa.me/?text= Hola!! Sumate a Veski, la nueva billetera virtual que hace tu vida mas facil @linkdeveski");
+
+   }
+ 
+
   return (
     <ScrollView>
-    
+      <LinearGradient
+        // Button Linear Gradient
+        colors={["#00f27c", "#384b99"]}
+        start={[1, 0]}
+        end={[0, 1]}
+        style={styles.background}
+      >
         <View style={styles.container}>
-          <Card>
           <Button
             type="clear"
             title="Agregar Contacto"
@@ -51,7 +67,7 @@ export default function contactos({ navigation }) {
             style={styles.boton}
             onPress={() => navigation.navigate("addContact")}
           />
-          <Card.Divider  />
+  
           {contacts.length
             ? contacts.map((u, i) => {
                 const { id_contact } = u;
@@ -65,10 +81,7 @@ export default function contactos({ navigation }) {
                         })
                       }
                     >
-                      <ListItem styles={styles.List}
-                        key={i}
-                      />
-                      <Text style={{ fontSize: 25, padding:10}}>{u.alias}</Text>
+                      <Text style={{ fontSize: 25 }}>{u.alias}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                       title="delete"
@@ -76,18 +89,24 @@ export default function contactos({ navigation }) {
                     >
                       <Text style={styles.delete}>Eliminar</Text>
                     </TouchableOpacity>
+                    
                   </View>
                 );
               })
             : null}
-        </Card>
-          <Button
+
+        <Text style={{ alignSelf: "center",marginTop: 20 }}>
+          El usuario que buscas aun no es cliente de Veski? Podes enviar una invitacion
+        </Text>
+        <Button
             type="outline"
-            onPress={() => navigation.goBack()}
-            title="Volver"
-            style={styles.botonvolver}
+            title="Invitar"
+            style={styles.boton}
+            onPress={handleWhatsappPress}
           />
-      </View>
+  
+        </View>
+      </LinearGradient>
     </ScrollView>
   );
 }
@@ -127,18 +146,11 @@ const styles = StyleSheet.create({
   boton: {
     flex: 1,
     color: "#03bb85",
-    alignSelf: "flex-end",
-    backgroundColor: "#fff",
-    paddingEnd: 10,
-  },
-  botonvolver: {
-    flex: 1,
-    color: "#03bb85",
     alignSelf: "center",
     backgroundColor: "#fff",
-    paddingTop: 10,
+  buttonTitle: {
+    fontSize: 20,
+    paddingBottom: 20,
   },
-  List: {
-    width: 30,
-  }
+}
 });

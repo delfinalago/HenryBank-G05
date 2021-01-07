@@ -30,7 +30,6 @@ import SendMoney from "./screens/SendMoney/sendMoney";
 import SelectContact from "./screens/SendMoney/selectContact";
 import UserData from "./screens/Profile/UserData";
 import Statistics from "./screens/Statistics/Statistics";
-
 import transacciones from "./screens/Transacciones/transacciones";
 import RechargeMoney from "./screens/RechargeMoney/rechargeMoney";
 import Card from "./screens/RechargeMoney/card";
@@ -134,6 +133,12 @@ function ProfileStack({ setToken }) {
         options={{ headerShown: false }}
       />
       <Stack.Screen
+        name="Statistics"
+        component={Statistics}
+        options={{ title: "Estadísticas" }}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
         name="transacciones"
         component={transacciones}
         options={{ title: "transacciones" }}
@@ -168,13 +173,7 @@ function ProfileStack({ setToken }) {
         options={{ title: "Mis datos" }}
         options={{ headerShown: false }}
       />
-       <Stack.Screen
-        name="Statistics"
-        component={Statistics}
-        options={{ title: "Estadísticas" }}
-        options={{ headerShown: false }}
-      />
-    </Stack.Navigator> 
+    </Stack.Navigator>
   );
 }
 

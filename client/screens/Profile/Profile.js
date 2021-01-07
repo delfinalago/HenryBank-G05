@@ -72,28 +72,9 @@ export default function Profile({ navigation, setToken }) {
         <View style={styles.container}>
           <View style={styles.buttons}>
             <Button
-                titleStyle={styles.listItem}
-                type="outline"
-                title="Transacciones"
-                onPress={() => navigation.navigate("transacciones")}
-                containerStyle={styles.listItemContainer}
-                icon={
-                  <BaseIcon
-                    containerStyle={{
-                      backgroundColor: "#29333d",
-                      marginLeft: 10,
-                    }}
-                    icon={{
-                      type: "font-awesome",
-                      name: "bank",
-                    }}
-                  />
-                }
-              />
-            <Button
               titleStyle={styles.listItem}
-              type="outline"
-              title="Balance de gastos"
+              type="clear"
+              title="Estadisticas"
               onPress={() => navigation.navigate("Statistics")}
               containerStyle={styles.listItemContainer}
               icon={
