@@ -29,9 +29,9 @@ export default function transacciones({navigation}){
       axios.get(`${API}/api/accounts/mov` , {id : id})
       .then(({ data }) => {
         setTransaction(data);
-        console.log("transaction", transaction);
         console.log("data:", data );
-      })
+        convert(data)
+      })  
 
       .catch((error) => {
         console.log(error);
@@ -40,7 +40,13 @@ export default function transacciones({navigation}){
     })
   }, []);
 
-
+  // function convert(data){
+  //   var datearray = data.forEach(data.ts.split("/"))
+  //   var newdate = datearray[1] + '/' + datearray[0] + '/' + datearray[2];
+  //   console.log(data.ts)
+  //   console.log(newdate)
+  //    return newdate;
+  // }
 
     return (
 
