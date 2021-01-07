@@ -58,7 +58,7 @@ module.exports = {
 				ctx.params.quantity = 0;
 			},
 
-			testear() { },
+			testear() {},
 		},
 	},
 
@@ -121,7 +121,7 @@ module.exports = {
 						if (type === "recarga") {
 							this.adapter.db.query(
 								"INSERT INTO `transactions` (`state`, `type`, `description`, `amount`, `destiny`)" +
-								`VALUES ('1', 'recarga', '', '${amount}', '${destiny}');`
+									`VALUES ('1', 'recarga', '', '${amount}', '${destiny}');`
 							);
 						}
 						return this.adapter.db.query(
@@ -159,7 +159,7 @@ module.exports = {
 								if (type === "gasto") {
 									this.adapter.db.query(
 										"INSERT INTO `transactions` (`state`, `type`, `description`, `amount`, `origin`)" +
-										`VALUES ('1', 'gasto', '${description}', '${amount}', '${origin}');`
+											`VALUES ('1', 'gasto', '${description}', '${amount}', '${origin}');`
 									);
 								}
 								return this.adapter.db.query(
@@ -197,7 +197,7 @@ module.exports = {
 
 					await this.adapter.db.query(
 						"INSERT INTO `transactions` (`state`, `type`, `description`, `amount`, `origin`, `destiny`)" +
-						`VALUES ('1', 'transferencia', '${description}', '${amount}', '${origin}', '${destiny}');`
+							`VALUES ('1', 'transferencia', '${description}', '${amount}', '${origin}', '${destiny}');`
 					);
 				} catch (e) {
 					return e;
@@ -251,13 +251,13 @@ module.exports = {
 					//  `SELECT * FROM transactions WHERE origin ='${id}' ORDER BY date desc`
 					//  `SELECT * FROM transactions WHERE origin = '${id}' AND date <= '${dat}'
 					//   ORDER BY date DESC`
-					`SELECT * FROM  transactions WHERE origin ='${id}' AND ts > DATE_SUB(NOW(),INTERVAL 180 DAY)`
+					`SELECT * FROM  transactions WHERE origin ='${id}' AND date > DATE_SUB(NOW(),INTERVAL 180 DAY)`
 				);
 
 				const gastos = new Array(12).fill(0);
 
 				movEgresosM.forEach((mov) => {
-					gastos[mov.ts.getMonth()] += mov.amount;
+					gastos[mov.date.getMonth()] += mov.amount;
 				});
 
 				const thisMonth = new Date().getMonth() + 1;
@@ -272,7 +272,7 @@ module.exports = {
 				const id = ctx.params.id_client || ctx.meta.user.id;
 
 				const [movEgresosS] = await this.adapter.db.query(
-					`SELECT SUM(amount) as amount, week(ts) as week FROM transactions WHERE origin ='${id}' AND ts > DATE_SUB(NOW(),INTERVAL 84 DAY) GROUP BY WEEK(ts)`
+					`SELECT SUM(amount) as amount, week(date) as week FROM transactions WHERE origin ='${id}' AND date > DATE_SUB(NOW(),INTERVAL 84 DAY) GROUP BY WEEK(date)`
 				);
 
 				const gastos = new Array(52).fill(0);
@@ -298,16 +298,16 @@ module.exports = {
 					.reverse()
 					.join("-");
 				const [movEgresosD] = await this.adapter.db.query(
-					`SELECT * FROM  transactions WHERE origin ='${id}' AND ts > DATE_SUB(NOW(),INTERVAL 30 DAY)`
+					`SELECT * FROM  transactions WHERE origin ='${id}' AND date > DATE_SUB(NOW(),INTERVAL 30 DAY)`
 				);
 
 				const gastos = new Array(31).fill(0);
 				movEgresosD.forEach((mov) => {
-					gastos[mov.ts.getDate()] += mov.amount;
+					gastos[mov.date.getDate() - 1] += mov.amount;
 				});
 
 				const thisDay = new Date().getDate();
-				const daysPast = gastos.slice(0, thisDay);
+				const daysPast = gastos.slice(0, thisDay + 1);
 
 				return [...gastos, ...daysPast].slice(-30);
 			},
@@ -323,7 +323,7 @@ module.exports = {
 					.reverse()
 					.join("-");
 				const [movIngresosM] = await this.adapter.db.query(
-					`SELECT * FROM transactions WHERE  destiny = '${id}' AND   ts <='${dat}'`
+					`SELECT * FROM transactions WHERE  destiny = '${id}' AND   date <='${dat}'`
 				);
 				return movIngresosM[0];
 			},
@@ -340,7 +340,7 @@ module.exports = {
 					.reverse()
 					.join("-");
 				const [movIngresosS] = await this.adapter.db.query(
-					`SELECT * FROM transactions WHERE destiny = '${id}' AND   ts <='${dat}' `
+					`SELECT * FROM transactions WHERE destiny = '${id}' AND   date <='${dat}' `
 				);
 				return movIngresosS[0];
 			},
@@ -356,7 +356,7 @@ module.exports = {
 					.reverse()
 					.join("-");
 				const [movIngresosD] = await this.adapter.db.query(
-					`SELECT * FROM transactions WHERE destiny = '${id}' AND   ts <='${dat}'`
+					`SELECT * FROM transactions WHERE destiny = '${id}' AND   date <='${dat}'`
 				);
 				return movIngresosD[0];
 			},
@@ -381,7 +381,7 @@ module.exports = {
 					.reverse()
 					.join("-");
 				const [movUser] = await this.adapter.db.query(
-					`SELECT *  FROM transactions WHERE origin = '${id}' ORDER BY  ts <='${dat}'  DESC LIMIT 14`
+					`SELECT *  FROM transactions WHERE origin = '${id}' ORDER BY  date <='${dat}'  DESC LIMIT 14`
 				);
 				return movUser;
 			},

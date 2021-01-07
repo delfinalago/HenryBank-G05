@@ -43,12 +43,11 @@ export default function contactos({ navigation }) {
       });
   };
 
-
-   const handleWhatsappPress = async () => {
-    await Linking.openURL("https://wa.me/?text= Hola!! Sumate a Veski, la nueva billetera virtual que hace tu vida mas facil @linkdeveski");
-
-   }
- 
+  const handleWhatsappPress = async () => {
+    await Linking.openURL(
+      "https://wa.me/?text= Hola!! Sumate a Veski, la nueva billetera virtual que hace tu vida mas facil @linkdeveski"
+    );
+  };
 
   return (
     <ScrollView>
@@ -67,7 +66,6 @@ export default function contactos({ navigation }) {
             style={styles.boton}
             onPress={() => navigation.navigate("addContact")}
           />
-  
           {contacts.length
             ? contacts.map((u, i) => {
                 const { id_contact } = u;
@@ -89,7 +87,6 @@ export default function contactos({ navigation }) {
                     >
                       <Text style={styles.delete}>Eliminar</Text>
                     </TouchableOpacity>
-                    
                   </View>
                 );
               })
@@ -148,9 +145,9 @@ const styles = StyleSheet.create({
     color: "#03bb85",
     alignSelf: "center",
     backgroundColor: "#fff",
+  },
   buttonTitle: {
     fontSize: 20,
     paddingBottom: 20,
   },
-}
 });

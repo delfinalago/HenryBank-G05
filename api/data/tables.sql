@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 5.0.3
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 18-12-2020 a las 17:08:53
--- Versión del servidor: 10.4.17-MariaDB
--- Versión de PHP: 8.0.0
+-- Tiempo de generación: 06-01-2021 a las 23:10:47
+-- Versión del servidor: 10.4.14-MariaDB
+-- Versión de PHP: 7.2.34
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -145,19 +145,34 @@ CREATE TABLE `models` (
 
 CREATE TABLE `transactions` (
   `id` int(60) NOT NULL,
-  `ts` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `date` timestamp NOT NULL DEFAULT current_timestamp(),
   `state` int(60) NOT NULL,
   `type` varchar(60) NOT NULL,
   `description` varchar(60) DEFAULT NULL,
   `amount` int(60) NOT NULL,
-  `origin` int(60) NOT NULL,
-  `destiny` int(8) NOT NULL
+  `origin` int(60) DEFAULT NULL,
+  `destiny` int(8) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `transactions`
 --
 
+INSERT INTO `transactions` (`id`, `date`, `state`, `type`, `description`, `amount`, `origin`, `destiny`) VALUES
+(1, '2021-01-06 21:48:59', 1, 'transferencia', 'te mando lo que me falto del asado', 750, 4, 5),
+(2, '2021-01-06 21:48:59', 1, 'transferencia', 'aca va una ayuda para tu viaje', 50, 3, 4),
+(4, '2021-01-06 21:48:59', 1, 'transferencia', '50 pe?, deja, quedatelos', 50, 4, 3),
+(7, '2020-11-19 21:50:34', 12, 'egreso', 'pago de cuentas', 1500, 4, 5),
+(8, '2020-11-19 21:51:58', 10, 'Egreso', 'pagos', 750, 4, 6),
+(9, '2020-12-23 21:53:06', 1, 'info', 'envio', 100, 4, 7),
+(10, '2020-12-31 21:54:11', 19, 'saldo', 'envio de dinero ', 1000, 4, 8),
+(11, '2021-01-01 21:57:01', 1, 'transf', ' paga la mutual', 1500, 4, 3),
+(12, '2020-12-01 21:57:54', 1, 'transferencia', 'compra del super', 1500, 4, 5),
+(13, '2020-12-23 21:59:11', 1, 'egreso', 'pagos', 1000, 4, 5),
+(14, '2020-10-10 21:59:51', 1, 'Egreso', 'envio', 750, 4, 7),
+(15, '2020-10-10 22:03:40', 1, 'egreso', 'regalo de cumple', 1000, 4, 5),
+(16, '2020-11-24 22:05:22', 1, 'egreso', 'pagos', 1550, 4, 3),
+(17, '2020-10-20 22:08:27', 1, 'egreso', 'comida para el gato compra', 750, 4, 3);
 
 --
 -- Índices para tablas volcadas
@@ -189,7 +204,8 @@ ALTER TABLE `client`
 --
 ALTER TABLE `contacts`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `cli-cli` (`id_cli`);
+  ADD KEY `cli-cli` (`id_cli`),
+  ADD KEY `cont-cli` (`id_contact`);
 
 --
 -- Indices de la tabla `models`
@@ -202,7 +218,8 @@ ALTER TABLE `models`
 --
 ALTER TABLE `transactions`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `acc-transd` (`destiny`);
+  ADD KEY `acc-transd` (`destiny`),
+  ADD KEY `acc-trans` (`origin`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -242,7 +259,7 @@ ALTER TABLE `models`
 -- AUTO_INCREMENT de la tabla `transactions`
 --
 ALTER TABLE `transactions`
-  MODIFY `id` int(60) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(60) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- Restricciones para tablas volcadas
@@ -274,22 +291,6 @@ ALTER TABLE `transactions`
   ADD CONSTRAINT `acc-trans` FOREIGN KEY (`origin`) REFERENCES `accounts` (`id_client`),
   ADD CONSTRAINT `acc-transd` FOREIGN KEY (`destiny`) REFERENCES `accounts` (`id_client`);
 COMMIT;
-
-
-INSERT INTO `transactions` (`id`, `state`, `ts`, `type`, `description`, `amount`, `origin`, `destiny`) VALUES
-(1, 1, '2020-12-23', 'nose', 'nose', 5000, 4, 3),
-(2, 2, '2020-12-19', 'qi', 'blabla', 10000, 4, 4),
-(3, 1, '2020-12-23', 'nose', 'nose', 150, 4, 3),
-(4, 2, '2020-05-19', 'qi', 'blabla', 300, 4, 4),
-(5, 1, '2020-12-23', 'nose', 'nose', 5000, 4, 3),
-(6, 2, '2020-05-19', 'qi', 'blabla', 800, 4, 4),
-(7, 1, '2020-01-03', 'nose', 'nose', 5000, 4, 3),
-(8, 2, '2020-05-06', 'qi', 'blabla', 111, 4, 4),
-(9, 1, '2020-01-03', 'nose', 'nose', 423, 4, 3),
-(10, 2, '2020-05-19', 'qi', 'blabla', 800, 4, 4);
-
-
-
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
