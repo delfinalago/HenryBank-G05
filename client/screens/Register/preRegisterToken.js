@@ -11,8 +11,11 @@ import {
   ScrollView,
 } from "react-native";
 
+import { LinearGradient } from "expo-linear-gradient";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Axios from "axios";
+import { Dimensions } from "react-native";
+var height = Dimensions.get('window').height; //full height
 
 const randomNum = () => {
   return Math.floor(Math.random() * 999999) + 1;
@@ -80,18 +83,24 @@ export default function PreRegisterToken({ navigation }) {
   });
 
   return (
-    <ScrollView style={styles.scrollView}>
+    
+<ScrollView>
+    <LinearGradient
+        // Button Linear Gradient
+        colors={["#00f27c", "#384b99"]}
+        start={[1, 0]}
+        end={[0, 1]}
+        style={styles.background}
+      >
+    
       <View style={styles.container}>
-        <Text
-          style={{
-            paddingTop: 30,
-            paddingHorizontal: 20,
-            fontSize: 30,
-          }}
-        >
-          Por favor ingrese los 6 digitos que enviamos a su casilla de correo:
-        </Text>
+
+      <Text style={styles.titulo2}>
+         A continuación</Text>
+        <Text style={styles.titulo}>
+          Ingrese su código de verificación de 6 digitos</Text>
         <View style={styles.flexcontainer}>
+
           <TextInput
             onChangeText={handleChange("one")}
             value={values.one}
@@ -179,53 +188,77 @@ export default function PreRegisterToken({ navigation }) {
           secureTextEntry={true}
           title="Register"
           onPress={handleSubmit}
-          style={styles.button}
+          style={styles.boton}
         >
-          <Text>Enviar</Text>
+          <Text style={{color: "#fff" , fontSize: 20}}>Enviar</Text>
         </TouchableOpacity>
       </View>
+    </LinearGradient>
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: "#fff",
-  },
   text: {
     fontSize: 42,
   },
   flexcontainer: {
-    backgroundColor: "#FFF",
-    width: "100%",
-    flex: 1,
     flexDirection: "row",
   },
   input: {
+    marginHorizontal: 6,
+    height: 50,
+    color: "#000000",
     alignItems: "center",
-    width: "auto",
-    marginHorizontal: 10,
+    borderWidth: 3,
+    marginTop: 25,
     borderWidth: 2,
-    marginTop: 50,
-    paddingHorizontal: 10,
-    borderColor: "#00716F",
-    borderRadius: 23,
-    paddingVertical: 2,
-  },
-  button: {
-    marginHorizontal: 55,
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 30,
-    backgroundColor: "#00716F",
-    paddingVertical: 10,
-    borderRadius: 23,
+    borderRadius: 10,
+    borderColor: "#00aae4",
+    width: 50,
+    marginStart: 9,
+  
   },
   container: {
-    backgroundColor: "#FFF",
-    height: "100%",
-    flex: 2,
-    flexDirection: "column",
-    justifyContent: "space-between",
+    marginTop: 60,
+    justifyContent: "center",
+    borderRadius: 30,
+    backgroundColor: "rgba(255, 255, 255, 0.7)",
+    paddingVertical: 30,
+    marginHorizontal: 10,
+  },
+  background: {
+    paddingVertical: 50,
+    height: height,
+  },
+  titulo: {
+    textAlign: "center",
+    color: "#00aae4",
+    paddingTop: 10,
+    fontSize: 30,
+    alignSelf: "center",
+    margin:20,
+    fontWeight: "bold",
+    
+  },
+  titulo2: {
+    textAlign: "center",
+    color: "#00aae4",
+    paddingTop: 10,
+    fontSize: 30,
+    alignSelf: "center",
+    margin:10,
+    fontWeight: "bold",
+    
+  },
+  boton: {
+    color: "#fff",
+    marginHorizontal: 130,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 20,
+    paddingVertical: 10,
+    borderRadius: 10,
+    backgroundColor: "#00aae4",
   },
 });

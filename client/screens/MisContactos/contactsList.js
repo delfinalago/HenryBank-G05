@@ -66,7 +66,6 @@ export default function contactos({ navigation }) {
             style={styles.boton}
             onPress={() => navigation.navigate("addContact")}
           />
-
           {contacts.length
             ? contacts.map((u, i) => {
                 const { id_contact } = u;
@@ -92,6 +91,17 @@ export default function contactos({ navigation }) {
                 );
               })
             : null}
+
+        <Text style={{ alignSelf: "center",marginTop: 20 }}>
+          El usuario que buscas aun no es cliente de Veski? Podes enviar una invitacion
+        </Text>
+        <Button
+            type="outline"
+            title="Invitar"
+            style={styles.boton}
+            onPress={handleWhatsappPress}
+          />
+  
         </View>
       </LinearGradient>
     </ScrollView>
@@ -140,5 +150,4 @@ const styles = StyleSheet.create({
     fontSize: 20,
     paddingBottom: 20,
   },
-}
 });

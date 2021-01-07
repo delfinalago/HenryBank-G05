@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Axios from "axios";
@@ -74,17 +75,20 @@ export default function preRegister({ navigation }) {
   });
 
   return (
-    <ScrollView style={styles.scrollView}>
-      <View style={{ backgroundColor: "#FFF", height: "100%" }}>
-        <Text
-          style={{
-            paddingTop: 20,
-            fontSize: 40,
-            alignSelf: "center",
-          }}
+  
+      <LinearGradient
+          // Button Linear Gradient
+          colors={["#00f27c", "#384b99"]}
+          start={[1, 0]}
+          end={[0, 1]}
+          style={styles.background}
         >
-          Bienvenido al proceso de registro de Veski
-        </Text>
+    <ScrollView style={styles.background} >
+            
+      <View style={styles.container}>
+        <Text
+          style={styles.title}
+        >Bienvenido al proceso de registro de Veski</Text>
 
         <Text
           style={{
@@ -104,14 +108,17 @@ export default function preRegister({ navigation }) {
           onChangeText={handleChange("email")}
           value={values.email}
           style={{
-            flexDirection: "row",
+            flexDirection: "column",
+            marginHorizontal: 30,
+            height: 50,
+            color: "#000000",
             alignItems: "center",
-            marginHorizontal: 55,
-            borderWidth: 2,
-            marginTop: 50,
+            borderWidth: 3,
+            marginTop: 25,
             paddingHorizontal: 10,
-            borderColor: "#00716F",
-            borderRadius: 23,
+            borderWidth: 1,
+            borderRadius: 10,
+            borderColor: "#00aae4",
             paddingVertical: 2,
           }}
         />
@@ -124,14 +131,17 @@ export default function preRegister({ navigation }) {
           value={values.password}
           secureTextEntry={true}
           style={{
-            flexDirection: "row",
+            flexDirection: "column",
+            marginHorizontal: 30,
+            height: 50,
+            color: "#000000",
             alignItems: "center",
-            marginHorizontal: 55,
-            borderWidth: 2,
-            marginTop: 50,
+            borderWidth: 3,
+            marginTop: 25,
             paddingHorizontal: 10,
-            borderColor: "#00716F",
-            borderRadius: 23,
+            borderWidth: 1,
+            borderRadius: 10,
+            borderColor: "#00aae4",
             paddingVertical: 2,
           }}
         />
@@ -146,14 +156,17 @@ export default function preRegister({ navigation }) {
           value={values.confirmpassword}
           secureTextEntry={true}
           style={{
-            flexDirection: "row",
+            flexDirection: "column",
+            marginHorizontal: 30,
+            height: 50,
+            color: "#000000",
             alignItems: "center",
-            marginHorizontal: 55,
-            borderWidth: 2,
-            marginTop: 50,
+            borderWidth: 3,
+            marginTop: 25,
             paddingHorizontal: 10,
-            borderColor: "#00716F",
-            borderRadius: 23,
+            borderWidth: 1,
+            borderRadius: 10,
+            borderColor: "#00aae4",
             paddingVertical: 2,
           }}
         />
@@ -168,27 +181,48 @@ export default function preRegister({ navigation }) {
           onPress={handleSubmit}
           style={styles.button}
         >
-          <Text>Confirmar</Text>
+          <Text style={{color: "#fff" , fontSize: 20}}>Confirmar</Text>
         </TouchableOpacity>
       </View>
-    </ScrollView>
+     
+    </ScrollView> 
+    </LinearGradient>
   );
 }
 
 const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: "#fff",
-  },
   text: {
     fontSize: 42,
   },
   button: {
-    marginHorizontal: 55,
+    marginHorizontal: 130,
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 30,
-    backgroundColor: "#00716F",
+    marginTop: 20,
     paddingVertical: 10,
-    borderRadius: 23,
+    borderRadius: 10,
+    backgroundColor: "#00aae4",
+  },
+  title: {
+    paddingTop: 20,
+    fontSize: 40,
+    alignSelf: "center",
+    color: "#00aae4",
+    fontWeight: "bold",
+    textAlign:"center",
+    paddingBottom: 20,
+    
+  },
+  background: {
+    paddingVertical: 50,
+  },
+  container: {
+    marginTop: 40,
+    flex: 1,
+    justifyContent: "center",
+    borderRadius: 30,
+    backgroundColor: "rgba(255, 255, 255, 0.7)",
+    paddingVertical: 30,
+    marginHorizontal: 10,
   },
 });

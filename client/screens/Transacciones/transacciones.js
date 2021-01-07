@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
-import {TouchableOpacity, ScrollView, StyleSheet, View, Text, SafeAreaView, TextInput, FlatList} from "react-native";
+import {TouchableOpacity, ScrollView, StyleSheet, View, Text, Title, SafeAreaView, TextInput, FlatList} from "react-native";
   import { Card, ListItem, Button, Icon, Avatar } from "react-native-elements";
   import axios from "axios";
   import { API } from "../../env.js";
   import { LinearGradient } from 'expo-linear-gradient';
   import { Dimensions } from "react-native";
   import AsyncStorage from "@react-native-async-storage/async-storage";
+
+  import { forms as styles } from "../styles";
 
 var width = Dimensions.get('window').width; //full width
 var height = Dimensions.get('window').height; //full height
@@ -27,9 +29,9 @@ export default function transacciones({navigation}){
       axios.get(`${API}/api/accounts/mov` , {id : id})
       .then(({ data }) => {
         setTransaction(data);
-        console.log("transaction", transaction);
         console.log("data:", data );
-      })
+        convert(data)
+      })  
 
       .catch((error) => {
         console.log(error);
@@ -38,7 +40,13 @@ export default function transacciones({navigation}){
     })
   }, []);
 
-
+  // function convert(data){
+  //   var datearray = data.forEach(data.ts.split("/"))
+  //   var newdate = datearray[1] + '/' + datearray[0] + '/' + datearray[2];
+  //   console.log(data.ts)
+  //   console.log(newdate)
+  //    return newdate;
+  // }
 
     return (
 
@@ -46,71 +54,86 @@ export default function transacciones({navigation}){
       
     <ScrollView style= {{ backgroundColor: "#fff"}}> 
        
-      {/* <LinearGradient
-      // Background Linear Gradient
-      colors={["#9FD5D1", "#03BD85"]}
-      start={[0, 1]}
-      end={[1, 0]}
-      style={styles.linearGradient}
-    >  */}
-          <Card containerStyle={{marginHorizontal: 20, marginVertical: 20, }}>
-            <Card.Title style={styles.titulo}>TRANSACCIONES</Card.Title>
-              <Card.Divider />
+       <LinearGradient
+        // Button Linear Gradient
+        colors={["#00f27c", "#384b99"]}
+        start={[1, 0]}
+        end={[0, 1]}
+        style={styles.background}
+      >
+        <View>
+          
+            <Text style={style.titulo}>TRANSACCIONES</Text>
+            </View>
+              <View style={style.contact}>
                 {transaction.length
                   ? transaction.map((u, i) => {
                     return (
-                      <View key={i} style={styles.contact}>
-                          <ListItem key={i} bottomDivider>
-                          <ListItem.Content>
-                            <ListItem.Subtitle style={styles.fecha} >{u.date_colum}</ListItem.Subtitle>
+                      <View key={i} >
+                          
+                          <View Style={style.contact}>
                             <Card.Divider/>
+                            <Text style={style.fecha} >{u.date}</Text>
+                           
                             
-                            <ListItem.Title style={styles.tipo} >{u.type}</ListItem.Title>
-                            <ListItem.Subtitle style={styles.monto} >${u.amount}</ListItem.Subtitle>
-                            <Text style={styles.description}>Detalle: {u.description}</Text>
-                          </ListItem.Content>
-                        </ListItem>
+                            <Text style={style.tipo} >{u.type}</Text>
+                            <Text style={style.monto} >${u.amount}</Text>
+                            <Text style={style.description}>Detalle: {u.description}</Text>
+                          </View>
+                      
                       </View>
                     );
                   })
                 : null}
-        </Card>
-      
+       
+              </View>
      
-          <Button
+          <TouchableOpacity
               type="outline"
               onPress={() => navigation.goBack()}
               title="Volver"
-              style={styles.botonvolver}
-          />
+              style={style.botonvolver}
+          >
+          <Text style={style.volver}>Volver</Text>
+          </TouchableOpacity>
          
-          {/* </LinearGradient> */}
+          </LinearGradient>
   </ScrollView>     
   
    
     );
 }
 
-const styles = StyleSheet.create({
+const style = StyleSheet.create({
   titulo: {
-    color: "#9c9c9c",
-    paddingTop: 15,
-    fontSize: 25,
+    color: "#fff",
+    paddingTop: 10,
+    fontSize: 40,
+    alignSelf: "center",
+    margin:20,
+    fontWeight: "bold",
+    
   },
   contact: {
     justifyContent: "space-between",
     marginVertical: 4,
     borderWidth: 2,
-    borderRadius: 10,
-    borderColor: "#00aae4",
+    borderRadius:30,
+    borderColor: "#fff",
+    backgroundColor: "rgba(255, 255, 255, 0.7)",
+    margin: 60,
+
   },
   fecha: {
+    marginStart: 15,
     fontSize: 15,
     color: "#000000",
-    alignItems: "flex-start",
-    alignContent: "flex-start"
+    alignItems: "center",
+    paddingRight: 20,
   },
   tipo: {
+    fontWeight: "bold",
+    color: "#000000",
     alignSelf: "center",
     fontSize: 20,
     paddingBottom: 5,
@@ -123,19 +146,28 @@ const styles = StyleSheet.create({
   description: {
     fontSize: 16,
     color: "#332F23",
+    marginStart: 15,
+    color: "#000000",
     
   },
   monto:{
     alignSelf: "flex-end",
     fontSize: 20,
+    paddingRight: 15,
+    color: "#000000",
+
    
   },
   botonvolver: {
-    color: "#03bb85",
-    alignSelf: "center",
-    backgroundColor: "#fff",
-    marginTop: 10,
-    marginBottom: 10,
-    width: 80,
+    marginHorizontal: 130,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 20,
+    paddingVertical: 10,
+    borderRadius: 10,
+    backgroundColor: "#00aae4",
+  },
+  volver: {
+    color:"#fff"
   }
 })
