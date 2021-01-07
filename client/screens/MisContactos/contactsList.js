@@ -68,8 +68,6 @@ export default function contactos({ navigation }) {
             onPress={() => navigation.navigate("addContact")}
           />
   
-          <Card.Divider />
-  
           {contacts.length
             ? contacts.map((u, i) => {
                 const { id_contact } = u;
@@ -97,7 +95,6 @@ export default function contactos({ navigation }) {
               })
             : null}
 
-        </Card>
         <Text style={{ alignSelf: "center",marginTop: 20 }}>
           El usuario que buscas aun no es cliente de Veski? Podes enviar una invitacion
         </Text>
@@ -155,4 +152,5 @@ const styles = StyleSheet.create({
     fontSize: 20,
     paddingBottom: 20,
   },
+}
 });
