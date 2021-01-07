@@ -64,12 +64,11 @@ export default function Profile({ navigation, setToken }) {
         style={styles.background}
         containerStyle={styles.scroll}
       >
-        <View style={styles.saldoContainer}>
-          <Text style={styles.name}>¡Hola {saldo.name?.split(" ")[0]}!</Text>
-          <Text style={styles.saldo}>Saldo: ${saldo.balance}</Text>
-        </View>
-
         <View style={styles.container}>
+          <View style={styles.saldoContainer}>
+            <Text style={styles.name}>¡Hola {saldo.name?.split(" ")[0]}!</Text>
+            <Text style={styles.saldo}>Saldo: ${saldo.balance}</Text>
+          </View>
           <View style={styles.buttons}>
             <Button
               titleStyle={styles.listItem}
@@ -181,11 +180,11 @@ export default function Profile({ navigation, setToken }) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "rgba(255, 255, 255, 0.6)",
+    backgroundColor: "rgba(255, 255, 255, 0.75)",
     borderWidth: 0,
     flex: 1,
     borderRadius: 20,
-    marginVertical: 50,
+    marginVertical: 150,
     marginHorizontal: 15,
     padding: 15,
   },
@@ -198,10 +197,9 @@ const styles = StyleSheet.create({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 150,
     borderRadius: 30,
     padding: 5,
-    backgroundColor: "rgba(255, 255, 255, 0.7)",
+    marginTop: 50,
   },
   saldo: {
     fontSize: 30,
@@ -218,6 +216,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "space-around",
+    paddingTop: 50,
   },
   listItem: {
     marginVertical: 10,
@@ -226,7 +225,6 @@ const styles = StyleSheet.create({
     flexDirection: "row-reverse",
   },
   background: {
-    marginTop: 10,
     paddingBottom: 260,
     alignItems: "center",
     flex: 1,

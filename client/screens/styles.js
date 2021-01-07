@@ -11,7 +11,7 @@ export const forms = StyleSheet.create({
     marginHorizontal: 10,
   },
   background: {
-    paddingVertical: 50,
+    paddingVertical: 60,
   },
   text: {
     flexDirection: "column",
@@ -48,6 +48,13 @@ export const forms = StyleSheet.create({
   },
   img: {
     alignSelf: "center",
-    height: 200,
+    height: 120,
+    width: 120,
+  },
+  logo: {
+    alignSelf: "center",
+    fontSize: 25,
+    marginVertical: 10,
+    color: "#8A8E8A",
   },
 });
