@@ -52,8 +52,9 @@ export const forms = StyleSheet.create({
     width: 120,
   },
   logo: {
+    fontFamily: "sans-serif-condensed",
     alignSelf: "center",
-    fontSize: 25,
+    fontSize: 30,
     marginVertical: 10,
     color: "#8A8E8A",
   },
