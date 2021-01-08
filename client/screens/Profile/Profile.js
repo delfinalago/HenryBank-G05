@@ -89,7 +89,7 @@ export default function Profile({ navigation, setToken }) {
                 />
               }
             />
-          
+
             <Button
               titleStyle={styles.listItem}
               title="Transacciones"
@@ -102,6 +102,22 @@ export default function Profile({ navigation, setToken }) {
                   icon={{
                     type: "font-awesome",
                     name: "bank",
+                  }}
+                />
+              }
+            />
+            <Button
+              titleStyle={styles.listItem}
+              title="Mis contactos"
+              type="outline"
+              onPress={() => navigation.navigate("contactsList")}
+              containerStyle={styles.listItemContainer}
+              icon={
+                <BaseIcon
+                  containerStyle={{ backgroundColor: "#29333d" }}
+                  icon={{
+                    type: "font-awesome",
+                    name: "handshake-o",
                   }}
                 />
               }
@@ -185,9 +201,8 @@ const styles = StyleSheet.create({
     borderWidth: 0,
     flex: 1,
     borderRadius: 20,
-    marginVertical: 150,
-    marginHorizontal: 15,
-    padding: 15,
+    paddingHorizontal: 50,
+    marginTop: 25,
   },
   scroll: {
     flex: 1,
@@ -213,10 +228,8 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   buttons: {
-    alignItems: "center",
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "space-around",
+    alignItems: "flex-start",
+    justifyContent: "center",
     paddingTop: 50,
   },
   listItem: {
