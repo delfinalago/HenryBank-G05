@@ -17,6 +17,10 @@ import {
 import axios from "axios";
 import { API } from "../../env.js";
 import { Card, ListItem, Button, Icon, Avatar } from "react-native-elements";
+import { LinearGradient } from "expo-linear-gradient";
+
+var width = Dimensions.get("window").width; //full width
+var height = Dimensions.get("window").height; //full height
 
 export default function Statistics({ navigation }) {
   // const [saldo, setSaldo] = useState([]);
@@ -101,117 +105,117 @@ export default function Statistics({ navigation }) {
   console.log("Gastos =", gastos);
 
   return (
-    <ScrollView style={styles.scrollView}>
-      
-        <Text style={styles.title}>MIS GASTOS</Text>
-        
-      
-      <View style={styles.container}>
-      <LineChart
-        data={{
-          labels: labels,
-          datasets: [
-            {
-              data: gastos,
-            },
-          ],
-        }}
-        width={Dimensions.get("window").width} // from react-native
-        height={220}
-        chartConfig={{
-          backgroundColor: "#e26a00",
-          backgroundGradientFrom: "#4DBAF4",
-          backgroundGradientTo: "#0FEA2D",
-          decimalPlaces: 2, // optional, defaults to 2dp
-          color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-          style: {
-            borderRadius: 16,
-            
-          },
-        }}
-        bezier
-        style={{
-          marginVertical: 8,
-          borderRadius: 16,
-        }}
-      />
-      </View>
-      <View>
-        <TouchableOpacity
-          type="outline"
-          title="Mensual"
-          style={styles.boton}
-          onPress={handleMovMesEg}
-        >
-        <Text style={{color: "#fff" , fontSize: 20}}>Mensual</Text>
-        </TouchableOpacity>
+    <ScrollView style={{ height: height }}>
+      <LinearGradient
+        // Button Linear Gradient
+        colors={["#00f27c", "#384b99"]}
+        start={[1, 0]}
+        end={[0, 1]}
+        style={styles.background}
+      >
+        <View style={styles.container}>
+          <Text style={styles.title}>MIS GASTOS</Text>
 
-        <TouchableOpacity
-          type="outline"
-          title="Semanal"
-          style={styles.boton}
-          onPress={handleMovSemEg}
-        >
-           <Text style={{color: "#fff" , fontSize: 20}}>Semanal</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          type="outline"
-          title="Diario"
-          style={styles.boton}
-          onPress={handleMovDiaEg}
-        //´${handler}
-        >
-        <Text style={{color: "#fff" , fontSize: 20}}>Diario</Text>
-        </TouchableOpacity>
-       
-      </View>
+          <LineChart
+            data={{
+              labels: labels,
+              datasets: [
+                {
+                  data: gastos,
+                },
+              ],
+            }}
+            width={Dimensions.get("window").width} // from react-native
+            height={220}
+            chartConfig={{
+              backgroundColor: "#e26a00",
+              backgroundGradientFrom: "#4DBAF4",
+              backgroundGradientTo: "#0FEA2D",
+              decimalPlaces: 2, // optional, defaults to 2dp
+              color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+              style: {
+                borderRadius: 16,
+              },
+            }}
+            bezier
+            style={{
+              marginVertical: 8,
+              borderRadius: 16,
+            }}
+          />
+          <View style={styles.direccion}>
+            <TouchableOpacity
+              type="outline"
+              title="Mensual"
+              style={styles.boton}
+              onPress={handleMovMesEg}
+            >
+              <Text style={{ color: "#fff", fontSize: 20 }}>Mensual</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              type="outline"
+              title="Semanal"
+              style={styles.boton}
+              onPress={handleMovSemEg}
+            >
+              <Text style={{ color: "#fff", fontSize: 20 }}>Semanal</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              type="outline"
+              title="Diario"
+              style={styles.boton}
+              onPress={handleMovDiaEg}
+              //´${handler}
+            >
+              <Text style={{ color: "#fff", fontSize: 20 }}>Diario</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </LinearGradient>
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: "rgba(255, 255, 255, 0.7)",
-  },
   container: {
-    marginTop: 50,
+    marginTop: 10,
+    flex: 1,
+    justifyContent: "center",
+    borderRadius: 30,
+    backgroundColor: "rgba(255, 255, 255, 0.7)",
+    // marginHorizontal: 10,
+  },
+  background: {
+    paddingVertical: 80,
+    height: height,
   },
   text: {
     fontSize: 42,
   },
-  input: {
-    flexDirection: "column",
-    marginRight: 20,
-    marginLeft: 20,
-    height: 50,
-    color: "#000000",
-    alignItems: "center",
-    borderWidth: 3,
-    marginTop: 25,
-    paddingHorizontal: 10,
-    borderWidth: 1,
-    borderRadius: 10,
-    borderColor: "#00aae4",
-    paddingVertical: 2,
-  },
+
   boton: {
+    width: 90,
     color: "#fff",
-    marginHorizontal: 130,
-    alignItems: "center",
-    justifyContent: "center",
     marginTop: 20,
     paddingVertical: 10,
     borderRadius: 10,
     backgroundColor: "#00aae4",
+    marginBottom: 10,
+    alignItems: "center",
   },
   innerText: {
     color: "white",
   },
   title: {
-    paddingTop: 50,
+    paddingBottom: 20,
     fontSize: 30,
     alignSelf: "center",
     color: "#00aae4",
     fontWeight: "bold",
+  },
+  direccion: {
+    flexDirection: "row",
+    justifyContent: "space-evenly",
   },
 });

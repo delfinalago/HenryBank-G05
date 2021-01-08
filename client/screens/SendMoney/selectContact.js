@@ -7,6 +7,7 @@ import {
   Dimensions,
   ScrollView,
 } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 import { ListItem, Avatar } from "react-native-elements";
 import Axios from "axios";
 import { API } from "../../env.js";
@@ -42,47 +43,56 @@ export default function SelectContact({ navigation }) {
 
   return (
     <ScrollView style={styles.scrollView}>
-      {contacts.length > 0 ? (
-        <>
-          <View style={styles.container}>
-            <Text style={styles.textSub}>
-              Seleccioná un contacto para enviarle dinero
-            </Text>
-          </View>
-          <View style={styles.container}>
-            {contacts.map((contact, i) => (
-              <ListItem key={i} bottomDivider>
-                <View style={styles.contactContainer}>
-                  <Text style={styles.textContact}>{contact.alias}</Text>
+      <LinearGradient
+        // Button Linear Gradient
+        colors={["#00f27c", "#384b99"]}
+        start={[1, 0]}
+        end={[0, 1]}
+        style={styles.background}
+        containerStyle={styles.scroll}
+      >
+        {contacts.length > 0 ? (
+          <>
+            <View style={styles.container}>
+              <Text style={styles.textSub}>
+                Seleccioná un contacto para enviarle dinero
+              </Text>
+            </View>
+            <View style={styles.container}>
+              {contacts.map((contact, i) => (
+                <ListItem key={i} bottomDivider>
+                  <View style={styles.contactContainer}>
+                    <Text style={styles.textContact}>{contact.alias}</Text>
 
-                  <TouchableOpacity
-                    mode="contained"
-                    secureTextEntry={true}
-                    title=""
-                    onPress={() =>
-                      navigation.navigate("SendMoney", {
-                        id_contact: contact.id_contact,
-                      })
-                    }
-                    style={styles.button}
-                  >
-                    <Text>Enviar dinero</Text>
-                  </TouchableOpacity>
-                </View>
-              </ListItem>
-            ))}
-          </View>
-        </>
-      ) : (
-        <>
-          <View style={styles.container}>
-            <Text style={styles.textSub}>
-              Todavía no tenés ningun contacto, dirigite a Mis Contactos para
-              agregar a algún contacto Veski.
-            </Text>
-          </View>
-        </>
-      )}
+                    <TouchableOpacity
+                      mode="contained"
+                      secureTextEntry={true}
+                      title=""
+                      onPress={() =>
+                        navigation.navigate("SendMoney", {
+                          id_contact: contact.id_contact,
+                        })
+                      }
+                      style={styles.button}
+                    >
+                      <Text>Enviar dinero</Text>
+                    </TouchableOpacity>
+                  </View>
+                </ListItem>
+              ))}
+            </View>
+          </>
+        ) : (
+          <>
+            <View style={styles.container}>
+              <Text style={styles.textSub}>
+                Todavía no tenés ningun contacto, dirigite a Mis Contactos para
+                agregar a algún contacto Veski.
+              </Text>
+            </View>
+          </>
+        )}
+      </LinearGradient>
     </ScrollView>
   );
 }
