@@ -7,10 +7,10 @@ import {
   Dimensions,
   ScrollView,
 } from "react-native";
-import { ListItem, Avatar } from "react-native-elements";
 import Axios from "axios";
 import { API } from "../../env.js";
 const { width, height } = Dimensions.get("window");
+import { LinearGradient } from 'expo-linear-gradient';
 
 export default function SelectContact({ navigation }) {
   const [contacts, setContacts] = useState([{}]);
@@ -41,102 +41,100 @@ export default function SelectContact({ navigation }) {
   };
 
   return (
-    <ScrollView style={styles.scrollView}>
-      {contacts.length > 0 ? (
-        <>
-          <View style={styles.container}>
-            <Text style={styles.textSub}>
-              Seleccioná un contacto para enviarle dinero
-            </Text>
-          </View>
-          <View style={styles.container}>
-            {contacts.map((contact, i) => (
-              <ListItem key={i} bottomDivider>
-                <View style={styles.contactContainer}>
-                  <Text style={styles.textContact}>{contact.alias}</Text>
 
-                  <TouchableOpacity
-                    mode="contained"
-                    secureTextEntry={true}
-                    title=""
-                    onPress={() =>
-                      navigation.navigate("SendMoney", {
-                        id_contact: contact.id_contact,
-                      })
-                    }
-                    style={styles.button}
-                  >
-                    <Text>Enviar dinero</Text>
-                  </TouchableOpacity>
-                </View>
-              </ListItem>
-            ))}
-          </View>
-        </>
-      ) : (
-        <>
-          <View style={styles.container}>
-            <Text style={styles.textSub}>
-              Todavía no tenés ningun contacto, dirigite a Mis Contactos para
-              agregar a algún contacto Veski.
-            </Text>
-          </View>
-        </>
-      )}
-    </ScrollView>
+    <ScrollView style={styles.scrollView}>
+      <LinearGradient
+        // Button Linear Gradient
+        colors={["#00f27c", "#384b99"]}
+        start={[1, 0]}
+        end={[0, 1]}
+        style={styles.background}
+      >
+
+        <View styles={styles.container}>
+          <Text style={styles.textSub}>
+            Seleccioná un contacto para enviarle dinero
+              </Text>
+          {contacts.map((contact, i) => (
+            <View key={i} style={styles.contact}>
+              <Text style={styles.textContact}>{contact.alias}</Text>
+
+              <TouchableOpacity
+                mode="contained"
+                secureTextEntry={true}
+                title=""
+                onPress={() =>
+                  navigation.navigate("SendMoney", {
+                    id_contact: contact.id_contact,
+                  })
+                }
+                style={styles.touchable}
+              >
+                <Text style={styles.textButton}>Enviar dinero</Text>
+              </TouchableOpacity>
+            </View>
+          ))}
+        </View>
+      </LinearGradient>
+    </ScrollView >
+
   );
 }
 
 const styles = StyleSheet.create({
   scrollView: {
-    backgroundColor: "#fff",
-  },
-  textTitle: {
-    fontSize: 40,
-  },
-  textSub: {
-    fontSize: 20,
-  },
-  textContact: {
-    fontSize: 30,
-    paddingVertical: 10,
-  },
-  input: {
-    alignItems: "center",
-    width: "auto",
-    height: 50,
-    marginHorizontal: 10,
-    borderWidth: 2,
-    marginTop: 120,
-    marginBottom: 20,
-    paddingHorizontal: 10,
-    borderColor: "#00716F",
-    borderRadius: 10,
-    paddingVertical: 2,
-  },
-  button: {
-    borderRadius: 10,
-    padding: 5,
-    borderWidth: 1,
-    borderRadius: 10,
-    borderColor: "#00aae4",
+    height: height,
   },
   container: {
-    paddingTop: 100,
-    paddingHorizontal: 30,
-    backgroundColor: "#FFF",
-    height: "100%",
-    flex: 3,
-    flexDirection: "column",
-  },
-  contactContainer: {
-    flex: 2,
-    flexDirection: "row",
+
     justifyContent: "space-between",
+    marginVertical: 4,
+    borderWidth: 0,
+    borderRadius: 30,
+    borderColor: "#fff",
+    backgroundColor: "rgba(255, 255, 255, 0.7)",
+    marginHorizontal: 10,
+    paddingVertical: 10
+  },
+
+  title: {
+    fontSize: 32,
+  },
+
+  contact: {
+    justifyContent: "space-between",
+    flexDirection: "row",
     alignItems: "center",
-    borderWidth: 1,
-    borderRadius: 10,
-    borderColor: "#00aae4",
-    padding: 10,
+    marginVertical: 4,
+    height: 60,
+    borderRadius: 20,
+    backgroundColor: "rgba(255, 255, 255, 0.7)",
+    marginHorizontal: 30,
+    paddingVertical: 10
+  },
+
+  textContact: {
+    marginLeft: 20,
+    fontSize: 20,
+  },
+  textSub: {
+    fontSize: 32,
+    alignSelf: "center",
+    marginLeft: 30,
+    marginBottom: 40
+  },
+  textButton: {
+    fontSize: 15,
+  },
+
+  touchable: {
+    color: "#000000",
+    alignItems: "center",
+    marginRight: 20
+  },
+  background: {
+    height: height + 50,
+    justifyContent: "center",
+
   },
 });

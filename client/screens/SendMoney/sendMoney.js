@@ -15,6 +15,7 @@ import Axios from "axios";
 import { API } from "../../env.js";
 const { width, height } = Dimensions.get("window");
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { LinearGradient } from 'expo-linear-gradient';
 
 export default function sendMoney({ route, navigation }) {
   const [modalVisible, setModalVisible] = useState(false);
@@ -70,66 +71,78 @@ export default function sendMoney({ route, navigation }) {
   });
   return (
     <ScrollView style={styles.scrollView}>
-      <View style={styles.container}>
+      <LinearGradient
+        // Button Linear Gradient
+        colors={["#00f27c", "#384b99"]}
+        start={[1, 0]}
+        end={[0, 1]}
+        style={styles.background}
+      >
         <Text style={styles.textTitle}>Enviar Dinero</Text>
-        <Text style={styles.textSub}>
-          Ingresá cuanto dinero le queres transferir a tu contacto
-        </Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Cantidad a transferir"
-          value={values.amount}
-          onChangeText={handleChange("amount")}
-          keyboardType={"numeric"}
-        />
-        {touched.amount && errors.amount ? <Text>{errors.amount}</Text> : null}
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => {
-            setModalVisible(!modalVisible);
-          }}
-        >
-          <Text style={styles.textStyle}>Transferir</Text>
-        </TouchableOpacity>
-        <Modal
-          animationType="fade"
-          transparent={true}
-          visible={modalVisible}
-          syle={styles.modal}
-        >
-          <View style={styles.centeredView}>
-            <View style={styles.modalView}>
-              <Text style={styles.modalText}>Ya esta todo listo!</Text>
+        <View style={styles.container}>
 
-              <TextInput
-                style={styles.input}
-                placeholder="Incluir un mensaje?"
-                value={values.description}
-                onChangeText={handleChange("description")}
-              />
+          <Text style={styles.textSub}>
+            Ingresá cuanto dinero le queres transferir a tu contacto
+          </Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Cantidad a transferir"
+            value={values.amount}
+            onChangeText={handleChange("amount")}
+            keyboardType={"numeric"}
+          />
+          {touched.amount && errors.amount ? <Text>{errors.amount}</Text> : null}
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => {
+              setModalVisible(!modalVisible);
+            }}
+          >
+            <Text style={styles.textStyle}>Transferir</Text>
+          </TouchableOpacity>
+          <Modal
+            animationType="fade"
+            transparent={true}
+            visible={modalVisible}
+            syle={styles.modal}
+          >
+            <View style={styles.centeredView}>
+              <View style={styles.modalView}>
+                <Text style={styles.modalText}>Ya esta todo listo!</Text>
 
-              <TouchableOpacity
-                style={styles.button}
-                onPress={(e) => {
-                  handleSubmit(e);
-                  setModalVisible(!modalVisible);
-                }}
-              >
-                <Text style={styles.textStyle}>Confirmar</Text>
-              </TouchableOpacity>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Incluir un mensaje?"
+                  value={values.description}
+                  onChangeText={handleChange("description")}
+                />
+
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={(e) => {
+                    handleSubmit(e);
+                    setModalVisible(!modalVisible);
+                  }}
+                >
+                  <Text style={styles.textStyle}>Confirmar</Text>
+                </TouchableOpacity>
+              </View>
             </View>
-          </View>
-        </Modal>
-      </View>
+          </Modal>
+        </View>
+      </LinearGradient>
     </ScrollView>
   );
 }
 const styles = StyleSheet.create({
   scrollView: {
-    backgroundColor: "#fff",
+    height: height,
   },
   textTitle: {
-    fontSize: 40,
+    fontSize: 32,
+    alignSelf: "center",
+
+    marginBottom: 30
   },
   textSub: {
     fontSize: 20,
@@ -159,14 +172,14 @@ const styles = StyleSheet.create({
     borderColor: "#00aae4",
   },
   container: {
-    paddingTop: 100,
-    paddingHorizontal: 30,
-    backgroundColor: "#FFF",
-    height: "100%",
-    flex: 3,
-    flexDirection: "column",
-    justifyContent: "space-between",
-    alignItems: "stretch",
+    // justifyContent: "space-between",
+    // flexDirection: "row",
+    // alignItems: "center",
+    marginVertical: 4,
+    borderRadius: 20,
+    backgroundColor: "rgba(255, 255, 255, 0.7)",
+    marginHorizontal: 30,
+    paddingVertical: 10
   },
   centeredView: {
     flex: 1,
@@ -203,5 +216,10 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     textAlign: "center",
     fontSize: 30,
+  },
+  background: {
+    height: height + 50,
+    justifyContent: "center",
+
   },
 });
