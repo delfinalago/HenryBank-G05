@@ -27,7 +27,8 @@ export default function transacciones({ navigation }) {
         axios.get(`${API}/api/accounts/mov`, { id: id })
           .then(({ data }) => {
             convert(data)
-            setTransaction(data);
+            setTransaction(data.reverse());
+            console.log("transactions----------", transaction)
 
           })
 

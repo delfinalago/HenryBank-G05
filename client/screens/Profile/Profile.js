@@ -109,7 +109,7 @@ export default function Profile({ navigation, setToken }) {
             <Button
               titleStyle={styles.listItem}
               title="Mis contactos"
-              type="outline"
+              type="clear"
               onPress={() => navigation.navigate("contactsList")}
               containerStyle={styles.listItemContainer}
               icon={
@@ -201,8 +201,8 @@ const styles = StyleSheet.create({
     borderWidth: 0,
     flex: 1,
     borderRadius: 20,
-    paddingHorizontal: 50,
-    marginTop: 25,
+    paddingHorizontal: 60,
+    marginTop: 70
   },
   scroll: {
     flex: 1,

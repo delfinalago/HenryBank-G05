@@ -58,7 +58,7 @@ module.exports = {
 				ctx.params.quantity = 0;
 			},
 
-			testear() {},
+			testear() { },
 		},
 	},
 
@@ -121,7 +121,7 @@ module.exports = {
 						if (type === "recarga") {
 							this.adapter.db.query(
 								"INSERT INTO `transactions` (`state`, `type`, `description`, `amount`, `destiny`)" +
-									`VALUES ('1', 'recarga', '', '${amount}', '${destiny}');`
+								`VALUES ('1', 'recarga', '', '${amount}', '${destiny}');`
 							);
 						}
 						return this.adapter.db.query(
@@ -159,7 +159,7 @@ module.exports = {
 								if (type === "gasto") {
 									this.adapter.db.query(
 										"INSERT INTO `transactions` (`state`, `type`, `description`, `amount`, `origin`)" +
-											`VALUES ('1', 'gasto', '${description}', '${amount}', '${origin}');`
+										`VALUES ('1', 'gasto', '${description}', '${amount}', '${origin}');`
 									);
 								}
 								return this.adapter.db.query(
@@ -197,7 +197,7 @@ module.exports = {
 
 					await this.adapter.db.query(
 						"INSERT INTO `transactions` (`state`, `type`, `description`, `amount`, `origin`, `destiny`)" +
-							`VALUES ('1', 'transferencia', '${description}', '${amount}', '${origin}', '${destiny}');`
+						`VALUES ('1', 'transferencia', '${description}', '${amount}', '${origin}', '${destiny}');`
 					);
 				} catch (e) {
 					return e;
@@ -367,21 +367,7 @@ module.exports = {
 			async handler(ctx) {
 				const id = ctx.params.id_client || ctx.meta.user.id;
 				const [movUser] = await this.adapter.db.query(
-					`SELECT *  FROM transactions WHERE origin = '${id}'`
-				);
-				return movUser;
-			},
-
-			async handler(ctx) {
-				const id = ctx.params.id_client || ctx.meta.user.id;
-				const today = new Date();
-				const dat = today
-					.toLocaleDateString()
-					.split("/")
-					.reverse()
-					.join("-");
-				const [movUser] = await this.adapter.db.query(
-					`SELECT *  FROM transactions WHERE origin = '${id}' ORDER BY  date <='${dat}'  DESC LIMIT 14`
+					`SELECT *  FROM transactions WHERE origin = '${id}' or destiny = '${id}'`
 				);
 				return movUser;
 			},
