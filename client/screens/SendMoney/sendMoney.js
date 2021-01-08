@@ -146,6 +146,7 @@ const styles = StyleSheet.create({
   },
   textSub: {
     fontSize: 20,
+    marginLeft: 20
   },
   input: {
     alignItems: "center",
@@ -153,10 +154,9 @@ const styles = StyleSheet.create({
     height: 50,
     marginHorizontal: 10,
     borderWidth: 2,
-    marginTop: 30,
-    marginBottom: 20,
+    marginVertical: 10,
     paddingHorizontal: 10,
-    borderWidth: 1,
+    borderWidth: 0,
     borderRadius: 10,
     borderColor: "#00aae4",
     paddingVertical: 2,
@@ -165,8 +165,8 @@ const styles = StyleSheet.create({
     marginHorizontal: 55,
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 30,
-    paddingVertical: 10,
+    marginTop: 10,
+    paddingVertical: 5,
     borderWidth: 1,
     borderRadius: 10,
     borderColor: "#00aae4",
