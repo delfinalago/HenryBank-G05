@@ -83,117 +83,117 @@ export default function PreRegisterToken({ navigation }) {
   });
 
   return (
-    
-<ScrollView>
-    <LinearGradient
+
+    <ScrollView>
+      <LinearGradient
         // Button Linear Gradient
         colors={["#00f27c", "#384b99"]}
         start={[1, 0]}
         end={[0, 1]}
         style={styles.background}
       >
-    
-      <View style={styles.container}>
 
-      <Text style={styles.titulo2}>
-         A continuación</Text>
-        <Text style={styles.titulo}>
-          Ingrese su código de verificación de 6 digitos</Text>
-        <View style={styles.flexcontainer}>
+        <View style={styles.container}>
 
-          <TextInput
-            onChangeText={handleChange("one")}
-            value={values.one}
-            style={styles.input}
-            maxLength={1}
-            numeric
-            keyboardType={"numeric"}
-            autoFocus={true}
-            onChange={() => Elem2.current.focus()}
-          />
-          {touched.one && errors.one ? <Text>{errors.one}</Text> : null}
+          <Text style={styles.titulo2}>
+            A continuación</Text>
+          <Text style={styles.titulo}>
+            Ingrese su código de verificación de 6 digitos</Text>
+          <View style={styles.flexcontainer}>
 
-          <TextInput
-            placeholder=""
-            placeholderTextColor="#00716F"
-            onChangeText={handleChange("two")}
-            value={values.two}
-            style={styles.input}
-            maxLength={1}
-            numeric
-            keyboardType={"numeric"}
-            ref={Elem2}
-            onChange={() => Elem3.current.focus()}
-          />
-          {touched.two && errors.two ? <Text>{errors.two}</Text> : null}
+            <TextInput
+              onChangeText={handleChange("one")}
+              value={values.one}
+              style={styles.input}
+              maxLength={1}
+              numeric
+              keyboardType={"numeric"}
+              autoFocus={true}
+              onChange={() => Elem2.current.focus()}
+            />
+            {touched.one && errors.one ? <Text>{errors.one}</Text> : null}
 
-          <TextInput
-            placeholder=""
-            placeholderTextColor="#00716F"
-            onChangeText={handleChange("three")}
-            value={values.three}
-            style={styles.input}
-            maxLength={1}
-            numeric
-            keyboardType={"numeric"}
-            ref={Elem3}
-            onChange={() => Elem4.current.focus()}
-          />
-          {touched.three && errors.three ? <Text>{errors.three}</Text> : null}
+            <TextInput
+              placeholder=""
+              placeholderTextColor="#00716F"
+              onChangeText={handleChange("two")}
+              value={values.two}
+              style={styles.input}
+              maxLength={1}
+              numeric
+              keyboardType={"numeric"}
+              ref={Elem2}
+              onChange={() => Elem3.current.focus()}
+            />
+            {touched.two && errors.two ? <Text>{errors.two}</Text> : null}
 
-          <TextInput
-            placeholder=""
-            placeholderTextColor="#00716F"
-            onChangeText={handleChange("four")}
-            value={values.four}
-            style={styles.input}
-            maxLength={1}
-            numeric
-            keyboardType={"numeric"}
-            ref={Elem4}
-            onChange={() => Elem5.current.focus()}
-          />
-          {touched.four && errors.four ? <Text>{errors.four}</Text> : null}
+            <TextInput
+              placeholder=""
+              placeholderTextColor="#00716F"
+              onChangeText={handleChange("three")}
+              value={values.three}
+              style={styles.input}
+              maxLength={1}
+              numeric
+              keyboardType={"numeric"}
+              ref={Elem3}
+              onChange={() => Elem4.current.focus()}
+            />
+            {touched.three && errors.three ? <Text>{errors.three}</Text> : null}
 
-          <TextInput
-            placeholder=""
-            placeholderTextColor="#00716F"
-            onChangeText={handleChange("five")}
-            value={values.five}
-            style={styles.input}
-            maxLength={1}
-            numeric
-            keyboardType={"numeric"}
-            ref={Elem5}
-            onChange={() => Elem6.current.focus()}
-          />
-          {touched.five && errors.five ? <Text>{errors.five}</Text> : null}
+            <TextInput
+              placeholder=""
+              placeholderTextColor="#00716F"
+              onChangeText={handleChange("four")}
+              value={values.four}
+              style={styles.input}
+              maxLength={1}
+              numeric
+              keyboardType={"numeric"}
+              ref={Elem4}
+              onChange={() => Elem5.current.focus()}
+            />
+            {touched.four && errors.four ? <Text>{errors.four}</Text> : null}
 
-          <TextInput
-            placeholder=""
-            placeholderTextColor="#00716F"
-            onChangeText={handleChange("six")}
-            value={values.six}
-            style={styles.input}
-            maxLength={1}
-            numeric
-            keyboardType={"numeric"}
-            ref={Elem6}
-            onChange={handleSubmit}
-          />
-          {touched.six && errors.six ? <Text>{errors.six}</Text> : null}
+            <TextInput
+              placeholder=""
+              placeholderTextColor="#00716F"
+              onChangeText={handleChange("five")}
+              value={values.five}
+              style={styles.input}
+              maxLength={1}
+              numeric
+              keyboardType={"numeric"}
+              ref={Elem5}
+              onChange={() => Elem6.current.focus()}
+            />
+            {touched.five && errors.five ? <Text>{errors.five}</Text> : null}
+
+            <TextInput
+              placeholder=""
+              placeholderTextColor="#00716F"
+              onChangeText={handleChange("six")}
+              value={values.six}
+              style={styles.input}
+              maxLength={1}
+              numeric
+              keyboardType={"numeric"}
+              ref={Elem6}
+              onChange={handleSubmit}
+            />
+            {touched.six && errors.six ? <Text>{errors.six}</Text> : null}
+          </View>
+          <TouchableOpacity
+            mode="contained"
+            secureTextEntry={true}
+            title="Register"
+            onPress={handleSubmit}
+            style={styles.boton}
+          >
+            <Text style={{ color: "#fff", fontSize: 20 }}>Enviar</Text>
+          </TouchableOpacity>
         </View>
-        <TouchableOpacity
-          mode="contained"
-          secureTextEntry={true}
-          title="Register"
-          onPress={handleSubmit}
-          style={styles.boton}
-        >
-          <Text style={{color: "#fff" , fontSize: 20}}>Enviar</Text>
-        </TouchableOpacity>
-      </View>
-    </LinearGradient>
+      </LinearGradient>
     </ScrollView>
   );
 }
@@ -206,7 +206,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   input: {
-    marginHorizontal: 6,
+    marginHorizontal: 1,
     height: 50,
     color: "#000000",
     alignItems: "center",
@@ -217,7 +217,7 @@ const styles = StyleSheet.create({
     borderColor: "#00aae4",
     width: 50,
     marginStart: 9,
-  
+
   },
   container: {
     marginTop: 60,
@@ -237,9 +237,9 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     fontSize: 30,
     alignSelf: "center",
-    margin:20,
+    margin: 20,
     fontWeight: "bold",
-    
+
   },
   titulo2: {
     textAlign: "center",
@@ -247,9 +247,9 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     fontSize: 30,
     alignSelf: "center",
-    margin:10,
+    margin: 10,
     fontWeight: "bold",
-    
+
   },
   boton: {
     color: "#fff",
