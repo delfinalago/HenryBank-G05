@@ -6,20 +6,20 @@
 
 <div>
     <h1>HOME & LOGIN</h1> 
-    <img width="200" height="auto" src="./client/assets/readme/Home.jpg"></img>
+    <img width="250" height="auto" src="./client/assets/readme/Home.jpg"></img>
     <h1>REGISTRO </h1> 
     <h2>PASO 1 - REGISTRO INICIAL</h2> 
     <p>Solo debes poner tus datos basicos para el registro.</p>
-    <img src="./client/assets/readme/Registro1.jpg"></img>
+    <img width="250" height="auto" src="./client/assets/readme/Registro1.jpg"></img>
     <h2>PASO 2 - VALIDA EL CODIGO</h2> 
     <p>Una vez termines el paso uno, te enviaremos un correo electronico con el codigo correspondiente.</p>
-    <img src="./client/assets/readme/Registro2.jpg"></img>
+    <img width="250" height="auto" src="./client/assets/readme/Registro2.jpg"></img>
     <h2>PASO 3 - DAR ALTA A TU CUENTA</h2> 
     <p>Una vez valides tu codigo, tendras que completar un ultimo paso. Llena el formulario con los datos complementarios.</p>
-    <img src="./client/assets/readme/Registro3.png"></img>
+    <img width="250" height="auto" src="./client/assets/readme/Registro3.png"></img>
     <h2>PASO 4 - LOGIN</h2> 
     <p>Finalmente ya puedes logearte con tu email y contraseña registrados, ahora puedes disfrutar de Hbank.</p>
-    <img src="./client/assets/readme/Home.jpg"></img>
+    <img width="250" height="auto" src="./client/assets/readme/Home.jpg"></img>
 <div>
 
 <div>
@@ -27,28 +27,28 @@
     <p>
         Una vez inicies session, podras empezar a navegar y explorar todas las funcionalidades que tenemos para ti
     </p>
-    <img src="./client/assets/readme/Inicio.jpg"></img>
+    <img width="250" height="auto" src="./client/assets/readme/Inicio.jpg"></img>
     <h1>RECARGAR DINERO</h1> 
     <p>
         Recarga dinero a cualquiera de tus dos cuentas por medio de tarjeta credito o deboto, o atravez de un codigo QR que presentaras en cualquier punto de Todo Pago.
     </p>
     <h2>TARJETA</h2>
-    <img src="./client/assets/readme/Tarjeta.jpg""></img>
+    <img width="250" height="auto" src="./client/assets/readme/Tarjeta.jpg""></img>
     <h2>CODIGO ELECTRONICO</h2>
-    <img src="./client/assets/readme/Codigo.jpg"></img>
+    <img width="250" height="auto" src="./client/assets/readme/Codigo.jpg"></img>
     <h1>MANDAR DINERO</h1> 
     <p>
         Mandar dinero a tus contactos. Puedes hacerlo desde cualquiera de tus cuentas siempre y cuando tengas saldo disponible.
     </p>
-    <img src="./client/assets/readme/EnviarDinero.jpg"></img>
+    <img width="250" height="auto" src="./client/assets/readme/EnviarDinero.jpg"></img>
     <h1>MOVIMIENTOS Y ESTADISTICAS</h1>
     <p>
         Puedes ver tus ultimos movimientos en los ultimos 15 y 7 dias, asi como los que realizaste el mismo dia. de igual manera tendras informacion un poco mas especifica, ya que contaras con una opcion de estadisticas, en las cuales te muestraremos como fue el comportamiento de tu dienro, en el trascurso de los ultimos 7 dias encuanto a ingreso y egresos.
     </p>
     <h2>ULTIMOS MOVIMIENTOS</h2>
-    <img src="./client/assets/readme/UltimosMov.jpg"></img>
+    <img width="250" height="auto" src="./client/assets/readme/UltimosMov.jpg"></img>
     <h2>ESTADISTICAS</h2>
-    <img src="./client/assets/readme/Estadisticas.jpg"></img>
+    <img width="250" height="auto" src="./client/assets/readme/Estadisticas.jpg"></img>
 </div>
 <div>
 
