@@ -6,7 +6,7 @@
 
 <div>
     <h1>HOME & LOGIN</h1> 
-    <img src="./client/assets/readme/Home.jpg"></img>
+    <img style ="width:200px; height:auto;" src="./client/assets/readme/Home.jpg"></img>
     <h1>REGISTRO </h1> 
     <h2>PASO 1 - REGISTRO INICIAL</h2> 
     <p>Solo debes poner tus datos basicos para el registro.</p>
