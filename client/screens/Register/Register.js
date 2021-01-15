@@ -11,9 +11,11 @@ import {
   ScrollView,
   ImageBackground,
   Button,
+  Dimensions
 } from "react-native";
 import { forms as styles } from "../styles";
 import { LinearGradient } from "expo-linear-gradient";
+const { width, height } = Dimensions.get("window");
 
 
 import Axios from "axios";
@@ -80,143 +82,148 @@ export default function register({ navigation }) {
   });
 
   return (
-    <ScrollView>
-       <View style={styles.container}>
-          <LinearGradient
-          colors={["#00f27c", "#384b99"]}
-          start={[1, 0]}
-          end={[0, 1]}
-          style={styles.background}
-          >
-      
-        <Text style={style.title}>Registrarse</Text>
+    <ScrollView style={styles.scrollView}>
+      <LinearGradient
+        colors={["#00f27c", "#384b99"]}
+        start={[1, 0]}
+        end={[0, 1]}
+        style={styles.background}
+      >
+        <View style={styles.container}>
 
-        <Text style={style.subtitle}>
-          ¡Complete los campos para registrarse!
+
+          <Text style={style.title}>Registrarse</Text>
+
+          <Text style={style.subtitle}>
+            ¡Complete los campos para registrarse!
         </Text>
 
-        <TextInput
-          placeholder="Nombre"
-          placeholderTextColor="#00aae4"
-          onChangeText={handleChange("first_name")}
-          onChange={handleChange}
-          onSubmit={handleSubmit}
-          value={values.first_name}
-          id="first_name"
-          name="first_name"
-          style={style.input}
-        />
+          <TextInput
+            placeholder="Nombre"
+            placeholderTextColor="#00aae4"
+            onChangeText={handleChange("first_name")}
+            onChange={handleChange}
+            onSubmit={handleSubmit}
+            value={values.first_name}
+            id="first_name"
+            name="first_name"
+            style={style.input}
+          />
 
-        {touched.first_name && errors.first_name ? (
-          <Text>{errors.first_name}</Text>
-        ) : null}
+          {touched.first_name && errors.first_name ? (
+            <Text>{errors.first_name}</Text>
+          ) : null}
 
-        <TextInput
-          placeholder="Apellido"
-          placeholderTextColor="#00aae4"
-          onChangeText={handleChange("last_name")}
-          onChange={handleChange}
-          onSubmit={handleSubmit}
-          id="last_name"
-          name="last_name"
-          value={values.last_name}
-          style={style.input}
-        />
-        {touched.last_name && errors.last_name ? (
-          <Text>{errors.last_name}</Text>
-        ) : null}
+          <TextInput
+            placeholder="Apellido"
+            placeholderTextColor="#00aae4"
+            onChangeText={handleChange("last_name")}
+            onChange={handleChange}
+            onSubmit={handleSubmit}
+            id="last_name"
+            name="last_name"
+            value={values.last_name}
+            style={style.input}
+          />
+          {touched.last_name && errors.last_name ? (
+            <Text>{errors.last_name}</Text>
+          ) : null}
 
-        <TextInput
-          placeholder="Telefono"
-          placeholderTextColor="#00aae4"
-          onChangeText={handleChange("cellphone")}
-          onChange={handleChange}
-          onSubmit={handleSubmit}
-          value={values.cellphone}
-          keyboardType="numeric"
-          id="cellphone"
-          name="cellphone"
-          style={style.input}
-        />
-        {touched.cellphone && errors.cellphone ? (
-          <Text>{errors.cellphone}</Text>
-        ) : null}
+          <TextInput
+            placeholder="Telefono"
+            placeholderTextColor="#00aae4"
+            onChangeText={handleChange("cellphone")}
+            onChange={handleChange}
+            onSubmit={handleSubmit}
+            value={values.cellphone}
+            keyboardType="numeric"
+            id="cellphone"
+            name="cellphone"
+            style={style.input}
+          />
+          {touched.cellphone && errors.cellphone ? (
+            <Text>{errors.cellphone}</Text>
+          ) : null}
 
-        <TextInput
-          placeholder="DNI"
-          placeholderTextColor="#00aae4"
-          onChangeText={handleChange("dni")}
-          onChange={handleChange}
-          onSubmit={handleSubmit}
-          value={values.dni}
-          keyboardType="numeric"
-          id="dno"
-          name="dni"
-          style={style.input}
-        />
+          <TextInput
+            placeholder="DNI"
+            placeholderTextColor="#00aae4"
+            onChangeText={handleChange("dni")}
+            onChange={handleChange}
+            onSubmit={handleSubmit}
+            value={values.dni}
+            keyboardType="numeric"
+            id="dno"
+            name="dni"
+            style={style.input}
+          />
 
-        <TextInput
-          placeholder="AAAA/MM/DD"
-          placeholderTextColor="#00aae4"
-          onChangeText={handleChange("nacimiento")}
-          onChange={handleChange}
-          onSubmit={handleSubmit}
-          value={values.nacimiento}
-          id="nacimiento"
-          name="nacimiento"
-          style={style.input}
-        />
+          <TextInput
+            placeholder="AAAA/MM/DD"
+            placeholderTextColor="#00aae4"
+            onChangeText={handleChange("nacimiento")}
+            onChange={handleChange}
+            onSubmit={handleSubmit}
+            value={values.nacimiento}
+            id="nacimiento"
+            name="nacimiento"
+            style={style.input}
+          />
 
-        <TextInput
-          placeholder="Dirección"
-          placeholderTextColor="#00aae4"
-          onChangeText={handleChange("street")}
-          onChange={handleChange}
-          onSubmit={handleSubmit}
-          value={values.street}
-          id="street"
-          name="street"
-          style={style.input}
-        />
+          <TextInput
+            placeholder="Dirección"
+            placeholderTextColor="#00aae4"
+            onChangeText={handleChange("street")}
+            onChange={handleChange}
+            onSubmit={handleSubmit}
+            value={values.street}
+            id="street"
+            name="street"
+            style={style.input}
+          />
 
-        <TextInput
-          placeholder="Ciudad"
-          placeholderTextColor="#00aae4"
-          onChangeText={handleChange("city")}
-          onChange={handleChange}
-          id="city"
-          name="city"
-          onSubmit={handleSubmit}
-          value={values.city}
-          style={style.input}
-        />
+          <TextInput
+            placeholder="Ciudad"
+            placeholderTextColor="#00aae4"
+            onChangeText={handleChange("city")}
+            onChange={handleChange}
+            id="city"
+            name="city"
+            onSubmit={handleSubmit}
+            value={values.city}
+            style={style.input}
+          />
 
-        <TouchableOpacity
-          mode="contained"
-          secureTextEntry={true}
-          title="Register"
-          onPress={handleSubmit}
-          style={style.boton}
-        >
-          <Text style={{color: "#fff" , fontSize: 20}}>Enviar</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          title="Go back"
-          onPress={() => navigation.goBack()}
-          style={style.boton}
-        >
-          <Text style={{color: "#fff" , fontSize: 20}}>Volver</Text>
-        </TouchableOpacity>
-      
+          <TouchableOpacity
+            mode="contained"
+            secureTextEntry={true}
+            title="Register"
+            onPress={handleSubmit}
+            style={style.boton}
+          >
+            <Text style={{ color: "#fff", fontSize: 20 }}>Enviar</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            title="Go back"
+            onPress={() => navigation.goBack()}
+            style={style.boton}
+          >
+            <Text style={{ color: "#fff", fontSize: 20 }}>Volver</Text>
+          </TouchableOpacity>
+
+
+        </View>
       </LinearGradient>
-      </View>
-    </ScrollView>
+    </ScrollView >
   );
 }
 
 const style = StyleSheet.create({
-   container: {
-    marginTop: 60,
+  scrollView: {
+    height: height,
+  },
+  container: {
+
     flex: 1,
     justifyContent: "center",
     borderRadius: 30,
@@ -229,13 +236,13 @@ const style = StyleSheet.create({
   },
   input: {
     flexDirection: "row",
-    marginTop: 60,
+    marginVertical: 15,
     flex: 1,
     justifyContent: "center",
-    borderRadius: 30,
+    borderRadius: 20,
     backgroundColor: "rgba(255, 255, 255, 0.7)",
-    paddingVertical: 30,
-    marginHorizontal: 60,
+    paddingVertical: 10,
+    marginHorizontal: 40,
     fontWeight: "bold",
     paddingLeft: 25,
     fontSize: 20,
@@ -254,7 +261,7 @@ const style = StyleSheet.create({
     paddingTop: 30,
     fontSize: 50,
     alignSelf: "center",
-    color: "#FFF",
+    color: "#00aae4",
     fontWeight: "bold",
   },
   subtitle: {
@@ -264,6 +271,10 @@ const style = StyleSheet.create({
     textAlign: "center",
     marginTop: 10,
     opacity: 0.8,
-    color: "#FFF",
+    color: "#00aae4",
+  },
+  background: {
+    height: height,
+    justifyContent: "center",
   },
 });
