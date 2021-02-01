@@ -81,7 +81,7 @@ module.exports = {
 			async handler(ctx) {
 				const id_cli = ctx.meta.user.id;
 				const [allContact] = await this.adapter.db.query(
-					`SELECT * FROM contacts WHERE id_cli= '${id_cli}'`
+					`SELECT * FROM contacts WHERE id_cli= '${id_cli}' ORDER BY alias`
 				);
 				return allContact;
 			},

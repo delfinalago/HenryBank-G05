@@ -11,6 +11,7 @@ import {
   Text,
   TextInput,
   Linking,
+  TouchableOpacity
 } from "react-native";
 import { Card, ListItem, Button, Icon, Avatar } from "react-native-elements";
 
@@ -54,7 +55,7 @@ export default function addContact({ navigation }) {
         style={styles.background}
       >
         <View style={styles.container}>
-          <Text style={styles.title}>Agregar Contacto </Text>
+          <Text style={styles.title}> AGREGAR CONTACTO </Text>
           <TextInput
             onChangeText={handleChange("alias")}
             onSubmit={handleSubmit}
@@ -69,21 +70,22 @@ export default function addContact({ navigation }) {
             style={styles.input}
             placeholder="Email"
           />
-          <Button
-            type="solid"
-            onPress={handleSubmit}
-            title="Guardar"
-            containerStyle={styles.boton}
-          />
-          <Text style={{ alignSelf: "center", marginTop: 20 }}>
-            No es cliente de Veski? Podes enviar una invitacion
-          </Text>
-          <Button
+          {/* <Button
             type="clear"
-            title="Invitar"
-            titleStyle={styles.buttonTitle}
-            onPress={handleWhatsappPress}
-          />
+            onPress={handleSubmit}
+            title="GUARDAR"
+            containerStyle={{ backgroundColor: "#0002cd", alignItems: "center", marginHorizontal: 40 }}
+          /> */}
+            <TouchableOpacity
+            mode="contained"
+            title=""
+            onPress={handleSubmit}
+            style={styles.touchable}
+          >
+            <Text style={{  backgroundColor: "#0002cd", color: "#FFFFFF", textAlign: "center" , fontFamily: "sans-serif-condensed", padding: 10, borderRadius: 10, marginHorizontal: -50, marginTop: 25 }}>GUARDAR</Text>
+          </TouchableOpacity>
+          
+          
         </View>
       </LinearGradient>
     </ScrollView>
@@ -92,19 +94,22 @@ export default function addContact({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "rgba(255, 255, 255, 0.6)",
-    marginHorizontal: 20,
+    backgroundColor: "rgb(255, 255, 255)",
+    marginHorizontal: 25,
     borderRadius: 30,
     paddingHorizontal: 15,
-    paddingVertical: 40,
+    paddingVertical: 40
   },
   background: {
-    height: 680,
+    height: 520,
     justifyContent: "center",
   },
   title: {
-    fontSize: 32,
+    fontSize: 25,
     alignSelf: "center",
+    fontFamily: "sans-serif-condensed",
+    color: "#0002cd",
+    marginBottom: 25
   },
   contacts: {
     marginTop: 5,
@@ -124,17 +129,22 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     marginRight: 30,
   },
-  boton: {
+  touchable: {
     marginBottom: 50,
     marginHorizontal: 50,
     borderRadius: 10,
     fontSize: 20,
+    color: "#FFFFFF",
   },
   buttonTitle: {
     fontSize: 20,
+    color: "#FFFFFF",
+    fontFamily: "sans-serif-condensed",
   },
   input: {
     marginVertical: 20,
     fontSize: 20,
+    paddingHorizontal: 10,
+   
   },
 });

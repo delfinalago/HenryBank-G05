@@ -44,18 +44,29 @@ export default function editContact({ route, navigation }) {
         style={styles.background}
       >
         <View style={styles.container}>
+        <Text style={styles.title}> EDITAR CONTACTO</Text>
           <TextInput
             style={styles.input}
             name="alias"
             onChangeText={handleChange("alias")}
             placeholder="Cambiar nombre"
           />
-          <Button
+          {/* <Button
             type="clear"
             onPress={handleSubmit}
-            title="Guardar"
+            title="GUARDAR"
             style={styles.boton}
-          />
+          /> */}
+
+              <TouchableOpacity
+            mode="contained"
+            title=""
+            onPress={handleSubmit}
+            style={styles.touchable}
+          >
+            <Text style={{  backgroundColor: "#0002cd", color: "#FFFFFF", textAlign: "center" , fontFamily: "sans-serif-condensed", padding: 10, borderRadius: 10, marginHorizontal: -130, marginTop: 25 }}>GUARDAR</Text>
+          </TouchableOpacity>
+          
         </View>
       </LinearGradient>
     </ScrollView>
@@ -64,18 +75,21 @@ export default function editContact({ route, navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "rgba(255, 255, 255, 0.6)",
-    marginHorizontal: 20,
+    backgroundColor: "rgb(255, 255, 255)",
+    marginHorizontal: 30,
     borderRadius: 30,
     padding: 10,
     alignItems: "center",
   },
   background: {
-    height: 680,
+    height: 520,
     justifyContent: "center",
   },
   title: {
-    fontSize: 32,
+    fontSize: 25,
+    justifyContent: "space-between",
+    color: "#0002cd"
+
   },
   contacts: {
     marginTop: 5,
@@ -95,10 +109,10 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     marginRight: 30,
   },
-  boton: {
-    flex: 1,
-    color: "#03bb85",
-  },
+  // boton: {
+  //   flex: 1,
+  //   color: "#03bb85",
+  // },
   buttonTitle: {
     fontSize: 20,
     paddingBottom: 20,

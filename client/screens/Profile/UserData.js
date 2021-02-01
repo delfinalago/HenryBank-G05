@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { LinearGradient } from "expo-linear-gradient";
+import {logoo} from "../../assets/logoo.png"
 import axios from "axios";
 import {
   ScrollView,
@@ -7,10 +8,13 @@ import {
   TextInput,
   Text,
   StyleSheet,
-  TouchableOpacity,
+  TouchableOpacity, Image
 } from "react-native";
+import { Dimensions } from "react-native";
 
 import { API } from "../../env.js";
+var width = Dimensions.get('window').width; //full width
+var height = Dimensions.get('window').height; //full height
 
 export default function UserData() {
   const [data, setData] = useState({});
@@ -68,14 +72,19 @@ export default function UserData() {
       style={styles.background}
     >
       <View style={styles.container}>
-        <View>
-          <Text
-            style={styles.title}
-          >{`${data.first_name} ${data.last_name}`}</Text>
-        </View>
+      {/* <View style={styles.img}>
+      <Image source={require('../../assets/logoo.png')} /> */}
+    {/* </View>
+          <Text style={styles.logoo}>VESKI</Text>
+        <View> */}
+        <Text style={styles.title}>MIS DATOS</Text>
+        <View style={styles.field}>
+          <Text style={styles.text}>{`NOMBRE: \n${data.first_name} ${data.last_name}`}</Text>
+        {/* </View> */}
+         </View>
         <View>
           <View style={styles.field}>
-            <Text style={styles.text}>{`Teléfono: \n${data.cellphone}`}</Text>
+            <Text style={styles.text}>{`TELEFÓNO: \n${data.cellphone}`}</Text>
             <TouchableOpacity
               onPress={() => {
                 setInputVisible({
@@ -84,7 +93,7 @@ export default function UserData() {
                 });
               }}
             >
-              <Text style={styles.button}>Editar</Text>
+              <Text style={styles.button}>EDITAR</Text>
             </TouchableOpacity>
           </View>
           {inputVisible.cellphone && (
@@ -101,12 +110,12 @@ export default function UserData() {
                   handleSubmit("cellphone");
                 }}
               >
-                <Text style={styles.button}>Confirmar</Text>
+                <Text style={styles.button}>CONFIRMAR</Text>
               </TouchableOpacity>
             </View>
           )}
           <View style={styles.field}>
-            <Text style={styles.text}>{`Dirección: \n${data.street}`}</Text>
+            <Text style={styles.text}>{`DIRECCIÓN: \n${data.street}`}</Text>
             <TouchableOpacity
               onPress={() => {
                 setInputVisible({
@@ -115,7 +124,7 @@ export default function UserData() {
                 });
               }}
             >
-              <Text style={styles.button}>Editar</Text>
+              <Text style={styles.button}>EDITAR</Text>
             </TouchableOpacity>
           </View>
           {inputVisible.street && (
@@ -135,12 +144,12 @@ export default function UserData() {
                   }
                 }}
               >
-                <Text style={styles.button}>Confirmar</Text>
+                <Text style={styles.button}>CONFIRMAR</Text>
               </TouchableOpacity>
             </View>
           )}
           <View style={styles.field}>
-            <Text style={styles.text}>{`Email: \n${data.username}`}</Text>
+            <Text style={styles.text}>{`EMAIL: \n${data.username}`}</Text>
           </View>
           <View style={styles.field}>
             <Text style={styles.text}>{`DNI: \n${data.dni}`}</Text>
@@ -154,34 +163,59 @@ export default function UserData() {
 const styles = StyleSheet.create({
   text: {
     fontSize: 20,
+    fontFamily: "sans-serif-condensed",
+    fontStyle: "italic"
   },
   container: {
-    backgroundColor: "rgba(255, 255, 255, 0.7)",
-    borderRadius: 30,
-    paddingVertical: 30,
+    backgroundColor: "rgb(255, 255, 255)",
+    borderRadius: 10,
+    paddingVertical: 2,
     paddingHorizontal: 30,
+    fontFamily: "sans-serif-condensed"
   },
+
   title: {
     fontSize: 30,
-    marginVertical: 50,
+    marginVertical: 20,
+    marginTop: 10,
+    fontFamily: "sans-serif-condensed",
+    alignSelf: "center",
+    color: "#0002cd",
+    
+  
+   
   },
   field: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginVertical: 20,
+    marginVertical: 15,
+    fontFamily: "sans-serif-condensed",
+    
   },
   input: {
     width: 220,
     paddingHorizontal: 15,
     fontSize: 20,
+    fontFamily: "sans-serif-condensed",
   },
   background: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    fontFamily: "sans-serif-condensed",
+
+  },
+  logoo: {
+    fontSize:10
+  },
+  img: {
+    marginTop: 30
   },
   button: {
-    color: "#00aae4",
+    color: "#0002cd",
     fontSize: 15,
+    marginVertical: 15,
+    fontFamily: "sans-serif-condensed",
+
   },
 });

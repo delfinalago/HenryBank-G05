@@ -35,18 +35,18 @@ export default function register({ navigation }) {
     },
     validationSchema: Yup.object({
       first_name: Yup.string()
-        .min(4, "El nombre ingresado debe tener mas de 4 caracteres")
+        .min(4, "El nombre ingresado debe tener más de 4 caracteres")
         .max(50, "El nombre ingresado debe tener tener menos de 50 caracteres")
         .required("Campo requerido"),
       last_name: Yup.string()
-        .min(4, "El nombre ingresado debe tener mas de 4 caracteres")
+        .min(4, "El nombre ingresado debe tener más de 4 caracteres")
         .max(50, "El nombre ingresado debe tener tener menos de 50 caracteres")
         .required("Campo requerido"),
       cellphone: Yup.string()
-        .required("Ingrese su numero de telefono")
+        .required("Ingrese su número de teléfono")
         .matches(
           /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/,
-          "Numero de telefono no valido"
+          "Número de teléfono no válido"
         ),
     }),
     onSubmit: async () => {
@@ -57,7 +57,7 @@ export default function register({ navigation }) {
           return JSON.parse(info);
         } else {
           alert(
-            "hubo un probleba con tu email, pero podras recibir un nuevo codigo"
+            "Ups! Se produjo un problema al momento de ingresar el email pero podras recibir un nuevo código"
           );
         }
       });
@@ -81,23 +81,24 @@ export default function register({ navigation }) {
 
   return (
     <ScrollView>
-       <View style={styles.container}>
+    
           <LinearGradient
           colors={["#00f27c", "#384b99"]}
           start={[1, 0]}
           end={[0, 1]}
-          style={styles.background}
+          // style={styles.background}
           >
       
-        <Text style={style.title}>Registrarse</Text>
+      <View style={style.container}>
+        <Text style={style.title}>REGISTRA TUS DATOS</Text>
 
         <Text style={style.subtitle}>
-          ¡Complete los campos para registrarse!
+          ¡Completa los campos!
         </Text>
 
         <TextInput
           placeholder="Nombre"
-          placeholderTextColor="#00aae4"
+          placeholderTextColor="#C0C0C0"
           onChangeText={handleChange("first_name")}
           onChange={handleChange}
           onSubmit={handleSubmit}
@@ -113,7 +114,7 @@ export default function register({ navigation }) {
 
         <TextInput
           placeholder="Apellido"
-          placeholderTextColor="#00aae4"
+          placeholderTextColor="#C0C0C0"
           onChangeText={handleChange("last_name")}
           onChange={handleChange}
           onSubmit={handleSubmit}
@@ -128,7 +129,7 @@ export default function register({ navigation }) {
 
         <TextInput
           placeholder="Telefono"
-          placeholderTextColor="#00aae4"
+          placeholderTextColor="#C0C0C0"
           onChangeText={handleChange("cellphone")}
           onChange={handleChange}
           onSubmit={handleSubmit}
@@ -144,7 +145,7 @@ export default function register({ navigation }) {
 
         <TextInput
           placeholder="DNI"
-          placeholderTextColor="#00aae4"
+          placeholderTextColor="#C0C0C0"
           onChangeText={handleChange("dni")}
           onChange={handleChange}
           onSubmit={handleSubmit}
@@ -157,7 +158,7 @@ export default function register({ navigation }) {
 
         <TextInput
           placeholder="AAAA/MM/DD"
-          placeholderTextColor="#00aae4"
+          placeholderTextColor="#C0C0C0"
           onChangeText={handleChange("nacimiento")}
           onChange={handleChange}
           onSubmit={handleSubmit}
@@ -169,7 +170,7 @@ export default function register({ navigation }) {
 
         <TextInput
           placeholder="Dirección"
-          placeholderTextColor="#00aae4"
+          placeholderTextColor="#C0C0C0"
           onChangeText={handleChange("street")}
           onChange={handleChange}
           onSubmit={handleSubmit}
@@ -181,7 +182,7 @@ export default function register({ navigation }) {
 
         <TextInput
           placeholder="Ciudad"
-          placeholderTextColor="#00aae4"
+          placeholderTextColor="#C0C0C0"
           onChangeText={handleChange("city")}
           onChange={handleChange}
           id="city"
@@ -198,72 +199,79 @@ export default function register({ navigation }) {
           onPress={handleSubmit}
           style={style.boton}
         >
-          <Text style={{color: "#fff" , fontSize: 20}}>Enviar</Text>
+          <Text style={{color: "#fff" , fontSize: 16, fontFamily: "sans-serif-condensed"}}>ENVIAR</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          title="Go back"
-          onPress={() => navigation.goBack()}
-          style={style.boton}
-        >
-          <Text style={{color: "#fff" , fontSize: 20}}>Volver</Text>
-        </TouchableOpacity>
-      
+    
+        </View>
       </LinearGradient>
-      </View>
+      
+    
     </ScrollView>
   );
 }
 
 const style = StyleSheet.create({
-   container: {
-    marginTop: 60,
+  container: {
+    marginTop: 30,
     flex: 1,
     justifyContent: "center",
-    borderRadius: 30,
-    backgroundColor: "rgba(255, 255, 255, 0.7)",
-    paddingVertical: 30,
-    marginHorizontal: 10,
+    borderRadius: 10,
+    backgroundColor: "rgb(255, 255, 255)",
+    paddingVertical: 18,
+    marginHorizontal: 20,
+    marginBottom: 20,
   },
   text: {
-    fontSize: 50,
+    fontSize: 30,
+    fontFamily: "sans-serif-condensed"
   },
   input: {
     flexDirection: "row",
-    marginTop: 60,
+    marginTop: 10,
     flex: 1,
     justifyContent: "center",
-    borderRadius: 30,
-    backgroundColor: "rgba(255, 255, 255, 0.7)",
-    paddingVertical: 30,
-    marginHorizontal: 60,
-    fontWeight: "bold",
-    paddingLeft: 25,
-    fontSize: 20,
+    borderRadius: 10,
+    backgroundColor: "rgb(255, 255, 255)",
+    paddingVertical: 5,
+    borderWidth: 1,
+    marginHorizontal: 20,
+    paddingLeft: 10,
+    fontSize: 15,
+    borderColor: "#C0C0C0",
+    opacity: 0.8,
+    fontFamily: "sans-serif-condensed",
+    height: 45,
+    
   },
   boton: {
     color: "#fff",
-    marginHorizontal: 130,
+    marginHorizontal: 20,
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 20,
+    marginTop: 18,
     paddingVertical: 10,
     borderRadius: 10,
-    backgroundColor: "#00aae4",
+    backgroundColor: "#0002cd",
   },
   title: {
-    paddingTop: 30,
-    fontSize: 50,
+    marginTop: -5,
+    fontSize: 28,
     alignSelf: "center",
-    color: "#FFF",
-    fontWeight: "bold",
+    color: "#0002cd",
+    // fontWeight: "bold",
+    fontFamily: "sans-serif-condensed"
   },
   subtitle: {
-    fontWeight: "bold",
-    fontSize: 20,
+    // fontWeight: "bold",
+    fontSize: 18,
+    marginBottom: 10,
+    marginLeft: 35,
+   textAlign: "center",
     marginHorizontal: 55,
-    textAlign: "center",
-    marginTop: 10,
+    marginTop: 2,
     opacity: 0.8,
-    color: "#FFF",
+    color: "#C0C0C0",
+    fontFamily: "sans-serif-condensed",
+    fontStyle: "italic"
   },
 });

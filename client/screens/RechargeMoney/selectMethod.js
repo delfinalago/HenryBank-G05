@@ -23,7 +23,7 @@ export default function Code({ route, navigation }) {
         style={styles.background}
       >
         <View style={styles.container}>
-          <Text style={styles.title}>Seleccioná un método de pago</Text>
+          <Text style={styles.title}>SELECCIONÁ UN MÉTODO DE PAGO</Text>
 
           <TouchableOpacity
             onPress={() =>
@@ -33,7 +33,7 @@ export default function Code({ route, navigation }) {
             }
             style={styles.touchable}
           >
-            <Text style={styles.buttonTitle}>Código de pago electrónico</Text>
+            <Text style={styles.buttonTitle}>CÓDIGO DE PAGO ELECTRÓNICO</Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() =>
@@ -43,7 +43,7 @@ export default function Code({ route, navigation }) {
             }
             style={styles.touchable}
           >
-            <Text style={styles.buttonTitle}>Tarjeta de crédito o débito</Text>
+            <Text style={styles.buttonTitle}>TARJETA DE CRÉDITO O DÉBITO</Text>
           </TouchableOpacity>
         </View>
       </LinearGradient>
@@ -53,32 +53,36 @@ export default function Code({ route, navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "rgba(255, 255, 255, 0.6)",
+    backgroundColor: "rgb(255, 255, 255)",
     marginHorizontal: 20,
     borderRadius: 30,
     paddingVertical: 30,
     paddingHorizontal: 20,
+    marginBottom: 250
   },
   background: {
     height: 770,
     justifyContent: "center",
   },
   title: {
-    fontSize: 30,
+    fontSize: 25,
     marginBottom: 20,
     textAlign: "center",
+    fontFamily: "sans-serif-condensed",
   },
   buttonTitle: {
-    fontSize: 20,
+    fontSize: 18,
     paddingVertical: 10,
-    color: "#00aae4",
+    color: "#FFFFFF",
+    fontFamily: "sans-serif-condensed",
   },
   touchable: {
     color: "#000000",
     alignItems: "center",
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: "#00aae4",
+    borderColor: "#0002cd",
     marginVertical: 10,
+    backgroundColor: "#0002cd"
   },
 });
