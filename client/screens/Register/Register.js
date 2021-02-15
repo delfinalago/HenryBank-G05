@@ -11,9 +11,11 @@ import {
   ScrollView,
   ImageBackground,
   Button,
+  Dimensions
 } from "react-native";
 import { forms as styles } from "../styles";
 import { LinearGradient } from "expo-linear-gradient";
+const { width, height } = Dimensions.get("window");
 
 
 import Axios from "axios";
@@ -80,6 +82,7 @@ export default function register({ navigation }) {
   });
 
   return (
+
     <ScrollView>
     
           <LinearGradient
@@ -108,9 +111,22 @@ export default function register({ navigation }) {
           style={style.input}
         />
 
-        {touched.first_name && errors.first_name ? (
-          <Text>{errors.first_name}</Text>
-        ) : null}
+
+          <TextInput
+            placeholder="Apellido"
+            placeholderTextColor="#00aae4"
+            onChangeText={handleChange("last_name")}
+            onChange={handleChange}
+            onSubmit={handleSubmit}
+            id="last_name"
+            name="last_name"
+            value={values.last_name}
+            style={style.input}
+          />
+          {touched.last_name && errors.last_name ? (
+            <Text>{errors.last_name}</Text>
+          ) : null}
+
 
         <TextInput
           placeholder="Apellido"
@@ -207,12 +223,15 @@ export default function register({ navigation }) {
       
     
     </ScrollView>
+    
   );
 }
 
 const style = StyleSheet.create({
+
   container: {
     marginTop: 30,
+
     flex: 1,
     justifyContent: "center",
     borderRadius: 10,
@@ -227,6 +246,7 @@ const style = StyleSheet.create({
   },
   input: {
     flexDirection: "row",
+
     marginTop: 10,
     flex: 1,
     justifyContent: "center",
@@ -242,6 +262,7 @@ const style = StyleSheet.create({
     fontFamily: "sans-serif-condensed",
     height: 45,
     
+
   },
   boton: {
     color: "#fff",
@@ -260,6 +281,7 @@ const style = StyleSheet.create({
     color: "#0002cd",
     // fontWeight: "bold",
     fontFamily: "sans-serif-condensed"
+
   },
   subtitle: {
     // fontWeight: "bold",
@@ -273,5 +295,12 @@ const style = StyleSheet.create({
     color: "#C0C0C0",
     fontFamily: "sans-serif-condensed",
     fontStyle: "italic"
+
+   
+  },
+  background: {
+    height: height,
+    justifyContent: "center",
+
   },
 });

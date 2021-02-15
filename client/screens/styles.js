@@ -14,6 +14,7 @@ export const forms = StyleSheet.create({
   background: {
     paddingVertical: 200,
   
+
   },
   text: {
     flexDirection: "column",

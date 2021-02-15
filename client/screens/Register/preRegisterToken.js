@@ -83,17 +83,16 @@ export default function PreRegisterToken({ navigation }) {
   });
 
   return (
-    
-<ScrollView>
-    <LinearGradient
+
+    <ScrollView>
+      <LinearGradient
         // Button Linear Gradient
         colors={["#00f27c", "#384b99"]}
         start={[1, 0]}
         end={[0, 1]}
         style={styles.background}
       >
-    
-      <View style={styles.container}>
+
 
       <Text style={styles.titulo2}>
          VALIDACION DE CUENTA</Text>
@@ -101,17 +100,19 @@ export default function PreRegisterToken({ navigation }) {
           INGRESA EL CODIGO QUE HEMOS ENVIADO A TU CORREO</Text>
         <View style={styles.flexcontainer}>
 
-          <TextInput
-            onChangeText={handleChange("one")}
-            value={values.one}
-            style={styles.input}
-            maxLength={1}
-            numeric
-            keyboardType={"numeric"}
-            autoFocus={true}
-            onChange={() => Elem2.current.focus()}
-          />
-          {touched.one && errors.one ? <Text>{errors.one}</Text> : null}
+
+            <TextInput
+              onChangeText={handleChange("one")}
+              value={values.one}
+              style={styles.input}
+              maxLength={1}
+              numeric
+              keyboardType={"numeric"}
+              autoFocus={true}
+              onChange={() => Elem2.current.focus()}
+            />
+            {touched.one && errors.one ? <Text>{errors.one}</Text> : null}
+
 
           <TextInput
             placeholder=""
@@ -194,6 +195,7 @@ export default function PreRegisterToken({ navigation }) {
         </TouchableOpacity>
       </View>
     </LinearGradient>
+
     </ScrollView>
   );
 }
@@ -209,7 +211,7 @@ const styles = StyleSheet.create({
    
   },
   input: {
-    marginHorizontal: 6,
+    marginHorizontal: 1,
     height: 50,
     color: "#000000",
     alignItems: "center",
@@ -220,6 +222,7 @@ const styles = StyleSheet.create({
     width: 45,
     marginStart: 9,
     textAlign: "center",
+
   },
   container: {
     marginTop: 60,
@@ -239,9 +242,11 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     fontSize: 18,
     alignSelf: "center",
+
     margin:10,
   
     fontFamily: "sans-serif-condensed",
+
   },
   titulo2: {
     textAlign: "center",
@@ -250,8 +255,8 @@ const styles = StyleSheet.create({
     fontSize: 30,
     alignSelf: "center",
     margin: 10,
-
     fontFamily: "sans-serif-condensed",
+
   },
   boton: {
     color: "#fff",
