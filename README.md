@@ -1,4 +1,3 @@
-
 <h1>Veski App</h1> 
 <p>
     Veski App es una billetera electronica, que te ayudara a gestionar tu dinero, podras enviar dinero, recibir y hasta ver tu movimientos y estadisticas de los ultimos dias. Todo esto en base a una cuenta que creas cuando te registras en nuestra app.  A partir de ahi, podras disfrutar de todas las funcionalidades que te mencionamos ya. A continuacion te mostramos un resumen visual de nuestra aplicacion.
@@ -13,12 +12,11 @@
     <h2>PASO 1 - REGISTRO INICIAL</h2> 
     <p>Solo debes poner tus datos basicos para el registro.</p>
     <img width="250" height="auto" src="./client/assets/readme/styloUpdateado/crear-cuenta1.jpeg"></img>
-    <h2>PASO 2 - VALIDA EL CODIGO</h2>
-    <p>Una vez termines el primer paso, te enviaremos un correo electronico con el codigo correspondiente.</p>
+    <h2>PASO 2 - VALIDA EL CODIGO</h2> 
+    <p>Una vez termines el paso uno, te enviaremos un correo electronico con el codigo correspondiente.</p>
     <img width="250" height="auto" src="./client/assets/readme/styloUpdateado/validacion-cuenta.jpeg"></img>
     <h2>PASO 3 - DAR ALTA A TU CUENTA</h2> 
-    <p> Luego de ingresar el codigo, deberas completar el formulario con tus datos personales.</p>
-
+    <p> Luego de ingresar el codigo, el ultimo paso sera completar el formulario con tus datos personales.</p>
     <img width="250" height="auto" src="./client/assets/readme/styloUpdateado/reg-datos.jpeg"></img>
     <h2>PASO 4 - LOGIN</h2> 
     <p>Finalmente ya puedes logearte con tu email y contraseña registrados, ahora puedes disfrutar de Hbank.</p>
@@ -28,31 +26,26 @@
 <div>
     <h1>INICIO</h1>
     <p>
-        Una vez inicies sesion, podras empezar a navegar y explorar todas las funcionalidades que tenemos para ti
+        Una vez inicies session, podras empezar a navegar y explorar todas las funcionalidades que tenemos para ti
     </p>
-    <img width="250" height="auto" src="./client/assets/readme/profile.jpeg"></img>
+    <img width="250" height="auto" src="./client/assets/readme/Inicio.jpg"></img>
     <h1>RECARGAR DINERO</h1> 
     <p>
-        Recarga dinero a cualquiera de tus cuentas por medio de tarjeta credito o debito, o mediante un codigo QR que puedes presentar en cualquier punto de Todo Pago.
-
+        Recarga dinero a cualquiera de tus dos cuentas por medio de tarjeta credito o debito, o a traves de un codigo QR que presentaras en cualquier punto de Todo Pago.
     </p>
     <img width="250" height="auto" src="./client/assets/readme/styloUpdateado/metodo-pago.jpeg"></img>
     <h2>TARJETA</h2>
     <img width="250" height="auto" src="./client/assets/readme/styloUpdateado/tarjeta.jpeg"></img>
     <h2>CODIGO ELECTRONICO</h2>
     <img width="250" height="auto" src="./client/assets/readme/styloUpdateado/mercado-pago.jpeg"></img>
-
-    <h1>ENVIAR DINERO</h1> 
+    <h1>MANDAR DINERO</h1> 
     <p>
-        Enviar dinero a tus contactos. Puedes hacerlo desde cualquiera de tus cuentas siempre y cuando tengas saldo disponible.
-
+        Mandar dinero a tus contactos. Puedes hacerlo desde cualquiera de tus cuentas siempre y cuando tengas saldo disponible.
     </p>
     <img width="250" height="auto" src="./client/assets/readme/styloUpdateado/enviar-dinero1.jpeg"></img>
     <h1>MOVIMIENTOS Y ESTADISTICAS</h1>
     <p>
-
-        Puedes ver tus transacciones realizadas de acuerdo a tres tipos de datos especificados por periodo: mensual, semanal y diario volcados en un grafico. Asimismo tendras informacion detallada de tus ultimos movimientos.
-
+        Puedes ver tus transcciones realizadas de acuerdo a periodos de tipo mensual , semanal y diaria volcados en un grafico. asimismo tendras informacion detallada de tus ultimos movimientos.
     </p>
     <h2>ULTIMOS MOVIMIENTOS</h2>
     <img width="250" height="auto" src="./client/assets/readme/styloUpdateado/UltimosMov.jpeg"></img>
