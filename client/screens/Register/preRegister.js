@@ -88,45 +88,46 @@ export default function preRegister({ navigation }) {
       <View style={styles.container}>
         <Text
           style={styles.title}
-        >Bienvenido al proceso de registro de Veski</Text>
+        >CREAR CUENTA</Text>
 
         <Text
           style={{
-            fontSize: 20,
-            marginHorizontal: 55,
+            fontSize: 18,
             textAlign: "center",
             marginTop: 5,
             opacity: 0.4,
+            fontFamily: "sans-serif-condensed"
           }}
         >
-          Por favor ingrese un email y contraseña para continuar.
+          ¡REGISTRARSE ES SIMPLE Y RAPIDO!
         </Text>
 
         <TextInput
           placeholder="Email"
-          placeholderTextColor="#00716F"
+          placeholderTextColor="#C0C0C0"
           onChangeText={handleChange("email")}
           value={values.email}
           style={{
             flexDirection: "column",
             marginHorizontal: 30,
             height: 50,
-            color: "#000000",
+            color: "#C0C0C0",
             alignItems: "center",
             borderWidth: 3,
             marginTop: 25,
             paddingHorizontal: 10,
             borderWidth: 1,
             borderRadius: 10,
-            borderColor: "#00aae4",
+            borderColor: "#C0C0C0",
             paddingVertical: 2,
+            fontFamily: "sans-serif-condensed"
           }}
         />
         {touched.email && errors.email ? <Text>{errors.email}</Text> : null}
 
         <TextInput
           placeholder="Contraseña"
-          placeholderTextColor="#00716F"
+          placeholderTextColor="#C0C0C0"
           onChangeText={handleChange("password")}
           value={values.password}
           secureTextEntry={true}
@@ -134,15 +135,16 @@ export default function preRegister({ navigation }) {
             flexDirection: "column",
             marginHorizontal: 30,
             height: 50,
-            color: "#000000",
+            color: "#C0C0C0",
             alignItems: "center",
             borderWidth: 3,
             marginTop: 25,
             paddingHorizontal: 10,
             borderWidth: 1,
             borderRadius: 10,
-            borderColor: "#00aae4",
+            borderColor: "#C0C0C0",
             paddingVertical: 2,
+            fontFamily: "sans-serif-condensed"
           }}
         />
         {touched.password && errors.password ? (
@@ -151,7 +153,7 @@ export default function preRegister({ navigation }) {
 
         <TextInput
           placeholder="Confirme contraseña"
-          placeholderTextColor="#00716F"
+          placeholderTextColor="#C0C0C0"
           onChangeText={handleChange("confirmpassword")}
           value={values.confirmpassword}
           secureTextEntry={true}
@@ -159,15 +161,16 @@ export default function preRegister({ navigation }) {
             flexDirection: "column",
             marginHorizontal: 30,
             height: 50,
-            color: "#000000",
+            color: "#C0C0C0",
             alignItems: "center",
             borderWidth: 3,
             marginTop: 25,
             paddingHorizontal: 10,
             borderWidth: 1,
             borderRadius: 10,
-            borderColor: "#00aae4",
+            borderColor: "#C0C0C0",
             paddingVertical: 2,
+            fontFamily: "sans-serif-condensed"
           }}
         />
         {touched.confirmpassword && errors.confirmpassword ? (
@@ -181,7 +184,7 @@ export default function preRegister({ navigation }) {
           onPress={handleSubmit}
           style={styles.button}
         >
-          <Text style={{color: "#fff" , fontSize: 20}}>Confirmar</Text>
+          <Text style={{color: "#fff" , fontSize: 18, fontFamily: "sans-serif-condensed"}}>CONFIRMAR</Text>
         </TouchableOpacity>
       </View>
      
@@ -195,34 +198,40 @@ const styles = StyleSheet.create({
     fontSize: 42,
   },
   button: {
-    marginHorizontal: 130,
+    marginHorizontal: 30,
     alignItems: "center",
     justifyContent: "center",
     marginTop: 20,
     paddingVertical: 10,
     borderRadius: 10,
-    backgroundColor: "#00aae4",
+    backgroundColor: "#0002cd",
+    
   },
   title: {
-    paddingTop: 20,
-    fontSize: 40,
+    paddingTop: 3,
+    fontSize: 30,
     alignSelf: "center",
     color: "#00aae4",
-    fontWeight: "bold",
+    // fontWeight: "bold",
     textAlign:"center",
     paddingBottom: 20,
+    fontFamily: "sans-serif-condensed",
+    color: "#0002cd",
     
   },
   background: {
-    paddingVertical: 50,
+    paddingVertical: 40,
+  
+    
   },
   container: {
-    marginTop: 40,
+    marginVertical: 1,
     flex: 1,
     justifyContent: "center",
     borderRadius: 30,
-    backgroundColor: "rgba(255, 255, 255, 0.7)",
+    backgroundColor: "rgb(255, 255, 255)",
     paddingVertical: 30,
-    marginHorizontal: 10,
+    marginHorizontal: 20,
+    
   },
 });

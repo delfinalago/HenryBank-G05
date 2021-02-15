@@ -182,7 +182,7 @@ module.exports = {
 			rest: "PUT /transc", //operacion que une la extraccion con la recarga de dinero //
 
 			async handler(ctx) {
-				const { origin, destiny, amount, state } = ctx.params;
+				const { origin, destiny, amount, state} = ctx.params;
 
 				const description = ctx.params.description || "";
 
@@ -191,6 +191,7 @@ module.exports = {
 						origin,
 						amount,
 						state,
+						
 					}); //invoca a la func  extrac y recarga //
 
 					await ctx.call("accounts.recarga", { amount, destiny });

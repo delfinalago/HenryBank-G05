@@ -136,7 +136,7 @@ export default function Card({ route, navigation }) {
               handleSubmit();
             }}
           >
-            <Text style={styles.innerText}>Recargar</Text>
+            <Text style={styles.innerText}>RECARGAR</Text>
           </TouchableOpacity>
         </View>
       </LinearGradient>
@@ -152,14 +152,18 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "center",
     textAlign: "center",
+   
   },
   text: {
     fontSize: 42,
+    fontFamily: "sans-serif-condensed",
   },
   code: {
     fontSize: 42,
     textAlign: "center",
     marginTop: 100,
+    fontFamily: "sans-serif-condensed",
+    
   },
   title: {
     fontSize: 20,
@@ -167,6 +171,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginTop: 5,
     opacity: 0.4,
+    fontFamily: "sans-serif-condensed",
   },
   input: {
     flexDirection: "column",
@@ -179,8 +184,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderWidth: 1,
     borderRadius: 10,
-    borderColor: "#00aae4",
+    borderColor: "#C0C0C0",
     paddingVertical: 2,
+    fontFamily: "sans-serif-condensed",
+    backgroundColor: "#0002cd"
   },
   cardInput: {
     flexDirection: "column",
@@ -194,33 +201,42 @@ const styles = StyleSheet.create({
     borderWidth: 0,
     borderColor: "#FFF",
     paddingVertical: 2,
+    fontFamily: "sans-serif-condensed",
+   
   },
   label: {
     color: "black",
     fontSize: 16,
     textAlign: "center",
+    fontFamily: "sans-serif-condensed",
+ 
   },
   button: {
     marginHorizontal: 55,
     alignItems: "center",
     justifyContent: "center",
     marginTop: 30,
-    backgroundColor: "#00aae4",
+    backgroundColor: "#0002cd",
     paddingVertical: 10,
     borderRadius: 10,
+    paddingHorizontal: 15,
+    
   },
   innerText: {
     color: "white",
+    fontFamily: "sans-serif-condensed",
+    fontSize: 15
   },
   background: {
     paddingBottom: 190,
   },
   container: {
     marginTop: 200,
-    backgroundColor: "rgba(255, 255, 255, 0.6)",
+    backgroundColor: "rgb(255, 255, 255)",
     borderRadius: 30,
     paddingVertical: 30,
     paddingHorizontal: 10,
-    marginHorizontal: 10,
+    marginHorizontal: 15,
+    marginBottom: 30
   },
 });

@@ -78,11 +78,11 @@ export default function sendMoney({ route, navigation }) {
         end={[0, 1]}
         style={styles.background}
       >
-        <Text style={styles.textTitle}>Enviar Dinero</Text>
+        
         <View style={styles.container}>
-
+        <Text style={styles.textTitle}>ENVIAR DINERO</Text>
           <Text style={styles.textSub}>
-            Ingresá cuanto dinero le queres transferir a tu contacto
+            POR FAVOR, INGRESA EL MONTO
           </Text>
           <TextInput
             style={styles.input}
@@ -98,7 +98,7 @@ export default function sendMoney({ route, navigation }) {
               setModalVisible(!modalVisible);
             }}
           >
-            <Text style={styles.textStyle}>Transferir</Text>
+            <Text style={styles.textStyle}>TRANSFERIR</Text>
           </TouchableOpacity>
           <Modal
             animationType="fade"
@@ -108,7 +108,7 @@ export default function sendMoney({ route, navigation }) {
           >
             <View style={styles.centeredView}>
               <View style={styles.modalView}>
-                <Text style={styles.modalText}>Ya esta todo listo!</Text>
+                <Text style={styles.modalText}>¡YA ESTÁ TODO LISTO!</Text>
 
                 <TextInput
                   style={styles.input}
@@ -124,7 +124,7 @@ export default function sendMoney({ route, navigation }) {
                     setModalVisible(!modalVisible);
                   }}
                 >
-                  <Text style={styles.textStyle}>Confirmar</Text>
+                  <Text style={styles.textStyle}>CONFIRMAR</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -141,12 +141,16 @@ const styles = StyleSheet.create({
   textTitle: {
     fontSize: 32,
     alignSelf: "center",
+    fontFamily: "sans-serif-condensed",
+    color: "#0002cd",
 
-    marginBottom: 30
+    marginBottom: 30,
+    fontFamily: "sans-serif-condensed",
   },
   textSub: {
     fontSize: 20,
-    marginLeft: 20
+    marginLeft: 20,
+    fontFamily: "sans-serif-condensed",
   },
   input: {
     alignItems: "center",
@@ -160,6 +164,9 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderColor: "#00aae4",
     paddingVertical: 2,
+    fontFamily: "sans-serif-condensed",
+    fontSize: 18,
+    marginVertical: 20
   },
   button: {
     marginHorizontal: 55,
@@ -169,7 +176,10 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     borderWidth: 1,
     borderRadius: 10,
-    borderColor: "#00aae4",
+    borderColor: "#0002cd",
+    backgroundColor: "#0002cd",
+    marginHorizontal: 20,
+    paddingVertical: 10
   },
   container: {
     // justifyContent: "space-between",
@@ -177,21 +187,25 @@ const styles = StyleSheet.create({
     // alignItems: "center",
     marginVertical: 4,
     borderRadius: 20,
-    backgroundColor: "rgba(255, 255, 255, 0.7)",
+    backgroundColor: "rgb(255, 255, 255)",
     marginHorizontal: 30,
-    paddingVertical: 10
+    paddingVertical: 10,
+    marginBottom: 130
   },
   centeredView: {
     flex: 1,
     justifyContent: "center",
     alignItems: "stretch",
     marginTop: 22,
+    
   },
   modalView: {
-    margin: 20,
-    backgroundColor: "white",
+     margin: 20,
+    backgroundColor: "rgb(255, 255, 255)",
     borderRadius: 20,
-    padding: 35,
+    padding: 20,
+    // marginVertical: 20,
+    marginHorizontal: 50,
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -199,7 +213,7 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-    elevation: 5,
+    elevation: 50,
   },
   openButton: {
     backgroundColor: "#F194FF",
@@ -208,18 +222,22 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   textStyle: {
-    color: "black",
-    fontWeight: "bold",
+    color: "white",
     textAlign: "center",
+    fontFamily: "sans-serif-condensed",
+    fontSize: 15
   },
   modalText: {
     marginBottom: 15,
     textAlign: "center",
     fontSize: 30,
+    fontFamily: "sans-serif-condensed",
+    color: "#0002cd"
   },
   background: {
     height: height + 50,
     justifyContent: "center",
+    
 
   },
 });

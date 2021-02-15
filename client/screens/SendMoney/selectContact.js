@@ -51,10 +51,10 @@ export default function SelectContact({ navigation }) {
         style={styles.background}
       >
 
-        <View styles={styles.container}>
+        <View style={styles.container}>
           <Text style={styles.textSub}>
-            Seleccioná un contacto para enviarle dinero
-              </Text>
+            SELECCIONA UN CONTACTO 
+                          </Text>
           {contacts.map((contact, i) => (
             <View key={i} style={styles.contact}>
               <Text style={styles.textContact}>{contact.alias}</Text>
@@ -70,7 +70,7 @@ export default function SelectContact({ navigation }) {
                 }
                 style={styles.touchable}
               >
-                <Text style={styles.textButton}>Enviar dinero</Text>
+                <Text style={styles.textButton}>ENVIAR</Text>
               </TouchableOpacity>
             </View>
           ))}
@@ -89,16 +89,19 @@ const styles = StyleSheet.create({
 
     justifyContent: "space-between",
     marginVertical: 4,
-    borderWidth: 0,
-    borderRadius: 30,
-    borderColor: "#fff",
-    backgroundColor: "rgba(255, 255, 255, 0.7)",
-    marginHorizontal: 10,
-    paddingVertical: 10
+    // borderWidth: 1,
+    borderRadius: 10,
+    // borderColor: "#C0C0C0",
+     backgroundColor: "rgba(255, 255, 255, 0.2)",
+    marginHorizontal: 20,
+    paddingVertical: 20,
+    marginBottom: 150
   },
 
   title: {
-    fontSize: 32,
+    fontSize: 26,
+    fontFamily: "sans-serif-condensed",
+    // marginTop: 30
   },
 
   contact: {
@@ -107,24 +110,30 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginVertical: 4,
     height: 60,
-    borderRadius: 20,
-    backgroundColor: "rgba(255, 255, 255, 0.7)",
-    marginHorizontal: 30,
-    paddingVertical: 10
+    borderRadius: 8,
+    backgroundColor: "rgb(255, 255, 255)",
+    marginHorizontal: 15,
+    paddingVertical: 10,
+    fontFamily: "sans-serif-condensed",
   },
 
   textContact: {
     marginLeft: 20,
     fontSize: 20,
+    fontFamily: "sans-serif-condensed",
   },
   textSub: {
-    fontSize: 32,
-    alignSelf: "center",
-    marginLeft: 30,
-    marginBottom: 40
+    fontSize: 26,
+    textAlign: "center",
+    // marginLeft: 20,
+    marginBottom: 40,
+    fontFamily: "sans-serif-condensed",
+    color: "#0002cd"
   },
   textButton: {
     fontSize: 15,
+    color: "#0002cd",
+    fontFamily: "sans-serif-condensed",
   },
 
   touchable: {

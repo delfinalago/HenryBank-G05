@@ -109,7 +109,7 @@ export default function Login({ navigation, setToken }) {
             ]}
           />
           <Text style={styles.logo}>VESKI</Text>
-          <Text style={{ alignSelf: "center", fontSize: 20 }}>
+          <Text style={{ alignSelf: "center", fontSize: 20, fontFamily: "sans-serif-condensed" }}>
             Bienvenidx a tu billetera virtual
           </Text>
           <TextInput
@@ -145,23 +145,21 @@ export default function Login({ navigation, setToken }) {
             onPress={handleSubmit}
             style={styles.touchable}
           >
-            <Text style={{ color: "white", fontSize: 20 }}>Ingresar</Text>
+            <Text style={{ color: "white", fontSize: 15, fontFamily: "sans-serif-condensed" }}>INGRESAR</Text>
           </TouchableOpacity>
-
-          <Text style={{ alignSelf: "center", marginTop: 40 }}>
-            Si aun no te registraste
-          </Text>
-
+        
+          
           <TouchableOpacity
             mode="contained"
             secureTextEntry={true}
             title=""
             onPress={() => navigation.navigate("PreRegister")}
-            style={{ borderWidth: 0, marginTop: 10, alignSelf: "center" }}
+            style={{ borderWidth: 0, marginTop: 10 }}
           >
-            <Text style={{ color: "#00aae4", fontSize: 25 }}>Registrate</Text>
+            <Text style={{ color: "#808080", fontSize: 15, alignSelf: "center", marginTop: 15, fontFamily: "sans-serif-condensed" }}> ¿Aún no tenés una cuenta? Registrate aquí</Text>
           </TouchableOpacity>
-        </View>
+          </View>
+          
       </LinearGradient>
     </ScrollView>
   );

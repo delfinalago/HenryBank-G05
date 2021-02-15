@@ -6,13 +6,15 @@ export const forms = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     borderRadius: 30,
-    backgroundColor: "rgba(255, 255, 255, 0.7)",
+    backgroundColor: "rgb(255, 255, 255)",
     paddingVertical: 30,
-    marginHorizontal: 10,
+    marginHorizontal: 20,
+  
   },
   background: {
-    paddingVertical: 60,
-    height: 805
+    paddingVertical: 200,
+  
+
   },
   text: {
     flexDirection: "column",
@@ -20,18 +22,19 @@ export const forms = StyleSheet.create({
     marginRight: 10,
     textAlign: "center",
     marginTop: 10,
-    opacity: 0.8,
+    opacity: 0.6,
     color: "#000000",
   },
   touchable: {
     color: "#000000",
-    marginHorizontal: 130,
+    marginHorizontal: 30,
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 20,
+    marginTop: 30,
     paddingVertical: 10,
     borderRadius: 10,
-    backgroundColor: "#00aae4",
+    backgroundColor: "#0002cd",
+    
   },
   input: {
     flexDirection: "column",
@@ -44,8 +47,9 @@ export const forms = StyleSheet.create({
     paddingHorizontal: 10,
     borderWidth: 1,
     borderRadius: 10,
-    borderColor: "#00aae4",
+    borderColor: "#C0C0C0",
     paddingVertical: 2,
+    fontFamily: "sans-serif-condensed"
   },
   img: {
     alignSelf: "center",

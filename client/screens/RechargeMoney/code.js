@@ -96,7 +96,7 @@ export default function Code({ route, navigation }) {
               onPress={handleSubmit}
               style={styles.button}
             >
-              <Text style={styles.innerText}>Confirmar</Text>
+              <Text style={styles.innerText}>CONFIRMAR</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -110,19 +110,22 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   container: {
-    backgroundColor: "rgba(255, 255, 255, 0.6)",
-    marginHorizontal: 20,
+    backgroundColor: "rgb(255, 255, 255)",
+    marginHorizontal: 25,
     borderRadius: 30,
     paddingVertical: 20,
     paddingHorizontal: 20,
+    marginBottom: 250
   },
   text: {
     fontSize: 42,
+    fontFamily: "sans-serif-condensed",
   },
   code: {
     fontSize: 42,
     textAlign: "center",
     marginVertical: 20,
+    fontFamily: "sans-serif-condensed",
   },
   title: {
     fontSize: 20,
@@ -130,6 +133,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginTop: 5,
     opacity: 0.4,
+    fontFamily: "sans-serif-condensed",
   },
   input: {
     flexDirection: "column",
@@ -143,20 +147,24 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderWidth: 1,
     borderRadius: 10,
-    borderColor: "#00aae4",
+    borderColor: "#0002cd",
     paddingVertical: 2,
+    fontFamily: "sans-serif-condensed",
   },
   button: {
-    marginHorizontal: 55,
     alignItems: "center",
     justifyContent: "center",
     marginTop: 30,
-    backgroundColor: "#00aae4",
+    backgroundColor: "#0002cd",
     paddingVertical: 10,
     borderRadius: 10,
+    marginHorizontal: 20,
+    fontSize: 20
   },
   innerText: {
     color: "white",
+    fontFamily: "sans-serif-condensed",
+    fontSize: 16
   },
   background: {
     height: 760,
