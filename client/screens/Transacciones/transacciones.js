@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { TouchableOpacity, ScrollView, StyleSheet, View, Text, Title, SafeAreaView, TextInput, FlatList } from "react-native";
+import { TouchableOpacity, ScrollView, StyleSheet, View, Text, Title, SafeAreaView, TextInput, FlatList, Image } from "react-native";
 import { Card, ListItem, Button, Icon, Avatar } from "react-native-elements";
 import axios from "axios";
 import { API } from "../../env.js";
@@ -8,6 +8,7 @@ import { Dimensions } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { forms as styles } from "../styles";
+import {logoo} from "../../assets/logoo.png"
 
 var width = Dimensions.get('window').width; //full width
 var height = Dimensions.get('window').height; //full height
@@ -57,11 +58,12 @@ export default function transacciones({ navigation }) {
         end={[0, 1]}
         style={styles.background}
       >
-        <View>
+        {/* <View>
 
-          <Text style={style.titulo}>Transacciones</Text>
-        </View>
+           <Image source={require('../../assets/logoo.png')} />
+        </View> */}
         <View style={style.contact}>
+        <Text style={style.titulo}>ULTIMOS MOVIMIENTOS</Text>
           {transaction.length
             ? transaction.map((u, i) => {
               return (
@@ -69,9 +71,10 @@ export default function transacciones({ navigation }) {
 
                   <View >
                     <Text style={style.tipo} >{u.type}</Text>
-                    <Text style={style.fecha} >{u.date}</Text>
+                    <Text style={style.fecha} > FECHA: {u.date}</Text>
+                    
+                    <Text style={style.description}>DETALLE: {u.description}</Text>
                     <Text style={style.monto} >${u.amount}</Text>
-                    <Text style={style.description}>Detalle: {u.description}</Text>
                   </View>
 
                 </View>
@@ -81,15 +84,7 @@ export default function transacciones({ navigation }) {
 
         </View>
 
-        <TouchableOpacity
-          type="outline"
-          onPress={() => navigation.goBack()}
-          title="Volver"
-          style={style.botonvolver}
-        >
-          <Text style={style.volver}>Volver</Text>
-        </TouchableOpacity>
-
+      
       </LinearGradient>
     </ScrollView>
 
@@ -101,39 +96,47 @@ const style = StyleSheet.create({
   titulo: {
     color: "#fff",
     paddingTop: 0,
-    fontSize: 30,
-    alignSelf: "center",
+    fontSize: 25,
+    textAlign: "center",
     margin: 10,
-    fontWeight: "bold",
+    // fontWeight: "bold",
+    color: "#0002cd",
+    fontFamily: "sans-serif-condensed",
 
   },
   contact: {
     justifyContent: "space-between",
     marginVertical: 4,
-    borderWidth: 0,
-    borderRadius: 30,
-    borderColor: "#fff",
-    backgroundColor: "rgba(255, 255, 255, 0.7)",
+    // borderWidth: 1,
+    borderRadius: 10,
+    // borderColor: "#C0C0C0",
+    backgroundColor: "rgba(255, 255, 255, 0.4)",
     marginHorizontal: 30,
-    paddingVertical: 10
+    paddingVertical: 10,
+    fontFamily: "sans-serif-condensed",
+    marginTop: -180
 
   },
   contactCard: {
     justifyContent: "space-between",
     marginVertical: 4,
     borderWidth: 0,
-    borderRadius: 30,
+    borderRadius: 10,
     borderColor: "#fff",
-    backgroundColor: "rgba(255, 255, 255, 0.7)",
+    backgroundColor: "rgb(255, 255, 255)",
     marginHorizontal: 10,
-    paddingVertical: 10
+    paddingVertical: 10,
+    fontFamily: "sans-serif-condensed",
   },
   fecha: {
-    marginStart: 15,
+    // fontWeight: "bold",
+    marginStart: 8,
     fontSize: 15,
     color: "#000000",
     alignItems: "center",
     paddingRight: 20,
+    fontFamily: "sans-serif-condensed",
+   
   },
   tipo: {
     fontWeight: "bold",
@@ -141,17 +144,23 @@ const style = StyleSheet.create({
     alignSelf: "center",
     fontSize: 20,
     paddingBottom: 5,
-    textDecorationLine: "underline",
+    // textDecorationLine: "underline",
+    fontFamily: "sans-serif-condensed",
+    fontStyle: "italic"
   },
   linearGradient: {
     height: "100%",
     width: "100%",
   },
   description: {
-    fontSize: 16,
+    fontSize: 15,
     color: "#332F23",
-    marginStart: 15,
-    color: "#000000",
+    marginStart: 10,
+    color: "#C0C0C0",
+    fontFamily: "sans-serif-condensed",
+    // marginTop: -25,
+    // display: "flex",
+    // justifyContent: "space-between"
 
   },
   monto: {
@@ -159,19 +168,9 @@ const style = StyleSheet.create({
     fontSize: 20,
     paddingRight: 15,
     color: "#000000",
+    fontFamily: "sans-serif-condensed",
 
 
   },
-  botonvolver: {
-    marginHorizontal: 130,
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 20,
-    paddingVertical: 10,
-    borderRadius: 10,
-    backgroundColor: "#00aae4",
-  },
-  volver: {
-    color: "#fff"
-  }
+ 
 })

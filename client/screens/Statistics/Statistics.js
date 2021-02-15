@@ -6,7 +6,9 @@ import {
   TouchableOpacity,
   Dimensions,
   ScrollView,
+  Image
 } from "react-native";
+import {logoo} from  "../../assets/logoo.png"
 import {
   LineChart,
   BarChart,
@@ -114,8 +116,9 @@ export default function Statistics({ navigation }) {
         style={styles.background}
       >
         <View style={styles.container}>
+        
           <Text style={styles.title}>MIS GASTOS</Text>
-
+           
           <LineChart
             data={{
               labels: labels,
@@ -126,23 +129,29 @@ export default function Statistics({ navigation }) {
               ],
             }}
             width={Dimensions.get("window").width} // from react-native
-            height={220}
+            height={230}
+            width={280}
             chartConfig={{
-              backgroundColor: "#e26a00",
-              backgroundGradientFrom: "#4DBAF4",
-              backgroundGradientTo: "#0FEA2D",
+              backgroundColor: "#C0C0C0",
+               backgroundGradientFrom: "#F5FFFA",
+               backgroundGradientTo: "#F5FFFA",
               decimalPlaces: 2, // optional, defaults to 2dp
-              color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+              color: (opacity = 1) => `rgb(0, 0, 255, ${opacity})`,
               style: {
                 borderRadius: 16,
               },
             }}
             bezier
             style={{
-              marginVertical: 8,
-              borderRadius: 16,
+              // marginHorizontal: 10,
+              // marginHorizontal: -10,
+                marginTop: 14,
+              // borderRadius: 16,
+              alignSelf: "center",
+              marginBottom: 8
             }}
           />
+          <Text style={styles.title2}>AQUI PODES CONSULTAR EL BALANCE DE TUS GASTOS SEGUN EL PERIODO SELECCIONADO</Text>
           <View style={styles.direccion}>
             <TouchableOpacity
               type="outline"
@@ -150,7 +159,7 @@ export default function Statistics({ navigation }) {
               style={styles.boton}
               onPress={handleMovMesEg}
             >
-              <Text style={{ color: "#fff", fontSize: 20 }}>Mensual</Text>
+              <Text style={{ color: "#fff", fontSize: 15,  fontFamily: "sans-serif-condensed" }}>MENSUAL</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
@@ -159,7 +168,7 @@ export default function Statistics({ navigation }) {
               style={styles.boton}
               onPress={handleMovSemEg}
             >
-              <Text style={{ color: "#fff", fontSize: 20 }}>Semanal</Text>
+              <Text style={{ color: "#fff", fontSize: 15, fontFamily: "sans-serif-condensed" }}>SEMANAL</Text>
             </TouchableOpacity>
             <TouchableOpacity
               type="outline"
@@ -168,7 +177,7 @@ export default function Statistics({ navigation }) {
               onPress={handleMovDiaEg}
               //´${handler}
             >
-              <Text style={{ color: "#fff", fontSize: 20 }}>Diario</Text>
+              <Text style={{ color: "#fff", fontSize: 15,  fontFamily: "sans-serif-condensed" }}>DIARIO</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -178,44 +187,80 @@ export default function Statistics({ navigation }) {
 }
 
 const styles = StyleSheet.create({
+  // container: {
+  //   marginTop: 20,
+  //   flex: 1,
+  //   justifyContent: "center",
+  //   borderRadius: 30,
+  //   backgroundColor: "rgb(255, 255, 255)",
+  //   width: -80,
+  //   marginVertical: -20,
+  //   marginHorizontal: -8,
+
+  // },
   container: {
-    marginTop: 10,
+    marginTop: -70,
     flex: 1,
     justifyContent: "center",
-    borderRadius: 30,
-    backgroundColor: "rgba(255, 255, 255, 0.7)",
-    // marginHorizontal: 10,
+    borderRadius: 10,
+    backgroundColor: "rgb(255, 255, 255)",
+    paddingVertical: 30,
+    marginHorizontal: 20,
+    paddingBottom: -20,
+    backgroundColor: "rgba(255, 255, 255, 0.3)",
+  
   },
   background: {
     paddingVertical: 80,
-    height: height,
+   
   },
   text: {
     fontSize: 42,
+    fontFamily: "sans-serif-condensed"
   },
 
   boton: {
-    width: 90,
+    width: 280,
     color: "#fff",
-    marginTop: 20,
+    marginTop: 8,
     paddingVertical: 10,
+    margin: 18,
     borderRadius: 10,
-    backgroundColor: "#00aae4",
+    backgroundColor: "#0002cd",
     marginBottom: 10,
     alignItems: "center",
+   
   },
   innerText: {
-    color: "white",
+    color: "black",
   },
   title: {
-    paddingBottom: 20,
-    fontSize: 30,
+    // paddingBottom: 10,
+    fontSize: 26,
     alignSelf: "center",
-    color: "#00aae4",
-    fontWeight: "bold",
+    color: "#0002cd",
+    marginTop: -30
+  
+
+  },
+  title2: {
+    fontSize: 12,
+    fontFamily: "sans-serif-condensed",
+    color: "#000000",
+    textAlign: "center",
+    margin:3,
+    marginLeft: 10,
+    marginRight: 10
+  },
+  img: {
+    marginTop: -2,
+    margin: 10,
+    marginLeft: 10,
+    
   },
   direccion: {
-    flexDirection: "row",
+    flexDirection: "column",
     justifyContent: "space-evenly",
+
   },
 });

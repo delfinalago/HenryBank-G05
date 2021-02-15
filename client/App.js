@@ -14,6 +14,8 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { StyleSheet, Text, View } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import Toast from "react-native-toast-message";
+import { Image
+} from "react-native";
 
 // Screens
 
@@ -35,6 +37,8 @@ import RechargeMoney from "./screens/RechargeMoney/rechargeMoney";
 import Card from "./screens/RechargeMoney/card";
 import Code from "./screens/RechargeMoney/code";
 import SelectMethod from "./screens/RechargeMoney/selectMethod";
+import {logoo} from './assets/logoo.png';
+import {logo2} from './assets/logo2.png';
 
 const Stack = createStackNavigator(); //contiene la navegacion
 
@@ -101,8 +105,10 @@ function LoginStack({ setToken }) {
 
 function ProfileStack({ setToken }) {
   return (
+    
     <Stack.Navigator>
-      <Stack.Screen name="Me" options={{ headerShown: false }}>
+    
+      <Stack.Screen name="Mi Perfil">
         {(props) => <Profile {...props} setToken={setToken} />}
       </Stack.Screen>
       <Stack.Screen
@@ -113,65 +119,177 @@ function ProfileStack({ setToken }) {
       <Stack.Screen
         name="addContact"
         component={addContact}
-        options={{ title: "Mis Contactos" }}
-      />
+        options={{ 
+          headerTitle: (props) => ( // App Logo
+            
+           <Image
+             style={{ width: 80, height: 80, margin: 70 }}
+             source={require('./assets/logo2.png')} 
+             resizeMode='contain'
+           
+           />
+         ),
+        
+         headerTitleStyle: { flex: 1},
+         
+         }}
+         
+       />
       <Stack.Screen
         name="editContact"
         component={editContact}
-        options={{ title: "Editar contacto" }}
-      />
+        options={{ 
+          headerTitle: (props) => ( // App Logo
+            
+           <Image
+             style={{ width: 80, height: 80, marginLeft: 70}}
+             source={require('./assets/logo2.png')} 
+             resizeMode='contain'
+           
+           />
+         ),
+        
+         headerTitleStyle: { flex: 1},
+         
+         }}
+         
+       />
       <Stack.Screen
         name="SendMoney"
         component={SendMoney}
-        options={{ title: "Enviar Dinero" }}
-        options={{ headerShown: false }}
-      />
+        options={{ 
+          headerTitle: (props) => ( // App Logo
+            
+           <Image
+             style={{ width: 80, height: 80, marginLeft: 70}}
+             source={require('./assets/logo2.png')} 
+             resizeMode='contain'
+           
+           />
+         ),
+        
+         headerTitleStyle: { flex: 1},
+         
+         }}
+         
+       />
       <Stack.Screen
         name="SelectContact"
         component={SelectContact}
-        options={{ title: "Enviar Dinero" }}
-        options={{ headerShown: false }}
-      />
+        options={{ 
+          headerTitle: (props) => ( // App Logo
+            
+           <Image
+             style={{ width: 80, height: 80, marginLeft: 70}}
+             source={require('./assets/logo2.png')} 
+             resizeMode='contain'
+           
+           />
+         ),
+        
+         headerTitleStyle: { flex: 1},
+         
+         }}
+         
+       />
       <Stack.Screen
         name="Statistics"
         component={Statistics}
         options={{ title: "Estadísticas" }}
-        options={{ headerShown: false }}
+        // options={{ headerShown: false }}
       />
       <Stack.Screen
         name="transacciones"
         component={transacciones}
-        options={{ title: "transacciones" }}
-      />
+        //options={{ title: "Transacciones" }}
+        options={{ 
+          headerTitle: (props) => ( // App Logo
+            
+           <Image
+             style={{ width: 80, height: 80, marginLeft: 70}}
+             source={require('./assets/logo2.png')} 
+             resizeMode='contain'
+           
+           />
+         ),
+        
+         headerTitleStyle: { flex: 1},
+         
+         }}
+         
+       />
+       
+        
+        {/* // options={{ headerShown: false }} */}
+    
       <Stack.Screen
         name="RechargeMoney"
         component={RechargeMoney}
         options={{ title: "Recargar Dinero" }}
-        options={{ headerShown: false }}
+        // options={{ headerShown: false }}
       />
       <Stack.Screen
         name="SelectMethod"
         component={SelectMethod}
-        options={{ title: "Elegir metodo de pago" }}
-        options={{ headerShown: false }}
-      />
+        options={{ 
+          headerTitle: (props) => ( // App Logo
+            
+           <Image
+             style={{ width: 80, height: 80, marginLeft: 70}}
+             source={require('./assets/logo2.png')} 
+             resizeMode='contain'
+           
+           />
+         ),
+        
+         headerTitleStyle: { flex: 1},
+         
+         }}
+         
+       />
       <Stack.Screen
         name="Code"
         component={Code}
-        options={{ title: "Código" }}
-        options={{ headerShown: false }}
-      />
+        options={{ 
+          headerTitle: (props) => ( // App Logo
+            
+           <Image
+             style={{ width: 80, height: 80, marginLeft: 70}}
+             source={require('./assets/logo2.png')} 
+             resizeMode='contain'
+           
+           />
+         ),
+        
+         headerTitleStyle: { flex: 1},
+         
+         }}
+         
+       />
       <Stack.Screen
         name="Card"
         component={Card}
-        options={{ title: "Tarjeta" }}
-        options={{ headerShown: false }}
-      />
+        options={{ 
+          headerTitle: (props) => ( // App Logo
+            
+           <Image
+             style={{ width: 80, height: 80, marginLeft: 70}}
+             source={require('./assets/logo2.png')} 
+             resizeMode='contain'
+           
+           />
+         ),
+        
+         headerTitleStyle: { flex: 1},
+         
+         }}
+         
+       />
       <Stack.Screen
         name="UserData"
         component={UserData}
-        options={{ title: "Mis datos" }}
-        options={{ headerShown: false }}
+        options={{ title: "Datos Personales" }}
+        // options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );
