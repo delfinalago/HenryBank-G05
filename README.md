@@ -49,9 +49,9 @@
   Puedes ver tus transacciones realizadas de acuerdo a tres tipos de datos especificados por periodo: mensual, semanal y diario, a través de un grafico. Asimismo tendrás información detallada de tus ultimos movimientos.
     </p>
     <h2>ULTIMOS MOVIMIENTOS</h2>
-    <img width="250" height="auto" src="./client/assets/readme/styloUpdateado/UltimosMov.jpeg"></img>
+    <img width="250" height="auto" src="./client/assets/readme/styloUpdateado/ultimosMov.jpeg"></img>
     <h2>ESTADISTICAS</h2>
-    <img width="250" height="auto" src="./client/assets/readme/styloUpdateado/Estadisticas.jpeg"></img>
+    <img width="250" height="auto" src="./client/assets/readme/styloUpdateado/estadisticas.jpeg"></img>
 </div>
 <div>
 
